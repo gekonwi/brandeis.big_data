@@ -1,0 +1,9 @@
+/META-INF
+/capacity-scheduler.xml
+/core-site.xml
+/hadoop-policy.xml
+/krb5.conf
+/log4j.properties
+/org
+/test-fair-scheduler.xml
+/yarn-site.xml
