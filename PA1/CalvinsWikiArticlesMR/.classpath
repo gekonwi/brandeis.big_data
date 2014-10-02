@@ -3,8 +3,12 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="libs/hadoop/hadoop-common-2.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/CalvinsWikiArticlesMR/libs/hadoop/hadoop-mapreduce-client-core-2.5.1-javadoc.jar!/doc"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="libs/apache-commons-logging-1.2/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="libs/cloud9/cloud9-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/cloud9/cloud9-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
