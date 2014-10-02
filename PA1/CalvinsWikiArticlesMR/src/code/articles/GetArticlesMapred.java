@@ -69,8 +69,8 @@ public class GetArticlesMapred {
 			// TODO: You should implement getting article mapper here
 
 			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
-				Text articleXML = new Text(inputPage.getRawXML());
-				context.write(new Text(), articleXML);
+				Text pageContent = new Text(inputPage.getContent());
+				context.write(new Text(), pageContent);
 			}
 
 		}
