@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <mkdir dir="/Users/georg/Desktop/big_data/hadoop-2.5.1-src/hadoop-minicluster/target/test-dir"/>
+  <mkdir dir="/Users/georg/Desktop/big_data/hadoop-2.5.1-src/hadoop-minicluster/target/test-dir"/>
+</target>
+</project>
