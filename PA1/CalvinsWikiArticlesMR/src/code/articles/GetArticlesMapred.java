@@ -1,6 +1,7 @@
 package code.articles;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -41,6 +43,7 @@ public class GetArticlesMapred {
 	 *
 	 */
 	//@formatter:on
+	
 	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
 		public static Set<String> peopleArticlesTitles = new HashSet<String>();
 
@@ -51,9 +54,13 @@ public class GetArticlesMapred {
 			// DistributedCache here
 			//super.setup(context);
 			
-			URI[] uris = DistributedCache.getCacheFiles(context.getConfiguration());
 			
-			BufferedReader bReader = new BufferedReader(new FileReader(uris[0].toString()));
+			//URI[] uris = DistributedCache.getCacheFiles(context.getConfiguration());
+
+			
+			// read from people file, add each line to people set
+			File f = new File("people.txt");
+			BufferedReader bReader = new BufferedReader(new FileReader(f));
 			String line;
 			while ((line = bReader.readLine()) != null) {
 				peopleArticlesTitles.add(line);
@@ -65,36 +72,36 @@ public class GetArticlesMapred {
 		@Override
 		public void map(LongWritable offset, WikipediaPage inputPage, Context context)
 				throws IOException, InterruptedException {
-			// TODO: You should implement getting article mapper here
 			
+			// if the input page's title is in our set of people that we care about
 			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
-				Text articleXML = new Text(inputPage.getRawXML());
-				context.write(new Text(), articleXML);  
+				Text articleXML = new Text(inputPage.getContent());
+				context.write(new Text(), articleXML);
 			}
 			
 		}
 	}
 
+	
 	public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException, ClassNotFoundException {
-		// TODO: you should implement the Job Configuration and Job call
-		// here
-
+		
 		Job job = Job.getInstance(new Configuration());
-		job.addCacheFile(new URI("people.txt"));
+		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 		
 		job.setMapperClass(GetArticlesMapper.class); 
-		//job.setReducerClass(SumReducer.class);  
 		
 		job.setInputFormatClass(WikipediaPageInputFormat.class);
-		
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.setJarByClass(GetArticlesMapred.class);
+		
+		// so we don't have to specify in the argument
+		job.getConfiguration().set("mapreduce.job.queuename","hadoop08");
 		
 		job.submit();
 
