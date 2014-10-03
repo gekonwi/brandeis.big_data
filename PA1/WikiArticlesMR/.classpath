@@ -26,15 +26,9 @@
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/joda-time.jar"/>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/jollyday-0.4.7-sources.jar"/>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/jollyday.jar"/>
-	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar"/>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/xom-1.2.10-src.jar"/>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/xom.jar"/>
-	<classpathentry kind="lib" path="libs/stanford-corenlp-3.4.1/stanford-corenlp-3.4.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/WikiArticlesMR/libs/stanford-corenlp-3.4.1/stanford-corenlp-3.4.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
