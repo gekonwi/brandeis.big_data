@@ -1,8 +1,7 @@
 package code.lemma;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -11,17 +10,19 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import code.articles.GetArticlesMapred;
-import code.articles.GetArticlesMapred.GetArticlesMapper;
 import util.StringIntegerList;
 import util.WikipediaPageInputFormat;
 import util.StringIntegerList.StringInteger;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 /**
  * 
@@ -30,10 +31,39 @@ import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
+		private XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+		private XMLStreamReader xmlStreamReader;
+		private Tokenizer tokenizer= new Tokenizer();
+		
 		@Override
 		public void map(LongWritable offset, WikipediaPage page, Context context) throws IOException,
-		InterruptedException {
+		InterruptedException{
+			String article = "";
 			
+			try {
+				xmlStreamReader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(page.getRawXML().getBytes("UTF-8")));
+				int event = xmlStreamReader.getEventType();
+				while(true){
+					switch(event) {
+	                case XMLStreamConstants.START_ELEMENT:
+	                	if(xmlStreamReader.getLocalName().equals("text")){
+	                		xmlStreamReader.next();
+	            			if(!xmlStreamReader.isEndElement())
+	            				article = xmlStreamReader.getElementText();
+	                    }
+					}
+	                if (xmlStreamReader.hasNext())
+	                	event = xmlStreamReader.next();
+	                else
+	                	break;
+				}
+			} catch (XMLStreamException e) {
+				e.printStackTrace();
+			}
+			
+			StringIntegerList lemmaList = new StringIntegerList(tokenizer.tokenize(article));
+			
+			context.write(new Text(lemmaList.toString()), lemmaList);
 		}
 	}
 
@@ -47,8 +77,7 @@ public class LemmaIndexMapred {
 		}
 	}
 
-	public static void main(String[] args) throws IOException,
-	URISyntaxException, InterruptedException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
 		Job job = Job.getInstance(new Configuration());
 		job.setOutputKeyClass(Text.class);

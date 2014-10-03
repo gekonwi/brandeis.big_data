@@ -20,7 +20,7 @@ public class Tokenizer{
 	private StanfordCoreNLP pipeline; //tool used for lemmatization
 	private List<String> stopWords;
 	
-	public Tokenizer() throws FileNotFoundException{
+	public Tokenizer(){
         //set up and initialize the Stanford Core NLP Tool
 		Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma");
@@ -28,10 +28,16 @@ public class Tokenizer{
         
         //loading stop-words into an ArrayList
         stopWords = new ArrayList<String>();
-        Scanner in = new Scanner(new FileReader("stopwords.txt"));
-        while(in.hasNext())
-        	stopWords.add(in.next());
-        in.close();
+        Scanner in;
+		try {
+			in = new Scanner(new FileReader("stopwords.txt"));
+	        while(in.hasNext())
+	        	stopWords.add(in.next());
+	        in.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -40,7 +46,7 @@ public class Tokenizer{
 	 * @param sentence
 	 * @return
 	 */
-	public List<String> tokenize(String sentence){
+	public Map<String, Integer> tokenize(String sentence){
 		List<String> words = new ArrayList<String>();
 		//splitting using regex
 		//this implementation *can* be consolidated into method lemmatize(s), but could be messy with italics ('') and bolds (''')
@@ -48,9 +54,7 @@ public class Tokenizer{
 		//kinda weird, but this basically turns the current words ArrayList back into a String... sort've
 		sentence = Arrays.toString(words.toArray());
 		
-		words = lemmatize(sentence);
-		
-		return words;
+		return lemmatize(sentence);
 	}
 	
 	/**
@@ -59,8 +63,8 @@ public class Tokenizer{
 	 * @param documentText
 	 * @return
 	 */
-	public List<String> lemmatize(String documentText){
-        List<String> lemmas = new ArrayList<String>();
+	public Map<String, Integer> lemmatize(String documentText){
+		Map<String, Integer> lemmas = new HashMap<String, Integer>();
         Annotation document = new Annotation(documentText);
         this.pipeline.annotate(document);
 
@@ -72,23 +76,9 @@ public class Tokenizer{
             	if(!lem.matches(".*\\d.*") && !lem.matches(".*&lt.*") && !lem.matches(".*&gt.*") && !lem.matches(".*&amp.*") 
             		&& !lem.matches(".*http.*") && !lem.matches("[,.!?:;{}]") && !lem.equals("-lsb-") && !lem.equals("-rsb-")
             		&& !stopWords.contains(lem))
-            		lemmas.add(lem);
+            		lemmas.put(lem, lemmas.get(lem)+1);
             }
         }
         return lemmas;
     }
-	
-	public static void main(String[] args) throws FileNotFoundException{
-		Tokenizer temp = new Tokenizer();
-		
-		long start_time = System.currentTimeMillis();
-		
-		List<String> lemmas = temp.tokenize("hi i am so cool and or is we he she -this -is really |good ''asdsdd'' {qweqwe} [qwewqwere] awewe.");
-		for (String s: lemmas)
-			System.out.println(s);
-		
-		long end_time = System.currentTimeMillis();
-
-		System.out.println("Time to run tokenization: " + (end_time-start_time) + " milliseconds");
-	}
 }
