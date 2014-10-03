@@ -11,9 +11,8 @@ import edu.stanford.nlp.util.CoreMap;
 
 /**
  * @author Hadoop 08 (Steven, Calvin, Paul, Georg)
- * @version 0.1
- * @since 10/1/14
- * ***CLASS DESCRIPTION HERE***
+ * @version 0.3
+ * @since 10/2/14
  */
 public class Tokenizer{
 
