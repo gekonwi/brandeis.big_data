@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -28,8 +26,6 @@ import util.StringIntegerList.StringInteger;
  */
 public class InvertedIndexMapred {
 
-	private static final Log LOG = LogFactory.getLog(InvertedIndexMapred.class);
-
 	public static class InvertedIndexMapper extends
 			Mapper<Text, Text, Text, StringInteger> {
 
@@ -41,9 +37,10 @@ public class InvertedIndexMapred {
 
 			String articleIdString = articleId.toString();
 			for (StringInteger lemmaFreq : siList.getIndices()) {
+				Text lemma = new Text(lemmaFreq.getString());
 				StringInteger articleFreq = new StringInteger(articleIdString,
 						lemmaFreq.getValue());
-				context.write(new Text(lemmaFreq.getString()), articleFreq);
+				context.write(lemma, articleFreq);
 			}
 		}
 	}
@@ -56,15 +53,18 @@ public class InvertedIndexMapred {
 				Iterable<StringInteger> articlesAndFreqs, Context context)
 				throws IOException, InterruptedException {
 
-			LOG.info("===== Iterable for lemma [" + lemma + "]: "
-					+ articlesAndFreqs.getClass() + "; " + articlesAndFreqs);
-
 			List<StringInteger> siList = new ArrayList<>();
 
+			/*
+			 * here we need to create duplicate instances because the Hadoop
+			 * Iterable implementation keeps reference to THE SAME Writable
+			 * object between the Iterator next() calls. It just replaces the
+			 * object contents. Thus, without duplicating, we would add the same
+			 * object multiple times to the list, in the end containing the data
+			 * from the last iteration.
+			 */
 			for (StringInteger si : articlesAndFreqs)
-				siList.add(si);
-
-			LOG.info("===== reduced lemma [" + lemma + "]: " + siList);
+				siList.add(new StringInteger(si.getString(), si.getValue()));
 
 			context.write(lemma, new StringIntegerList(siList));
 		}
@@ -79,7 +79,6 @@ public class InvertedIndexMapred {
 		job.setReducerClass(InvertedIndexReducer.class);
 
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
-		// job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
