@@ -50,7 +50,7 @@ public class Tokenizer{
 		List<String> words = new ArrayList<String>();
 		//splitting using regex
 		//this implementation *can* be consolidated into method lemmatize(s), but could be messy with italics ('') and bolds (''')
-		words = Arrays.asList(sentence.split("\\s+|('')|(''')|[!.?:;,{}|-]|-|\\[|\\]"));
+		words = Arrays.asList(sentence.split("\\s+|('')|(''')|(``)|[!.?:;,{}|=<>/*%&#$_`'~+·・]|-|\\[|\\]"));
 		//kinda weird, but this basically turns the current words ArrayList back into a String... sort've
 		sentence = Arrays.toString(words.toArray());
 		
@@ -75,8 +75,11 @@ public class Tokenizer{
             	//if statement is doing a lot of magic--taking out unnecessary noise
             	if(!lem.matches(".*\\d.*") && !lem.matches(".*&lt.*") && !lem.matches(".*&gt.*") && !lem.matches(".*&amp.*") 
             		&& !lem.matches(".*http.*") && !lem.matches("[,.!?:;{}]") && !lem.equals("-lsb-") && !lem.equals("-rsb-")
-            		&& !stopWords.contains(lem))
-            		lemmas.put(lem, lemmas.get(lem)+1);
+            		&& !lem.equals("-lrb-") && !lem.matches(".*/.*") && !stopWords.contains(lem))
+            		if(lemmas.get(lem) != null)
+            			lemmas.put(lem, lemmas.get(lem)+1);
+            		else
+            			lemmas.put(lem, 1);
             }
         }
         return lemmas;

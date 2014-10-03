@@ -14,10 +14,16 @@
 			<attribute name="javadoc_location" value="http://lintool.github.io/Cloud9/docs/api"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/stanford-corenlp-3.4.1/stanford-corenlp-3.4.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/WikiArticlesMR/libs/stanford-corenlp-3.4.1/stanford-corenlp-3.4.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/ejml-0.23.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/javax.json-api-1.0-sources.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/javax.json.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/joda-time-2.1-sources.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/joda-time.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/jollyday-0.4.7-sources.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/jollyday.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/xom-1.2.10-src.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/xom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -29,7 +29,7 @@ import javax.xml.stream.XMLStreamReader;
  *
  */
 public class LemmaIndexMapred {
-	public static class LemmaIndexMapper extends Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
+	public static class LemmaIndexMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
 
 		private XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 		private XMLStreamReader xmlStreamReader;
@@ -47,7 +47,6 @@ public class LemmaIndexMapred {
 					switch(event) {
 	                case XMLStreamConstants.START_ELEMENT:
 	                	if(xmlStreamReader.getLocalName().equals("text")){
-	                		xmlStreamReader.next();
 	            			if(!xmlStreamReader.isEndElement())
 	            				article = xmlStreamReader.getElementText();
 	                    }
@@ -63,7 +62,7 @@ public class LemmaIndexMapred {
 			
 			StringIntegerList lemmaList = new StringIntegerList(tokenizer.tokenize(article));
 			
-			context.write(new Text(lemmaList.toString()), lemmaList);
+			context.write(new Text(), new Text(lemmaList.toString()));
 		}
 	}
 
