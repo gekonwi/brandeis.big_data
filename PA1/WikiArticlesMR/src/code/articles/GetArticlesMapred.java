@@ -84,7 +84,7 @@ public class GetArticlesMapred {
 
 	
 	public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException, ClassNotFoundException {
-		
+	
 		Job job = Job.getInstance(new Configuration());
 		
 		job.setOutputKeyClass(Text.class);
