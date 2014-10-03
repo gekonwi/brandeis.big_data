@@ -77,18 +77,4 @@ public class Tokenizer{
         }
         return lemmas;
     }
-	
-	public static void main(String[] args) throws FileNotFoundException{
-		Tokenizer temp = new Tokenizer();
-		
-		long start_time = System.currentTimeMillis();
-		
-		List<String> lemmas = temp.tokenize("hi i am so cool and or is we he she -this -is really |good ''asdsdd'' {qweqwe} [qwewqwere] awewe.");
-		for (String s: lemmas)
-			System.out.println(s);
-		
-		long end_time = System.currentTimeMillis();
-
-		System.out.println("Time to run tokenization: " + (end_time-start_time) + " milliseconds");
-	}
 }
