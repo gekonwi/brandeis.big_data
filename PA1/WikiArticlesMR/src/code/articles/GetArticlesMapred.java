@@ -89,7 +89,7 @@ public class GetArticlesMapred {
 
 		job.setJarByClass(GetArticlesMapred.class);
 
-		// so we don't have to specify in the argument
+		// so we don't have to specify the job name when starting job on cluster
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
 		job.submit();
