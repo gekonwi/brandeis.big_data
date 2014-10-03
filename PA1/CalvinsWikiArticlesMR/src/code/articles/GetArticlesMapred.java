@@ -75,7 +75,7 @@ public class GetArticlesMapred {
 			
 			// if the input page's title is in our set of people that we care about
 			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
-				Text articleXML = new Text(inputPage.getContent());
+				Text articleXML = new Text(inputPage.getRawXML());
 				context.write(new Text(), articleXML);
 			}
 			
