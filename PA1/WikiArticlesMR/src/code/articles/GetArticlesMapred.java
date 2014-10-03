@@ -66,7 +66,6 @@ public class GetArticlesMapred {
 		@Override
 		public void map(LongWritable offset, WikipediaPage inputPage,
 				Context context) throws IOException, InterruptedException {
-			// TODO: You should implement getting article mapper here
 
 			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
 				Text pageContent = new Text(inputPage.getContent());
@@ -78,8 +77,6 @@ public class GetArticlesMapred {
 
 	public static void main(String[] args) throws IOException,
 			URISyntaxException, InterruptedException, ClassNotFoundException {
-		// TODO: you should implement the Job Configuration and Job call
-		// here
 
 		Job job = Job.getInstance(new Configuration());
 		job.addCacheFile(new URI("people.txt"));
@@ -87,10 +84,8 @@ public class GetArticlesMapred {
 		job.setOutputValueClass(Text.class);
 
 		job.setMapperClass(GetArticlesMapper.class);
-		// job.setReducerClass(SumReducer.class);
 
 		job.setInputFormatClass(WikipediaPageInputFormat.class);
-
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
