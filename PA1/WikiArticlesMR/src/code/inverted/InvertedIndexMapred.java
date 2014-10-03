@@ -32,6 +32,20 @@ public class InvertedIndexMapred {
 		@Override
 		public void map(Text articleId, Text indices, Context context)
 				throws IOException, InterruptedException {
+			/*
+			 * transform:
+			 * 
+			 * article_id1 <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>
+			 * 
+			 * into:
+			 * 
+			 * lemma1 <article_id1,freq1>
+			 * 
+			 * lemma2 <article_id1,freq2>
+			 * 
+			 * lemma3 <article_id1,freq3>
+			 */
+
 			StringIntegerList siList = new StringIntegerList();
 			siList.readFromString(indices.toString());
 
@@ -52,6 +66,22 @@ public class InvertedIndexMapred {
 		public void reduce(Text lemma,
 				Iterable<StringInteger> articlesAndFreqs, Context context)
 				throws IOException, InterruptedException {
+
+			/*
+			 * transform:
+			 * 
+			 * lemma1 <article_id1,freq1>
+			 * 
+			 * lemma1 <article_id2,freq2>
+			 * 
+			 * lemma2 <article_id1,freq3>
+			 * 
+			 * into:
+			 * 
+			 * lemma1 <article_id1,freq1>,<article_id2,freq2>
+			 * 
+			 * lemma2 <article_id1,freq3>
+			 */
 
 			List<StringInteger> siList = new ArrayList<>();
 
@@ -84,6 +114,9 @@ public class InvertedIndexMapred {
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.setJarByClass(InvertedIndexMapred.class);
+
+		// so we don't have to specify the job name when starting job on cluster
+		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
 		job.submit();
 	}
