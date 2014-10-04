@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -22,15 +22,26 @@ import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**
- * @author Hadoop 08 (Steven, Calvin, Paul, Georg)
- * @version 0.2
- * @since 10/2/14
+ * This class is used for Section A of assignment 1. You are supposed to run the
+ * code taking the wikipedia dump file as input, and output being the raw XML of
+ * Wikipedia articles that matches the people.txt list.
+ * 
+ * @author Calvin Wang, minwang@brandeis.edu
  */
 public class GetArticlesMapred {
 
 	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
-		
-		public static List<String> peopleList = new ArrayList<String>(); //used to store people names to match up with Wikipedia articles
+
+		public static Set<String> peopleList = new HashSet<String>(); // used to
+																		// store
+																		// people
+																		// names
+																		// to
+																		// match
+																		// up
+																		// with
+																		// Wikipedia
+																		// articles
 
 		@Override
 		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
@@ -39,7 +50,7 @@ public class GetArticlesMapred {
 			File file = new File("people.txt");
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
-			//loop used to add each line from people.txt into peopleList
+			// loop used to add each line from people.txt into peopleList
 			while ((line = br.readLine()) != null) {
 				peopleList.add(line);
 			}
@@ -47,19 +58,20 @@ public class GetArticlesMapred {
 		}
 
 		@Override
-		public void map(LongWritable offset, WikipediaPage inputPage, Context context) 
+		public void map(LongWritable offset, WikipediaPage inputPage, Context context)
 				throws IOException, InterruptedException {
 
-			//conditional to take out the articles that have titles matching in peopleList
-			if(peopleList.contains(inputPage.getTitle())) {
+			// conditional to take out the articles that have titles matching in
+			// peopleList
+			if (peopleList.contains(inputPage.getTitle())) {
 				Text articleXML = new Text(inputPage.getRawXML());
 				context.write(new Text(), articleXML);
 			}
 		}
 	}
 
-	public static void main(String[] args) 
-			throws IOException, URISyntaxException, InterruptedException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, URISyntaxException,
+			InterruptedException, ClassNotFoundException {
 
 		Job job = Job.getInstance(new Configuration());
 

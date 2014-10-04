@@ -2,6 +2,7 @@ package code.lemma;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -23,16 +24,18 @@ import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**
- * @author Hadoop 08 (Steven, Calvin, Paul, Georg)
- * @version 0.2
- * @since 10/2/14
+ * This class is used for Section C.1 of assignment 1. You are supposed to run
+ * the code taking the GetArticlesMapred's output as input, and output being the
+ * lemma index.
+ * 
+ * @author Steven Hu, stevenhh@brandeis.edu
  */
 public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
-		private final XMLInputFactory xmlInputFactory = XMLInputFactory
-				.newInstance(); // for XML parsing
+		// for XML parsing
+		private final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 		private XMLStreamReader xmlStreamReader; // for XML parsing
 		private final Tokenizer tokenizer = new Tokenizer();
 
@@ -42,42 +45,66 @@ public class LemmaIndexMapred {
 			String article = ""; // used to store Wikipedia article body
 
 			try {
-				xmlStreamReader = xmlInputFactory
-						.createXMLStreamReader(new ByteArrayInputStream(page
-								.getRawXML().getBytes("UTF-8")));
-				int event = xmlStreamReader.getEventType();
-				while (true) {
-					// Using general STaX technique where the current event is
-					// checked if it is a open tag
-					switch (event) {
-					case XMLStreamConstants.START_ELEMENT:
-						// text is the tag name for the article body
-						if (xmlStreamReader.getLocalName().equals("text")) {
-							if (!xmlStreamReader.isEndElement())
-								// gets text of an open tag
-								article = xmlStreamReader.getElementText();
-						}
-					}
-					if (xmlStreamReader.hasNext())
-						event = xmlStreamReader.next();
-					else
-						break;
-				}
+				// retrieve the body of the Wikipedia article
+				article = xmlParser(page, xmlInputFactory, xmlStreamReader);
 			} catch (XMLStreamException e) {
 				e.printStackTrace();
 			}
 
 			// run the article body through the Tokenizer and save the lemmas
 			// and their count into StringIntegerList
-			StringIntegerList lemmaList = new StringIntegerList(
-					tokenizer.tokenize(article));
+			StringIntegerList lemmaList = new StringIntegerList(tokenizer.tokenize(article));
 
 			context.write(new Text(page.getTitle()), lemmaList);
 		}
+
+		/**
+		 * XML parsing helper method that traverses through an XML'ed Wikipedia
+		 * article and looks for the open tag <text>, with this, return the
+		 * element text that is encapsulated in the tag
+		 * 
+		 * @param page
+		 * @param xmlInputFactory
+		 * @param xmlStreamReader
+		 * @return
+		 * @throws UnsupportedEncodingException
+		 * @throws XMLStreamException
+		 */
+		public static String xmlParser(WikipediaPage page, XMLInputFactory xmlInputFactory,
+				XMLStreamReader xmlStreamReader) throws UnsupportedEncodingException,
+				XMLStreamException {
+			String article = "";
+
+			xmlStreamReader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(page
+					.getRawXML().getBytes("UTF-8")));
+			int event = xmlStreamReader.getEventType();
+			boolean hasNext = true;
+
+			while (hasNext) {
+				// Using general STaX technique where the current event is
+				// checked if it is a open tag
+				switch (event) {
+				case XMLStreamConstants.START_ELEMENT:
+					// text is the tag name for the article body
+					if (xmlStreamReader.getLocalName().equals("text")) {
+						if (!xmlStreamReader.isEndElement())
+							// gets text of an open tag
+							article = xmlStreamReader.getElementText();
+						hasNext = false;
+					}
+				}
+				if (xmlStreamReader.hasNext())
+					event = xmlStreamReader.next();
+				else
+					break;
+			}
+
+			return article;
+		}
 	}
 
-	public static void main(String[] args) throws IOException,
-			InterruptedException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, InterruptedException,
+			ClassNotFoundException {
 
 		// Job configs
 		Job job = Job.getInstance(new Configuration());
