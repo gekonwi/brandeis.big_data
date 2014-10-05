@@ -107,6 +107,9 @@ public class Tokenizer {
 		// leave only the description of a picture
 		patterns.add("\\[\\[File:.+px\\|");
 
+		// remove whole references
+		patterns.add("<ref>.+</ref>");
+
 		// TODO are these needed? if HTML is decoded while reading in, it's not.
 		patterns.add("&lt"); // "<" in HTML encoding
 		patterns.add("&gt"); // ">" in HTML encoding

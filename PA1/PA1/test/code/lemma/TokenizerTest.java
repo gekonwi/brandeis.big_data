@@ -161,13 +161,24 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemovesPicturesPreservingText() {
+	public void testRemovesPicturesPreservingDescription() {
 		String doc = "Here is ";
 		doc += "[[File:Tsushima battle map-en.svg|thumb|250px|Map showing the routes of both fleets]]";
 		doc += " - well.";
 
 		doc = Tokenizer.removeNoise(doc);
 		String expected = "Here is Map showing the routes of both fleets well";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesReferences() {
+		String doc = "Tōgō  [[Crossing the T|crossed the Russian 'T']]";
+		doc += "<ref>Semenoff (1907) p. 70</ref>";
+		doc += " enabling him to fire broadsides";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Tōgō Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
 }
