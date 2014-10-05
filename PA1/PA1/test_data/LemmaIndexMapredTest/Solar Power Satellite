@@ -1,0 +1,20 @@
+<page>
+  <title>Solar Power Satellite</title>
+  <ns>0</ns>
+  <id>55008</id>
+  <redirect title="Space-based solar power" />
+  <revision>
+    <id>272043124</id>
+    <parentid>177714293</parentid>
+    <timestamp>2009-02-20T10:29:13Z</timestamp>
+    <contributor>
+      <username>Equazcion</username>
+      <id>2813350</id>
+    </contributor>
+    <comment>[[WP:AES|←]]Redirected page to [[Space-based solar power]]</comment>
+    <text xml:space="preserve">#REDIRECT [[Space-based solar power]] {{R from other capitalisation}}</text>
+    <sha1>4z45ly16l0ogao8a10kjb0zideo1ote</sha1>
+    <model>wikitext</model>
+    <format>text/x-wiki</format>
+  </revision>
+</page>

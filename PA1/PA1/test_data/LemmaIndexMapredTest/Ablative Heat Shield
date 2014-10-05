@@ -1,0 +1,21 @@
+<page>
+  <title>Ablative Heat Shield</title>
+  <ns>0</ns>
+  <id>55010</id>
+  <redirect title="Atmospheric entry" />
+  <revision>
+    <id>411091934</id>
+    <parentid>33370954</parentid>
+    <timestamp>2011-01-31T03:24:32Z</timestamp>
+    <contributor>
+      <username>EmausBot</username>
+      <id>11292982</id>
+    </contributor>
+    <minor />
+    <comment>Bot: Fixing double redirect to [[Atmospheric entry]]</comment>
+    <text xml:space="preserve">#REDIRECT [[Atmospheric entry]]</text>
+    <sha1>8tn70d5dq9c4scq2hus4ztitm4f4gah</sha1>
+    <model>wikitext</model>
+    <format>text/x-wiki</format>
+  </revision>
+</page>

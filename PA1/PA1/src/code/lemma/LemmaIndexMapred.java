@@ -10,6 +10,8 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -35,9 +37,7 @@ public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
-		// for XML parsing
-		private final XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-		private XMLStreamReader xmlStreamReader;
+		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
 		private final Tokenizer tokenizer;
 
@@ -52,9 +52,9 @@ public class LemmaIndexMapred {
 
 			try {
 				// retrieve the body of the Wikipedia article
-				article = xmlParser(page, xmlInputFactory, xmlStreamReader);
+				article = getArticleBody(page.getRawXML());
 			} catch (XMLStreamException e) {
-				e.printStackTrace();
+				LOG.error("Failed parsing XML for article: " + page.getTitle(), e);
 			}
 
 			// run the article body through the Tokenizer and save the lemmas
@@ -69,43 +69,37 @@ public class LemmaIndexMapred {
 		 * article and looks for the open tag <text>, with this, return the
 		 * element text that is encapsulated in the tag
 		 * 
-		 * @param page
-		 * @param xmlInputFactory
-		 * @param xmlStreamReader
+		 * @param rawXML
+		 *            UTF-8 encoded xml containing the article text
+		 * 
 		 * @return
 		 * @throws UnsupportedEncodingException
 		 * @throws XMLStreamException
 		 */
-		public static String xmlParser(WikipediaPage page, XMLInputFactory xmlInputFactory,
-				XMLStreamReader xmlStreamReader) throws UnsupportedEncodingException,
+		public static String getArticleBody(String rawXML) throws UnsupportedEncodingException,
 				XMLStreamException {
-			String article = "";
 
-			xmlStreamReader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(page
-					.getRawXML().getBytes("UTF-8")));
-			int event = xmlStreamReader.getEventType();
-			boolean hasNext = true;
+			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			XMLStreamReader xmlStreamReader = xmlInputFactory
+					.createXMLStreamReader(new ByteArrayInputStream(rawXML.getBytes("UTF-8")));
 
-			while (hasNext) {
-				// Using general STaX technique where the current event is
-				// checked if it is a open tag
-				switch (event) {
-				case XMLStreamConstants.START_ELEMENT:
-					// text is the tag name for the article body
-					if (xmlStreamReader.getLocalName().equals("text")) {
-						if (!xmlStreamReader.isEndElement())
-							// gets text of an open tag
-							article = xmlStreamReader.getElementText();
-						hasNext = false;
-					}
-				}
-				if (xmlStreamReader.hasNext())
-					event = xmlStreamReader.next();
-				else
-					break;
+			while (xmlStreamReader.hasNext()) {
+				// General STaX technique:
+				// check if current event is an open tag
+
+				int event = xmlStreamReader.next();
+				if (event != XMLStreamConstants.START_ELEMENT)
+					continue;
+
+				// article's tag name must be text
+				if (!xmlStreamReader.getLocalName().equals("text"))
+					continue;
+
+				if (!xmlStreamReader.isEndElement())
+					return xmlStreamReader.getElementText();
 			}
 
-			return article;
+			throw new IllegalStateException("no article found in XML");
 		}
 	}
 

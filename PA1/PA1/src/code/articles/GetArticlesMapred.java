@@ -33,7 +33,7 @@ public class GetArticlesMapred {
 	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
 
 		// used to store people names to match up with Wikipedia articles
-		public static Set<String> peopleArticlesTitles = new HashSet<String>();
+		public static Set<String> wantedTitles = new HashSet<String>();
 
 		@Override
 		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
@@ -44,7 +44,7 @@ public class GetArticlesMapred {
 			String line;
 			// read from people file, add each line to people set
 			while ((line = br.readLine()) != null) {
-				peopleArticlesTitles.add(line);
+				wantedTitles.add(line);
 			}
 			br.close();
 		}
@@ -54,7 +54,7 @@ public class GetArticlesMapred {
 				throws IOException, InterruptedException {
 
 			// input page's title is in our set of wanted articles -> take it
-			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
+			if (wantedTitles.contains(inputPage.getTitle())) {
 				Text articleXML = new Text(inputPage.getRawXML());
 				context.write(new Text(), articleXML);
 			}

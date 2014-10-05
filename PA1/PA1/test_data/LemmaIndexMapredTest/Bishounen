@@ -1,0 +1,21 @@
+<page>
+  <title>Bishounen</title>
+  <ns>0</ns>
+  <id>55007</id>
+  <redirect title="Bishōnen" />
+  <revision>
+    <id>17743349</id>
+    <parentid>15949304</parentid>
+    <timestamp>2005-06-28T07:47:40Z</timestamp>
+    <contributor>
+      <username>Evil Monkey</username>
+      <id>140548</id>
+    </contributor>
+    <minor />
+    <comment>Bishōnen</comment>
+    <text xml:space="preserve">#REDIRECT [[Bishōnen]]</text>
+    <sha1>bv0n1umowhjun0fzhpsp9yjemlq22sx</sha1>
+    <model>wikitext</model>
+    <format>text/x-wiki</format>
+  </revision>
+</page>
