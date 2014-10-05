@@ -103,9 +103,9 @@ public class Tokenizer {
 				// noise
 				if (!lem.matches(".*\\d.*") && !lem.matches(".*&lt.*") && !lem.matches(".*&gt.*")
 						&& !lem.matches(".*&amp.*") && !lem.matches(".*http.*")
-						&& !lem.matches("[,.!?:;{}]") && !lem.equals("-lsb-")
-						&& !lem.equals("-rsb-") && !lem.equals("-lrb-") && !lem.matches(".*/.*")
-						&& !stopWords.contains(lem))
+						&& !lem.matches("[!.?:;,{}|=<>/*%&#$_`'~+·・]|(''`)|(''``)|('`)|(``)|('``)")
+						&& !lem.equals("-lsb-") && !lem.equals("-rsb-") && !lem.equals("-lrb-")
+						&& !lem.matches(".*/.*") && !stopWords.contains(lem))
 					if (lemmas.get(lem) != null)
 						lemmas.put(lem, lemmas.get(lem) + 1);
 					else
