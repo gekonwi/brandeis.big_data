@@ -32,16 +32,8 @@ public class GetArticlesMapred {
 
 	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
 
-		public static Set<String> peopleList = new HashSet<String>(); // used to
-																		// store
-																		// people
-																		// names
-																		// to
-																		// match
-																		// up
-																		// with
-																		// Wikipedia
-																		// articles
+		// used to store people names to match up with Wikipedia articles
+		public static Set<String> peopleList = new HashSet<String>();
 
 		@Override
 		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
