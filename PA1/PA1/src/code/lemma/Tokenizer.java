@@ -21,13 +21,14 @@ import edu.stanford.nlp.util.CoreMap;
 
 /**
  * @author Steven Hu, stevenhh@brandeis.edu
+ * @author Georg Konwisser, gekonwi@brandeis.edu
  */
 public class Tokenizer {
 
 	private final StanfordCoreNLP pipeLine; // tool used for lemmatization
 	private final Set<String> stopWords;
 
-	private final static Pattern NOISE_PATTERN = getNoisePattern();
+	private final static Pattern NOISE_PATTERN = buildNoisePattern();
 
 	public Tokenizer() throws FileNotFoundException {
 		// set up the Stanford Core NLP Tool
@@ -50,42 +51,22 @@ public class Tokenizer {
 	 * @return how often each lemma appeared in the sentence
 	 */
 	public List<String> getLemmas(String documentText) {
-		documentText = removeURLs(documentText);
+		documentText = removeNoise(documentText);
 
-		String[] tokens = tokenize(documentText);
+		List<String> lemmas = lemmatize(documentText);
 
-		List<String> lemmas = lemmatize(tokens);
-
-		return filterLemmas(lemmas);
+		return filterStopWords(lemmas);
 	}
 
-	public static String[] tokenize(String documentText) {
-		/*
-		 * splitting using regex. each unwanted character like white space or *,
-		 * #, ? or sequence of unwanted characters is used as separator between
-		 * tokens. This removes the separators and extracts tokens before and
-		 * after each separator.
-		 */
+	public static String removeNoise(String documentText) {
 		Matcher matcher = NOISE_PATTERN.matcher(documentText);
 		documentText = matcher.replaceAll(" ").trim();
-		return documentText.split("\\s+");
+
+		// replace all multiple blanks by a single blank
+		return documentText.replaceAll("\\s+", " ");
 	}
 
-	public static String removeURLs(String documentText) {
-		String[] tokens = documentText.split("\\s+");
-
-		StringBuilder sb = new StringBuilder();
-		for (String token : tokens)
-			if (!token.matches(".*((http(s)?:\\/\\/)|www).*"))
-				sb.append(token + " ");
-
-		// remove last blank
-		sb.deleteCharAt(sb.length() - 1);
-
-		return sb.toString();
-	}
-
-	private List<String> filterLemmas(List<String> lemmas) {
+	private List<String> filterStopWords(List<String> lemmas) {
 		List<String> filtered = new ArrayList<>(lemmas.size());
 
 		for (String lemma : lemmas)
@@ -95,27 +76,8 @@ public class Tokenizer {
 		return filtered;
 	}
 
-	public static Pattern getNoisePattern() {
-		List<String> patterns = new ArrayList<>();
-
-		// TODO are these needed? if HTML is decoded while reading in, it's not.
-		patterns.add("&lt"); // "<" in HTML encoding
-		patterns.add("&gt"); // ">" in HTML encoding
-		patterns.add("&amp"); // "&" in HTML encoding
-
-		patterns.add("\\{\\{Infobox.*\\}\\}"); // remove InfoBox
-
-		/*
-		 * Unwanted characters, separated by a blank. Used as separators between
-		 * tokens. The character " as well as \ has to be escaped using \ in
-		 * order to be part of the string.
-		 */
-		String sep = "\" ' ` ´ . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # § $ _ - ~ * ° ^ +";
-		sep += " s d"; // white space (s) and digits (s)
-
-		for (String c : sep.split(" "))
-			// escape to avoid mis-interpretation as a special regex character
-			patterns.add("\\" + c);
+	public static Pattern buildNoisePattern() {
+		List<String> patterns = buildNoisePatternParts();
 
 		StringBuilder sb = new StringBuilder();
 		for (String pattern : patterns)
@@ -131,22 +93,43 @@ public class Tokenizer {
 		return Pattern.compile(regex, Pattern.DOTALL);
 	}
 
+	private static List<String> buildNoisePatternParts() {
+		List<String> patterns = new ArrayList<>();
+
+		patterns.add("\\{\\{Infobox.*\\}\\}"); // the whole InfoBox
+
+		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+"); // whole URLs
+
+		// TODO are these needed? if HTML is decoded while reading in, it's not.
+		patterns.add("&lt"); // "<" in HTML encoding
+		patterns.add("&gt"); // ">" in HTML encoding
+		patterns.add("&amp"); // "&" in HTML encoding
+
+		// '' for italic, ''' for bold, but preserve the single '
+		patterns.add("''+");
+
+		// Unwanted characters, separated by a blank.
+		String chars = "\" ` ´ . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # § $ _ - ~ * ° ^ +";
+		chars += " s d"; // white space (s) and digits (s)
+
+		for (String c : chars.split(" "))
+			// escape to avoid mis-interpretation as a special regex character
+			patterns.add("\\" + c);
+
+		return patterns;
+	}
+
 	/**
 	 * Lemmatizes each element. Inspiration from:
 	 * http://stackoverflow.com/questions/1578062/lemmatization-java
 	 * 
-	 * @param tokens
+	 * @param documentText
 	 * @return
 	 */
-	public List<String> lemmatize(String[] tokens) {
+	public List<String> lemmatize(String documentText) {
 		List<String> lemmas = new ArrayList<>();
 
-		// let Stanford-NLP tokenize it the way it likes
-		StringBuilder sb = new StringBuilder();
-		for (String token : tokens)
-			sb.append(token + " ");
-
-		Annotation document = new Annotation(sb.toString());
+		Annotation document = new Annotation(documentText);
 		this.pipeLine.annotate(document);
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);

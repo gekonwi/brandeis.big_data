@@ -54,7 +54,7 @@ public class TokenizerTest {
 
 	@Test
 	public void testRegexDoesNotEndWithOr() {
-		String regex = Tokenizer.getNoisePattern().pattern();
+		String regex = Tokenizer.buildNoisePattern().pattern();
 		System.out.println(regex);
 		assertFalse(regex.charAt(regex.length() - 1) == "|".charAt(0));
 	}
@@ -63,8 +63,8 @@ public class TokenizerTest {
 	public void testRemoveURL_HTTP() {
 		String doc = "Here is some URL [http://www.url.com] which starts with http.";
 
-		String expected = "Here is some URL which starts with http.";
-		String actual = Tokenizer.removeURLs(doc);
+		String expected = "Here is some URL which starts with http";
+		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
 	}
@@ -73,8 +73,8 @@ public class TokenizerTest {
 	public void testRemoveURL_HTTPS() {
 		String doc = "Here is some URL [https://www.url.com] which starts with https.";
 
-		String expected = "Here is some URL which starts with https.";
-		String actual = Tokenizer.removeURLs(doc);
+		String expected = "Here is some URL which starts with https";
+		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
 	}
@@ -83,8 +83,8 @@ public class TokenizerTest {
 	public void testRemoveURL_HTTPS_Without_WWW() {
 		String doc = "Here is some URL [https://url.com] which starts with https but does not have a www.";
 
-		String expected = "Here is some URL which starts with https but does not have a";
-		String actual = Tokenizer.removeURLs(doc);
+		String expected = "Here is some URL which starts with https but does not have a www";
+		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
 	}
@@ -93,8 +93,8 @@ public class TokenizerTest {
 	public void testRemoveURL_WWW() {
 		String doc = "Here is some URL www.url.com without http and brackets.";
 
-		String expected = "Here is some URL without http and brackets.";
-		String actual = Tokenizer.removeURLs(doc);
+		String expected = "Here is some URL without http and brackets";
+		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
 	}
@@ -102,7 +102,7 @@ public class TokenizerTest {
 	@Test
 	public void testTokenize1() {
 		String doc = "cool -this is# /really   |good ''bad'' {some} [one|two] dog.";
-		String[] tokens = Tokenizer.tokenize(doc);
+		String[] tokens = Tokenizer.removeNoise(doc).split(" ");
 
 		assertEquals("cool", tokens[0]);
 
@@ -131,11 +131,8 @@ public class TokenizerTest {
 	public void testTokenizeRemovesInfobox() throws IOException {
 		String doc = utils.readFile("Infobox");
 
-		String[] tokens = Tokenizer.tokenize(doc);
+		String cleared = Tokenizer.removeNoise(doc);
 
-		assertEquals("First", tokens[0]);
-		assertEquals("line", tokens[1]);
-		assertEquals("Second", tokens[2]);
-		assertEquals("line", tokens[3]);
+		assertEquals("First line Second line", cleared);
 	}
 }
