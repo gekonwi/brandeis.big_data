@@ -4,6 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -58,11 +61,23 @@ public class LemmaIndexMapred {
 				return;
 			}
 
-			// run the article body through the Tokenizer and save the lemmas
-			// and their count into StringIntegerList
-			StringIntegerList lemmaList = new StringIntegerList(tokenizer.tokenize(article));
+			List<String> lemmas = tokenizer.getLemmas(article);
+			Map<String, Integer> lemmaCounts = countLemmas(lemmas);
+			StringIntegerList lemmaList = new StringIntegerList(lemmaCounts);
 
 			context.write(new Text(page.getTitle()), lemmaList);
+		}
+
+		public static Map<String, Integer> countLemmas(List<String> lemmas) {
+			Map<String, Integer> map = new HashMap<String, Integer>();
+
+			for (String lemma : lemmas)
+				if (map.containsKey(lemma))
+					map.put(lemma, map.get(lemma) + 1);
+				else
+					map.put(lemma, 1);
+
+			return map;
 		}
 
 		/**
@@ -86,8 +101,8 @@ public class LemmaIndexMapred {
 
 			while (xmlStreamReader.hasNext()) {
 				// General STaX technique:
-				// check if current event is an open tag
 
+				// check if current event is an open tag
 				int event = xmlStreamReader.next();
 				if (event != XMLStreamConstants.START_ELEMENT)
 					continue;
