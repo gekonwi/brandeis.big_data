@@ -13,6 +13,10 @@ import javax.xml.stream.XMLStreamException;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Georg Konwisser, gekonwi@brandeis.edu
+ */
 public class LemmaIndexMapredTest {
 
 	@Test

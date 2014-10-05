@@ -55,6 +55,7 @@ public class LemmaIndexMapred {
 				article = getArticleBody(page.getRawXML());
 			} catch (XMLStreamException e) {
 				LOG.error("Failed parsing XML for article: " + page.getTitle(), e);
+				return;
 			}
 
 			// run the article body through the Tokenizer and save the lemmas

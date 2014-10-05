@@ -5,6 +5,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Calvin Wang, minwang@brandeis.edu
+ * @author Georg Konwisser, gekonwi@brandeis.edu
+ */
 public class TokenizerTest {
 
 	@Test
