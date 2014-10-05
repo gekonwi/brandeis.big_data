@@ -135,4 +135,28 @@ public class TokenizerTest {
 
 		assertEquals("First line Second line", cleared);
 	}
+
+	@Test
+	public void testRemovesItalic() {
+		String doc = "some ''important'' message";
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "some important message";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesBold() {
+		String doc = "some ''important'' message";
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "some important message";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testPreservesSingleApostrophe() {
+		String doc = "I'm sure we're doing well";
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "I'm sure we're doing well";
+		assertEquals(expected, doc);
+	}
 }
