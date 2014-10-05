@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/TooBigLibs/stanford-corenlp-3.4.1-models.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
