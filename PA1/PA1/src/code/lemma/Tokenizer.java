@@ -90,15 +90,22 @@ public class Tokenizer {
 		// successive separators should be treated as one separation match
 		String regex = "(" + sb.toString() + ")+";
 
+		// make sure the regex dot character includes line breaks
+		// (e.g. for the multi-line info box)
 		return Pattern.compile(regex, Pattern.DOTALL);
 	}
 
 	private static List<String> buildNoisePatternParts() {
 		List<String> patterns = new ArrayList<>();
 
-		patterns.add("\\{\\{Infobox.*\\}\\}"); // the whole InfoBox
+		// remove the whole InfoBox
+		patterns.add("\\{\\{Infobox.*\\}\\}");
 
-		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+"); // whole URLs
+		// remove whole URLs
+		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+");
+
+		// leave only the description of a picture
+		patterns.add("\\[\\[File:.+px\\|");
 
 		// TODO are these needed? if HTML is decoded while reading in, it's not.
 		patterns.add("&lt"); // "<" in HTML encoding

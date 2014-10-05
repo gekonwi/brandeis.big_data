@@ -159,4 +159,15 @@ public class TokenizerTest {
 		String expected = "I'm sure we're doing well";
 		assertEquals(expected, doc);
 	}
+
+	@Test
+	public void testRemovesPicturesPreservingText() {
+		String doc = "Here is ";
+		doc += "[[File:Tsushima battle map-en.svg|thumb|250px|Map showing the routes of both fleets]]";
+		doc += " - well.";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Here is Map showing the routes of both fleets well";
+		assertEquals(expected, doc);
+	}
 }
