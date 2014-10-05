@@ -64,6 +64,26 @@ public class TokenizerTest {
 	}
 
 	@Test
+	public void testRemoveURL_HTTPS() {
+		String doc = "Here is some URL [https://www.url.com] which starts with https.";
+
+		String expected = "Here is some URL which starts with https.";
+		String actual = Tokenizer.removeURLs(doc);
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testRemoveURL_HTTPS_Without_WWW() {
+		String doc = "Here is some URL [https://url.com] which starts with https but does not have a www.";
+
+		String expected = "Here is some URL which starts with https but does not have a";
+		String actual = Tokenizer.removeURLs(doc);
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testRemoveURL_WWW() {
 		String doc = "Here is some URL www.url.com without http and brackets.";
 

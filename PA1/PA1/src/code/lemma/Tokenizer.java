@@ -70,7 +70,7 @@ public class Tokenizer {
 
 		StringBuilder sb = new StringBuilder();
 		for (String token : tokens)
-			if (!token.matches(".*http://.*|.*www.*"))
+			if (!token.matches(".*((http(s)?:\\/\\/)|www).*"))
 				sb.append(token + " ");
 
 		// remove last blank
