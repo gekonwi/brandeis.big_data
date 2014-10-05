@@ -22,24 +22,21 @@ import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**
- * This class is used for Section A of assignment 1. You are supposed to
- * implement a main method that has first argument to be the dump wikipedia
- * input filename , and second argument being an output filename that only
- * contains articles of people as mentioned in the people auxiliary file.
+ * This class is used for Section A of assignment 1. You are supposed to run the
+ * code taking the wikipedia dump file as input, and output being the raw XML of
+ * Wikipedia articles that matches the people.txt list.
  * 
- * @author Hadoop 08 (Steven, Calvin, Paul, Georg)
- * @version 0.2
- * @since 10/2/14
+ * @author Calvin Wang, minwang@brandeis.edu
  */
 public class GetArticlesMapred {
 
-	public static class GetArticlesMapper extends
-			Mapper<LongWritable, WikipediaPage, Text, Text> {
+	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
+
+		// used to store people names to match up with Wikipedia articles
 		public static Set<String> peopleArticlesTitles = new HashSet<String>();
 
 		@Override
-		protected void setup(
-				Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
+		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
 			File file = new File("people.txt");
@@ -53,8 +50,8 @@ public class GetArticlesMapred {
 		}
 
 		@Override
-		public void map(LongWritable offset, WikipediaPage inputPage,
-				Context context) throws IOException, InterruptedException {
+		public void map(LongWritable offset, WikipediaPage inputPage, Context context)
+				throws IOException, InterruptedException {
 
 			// input page's title is in our set of wanted articles -> take it
 			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
@@ -64,8 +61,8 @@ public class GetArticlesMapred {
 		}
 	}
 
-	public static void main(String[] args) throws IOException,
-			URISyntaxException, InterruptedException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, URISyntaxException,
+			InterruptedException, ClassNotFoundException {
 
 		Job job = Job.getInstance(new Configuration());
 

@@ -26,12 +26,11 @@ import util.StringIntegerList.StringInteger;
  */
 public class InvertedIndexMapred {
 
-	public static class InvertedIndexMapper extends
-			Mapper<Text, Text, Text, StringInteger> {
+	public static class InvertedIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
 
 		@Override
-		public void map(Text articleId, Text indices, Context context)
-				throws IOException, InterruptedException {
+		public void map(Text articleId, Text indices, Context context) throws IOException,
+				InterruptedException {
 			/*
 			 * transform:
 			 * 
@@ -52,8 +51,7 @@ public class InvertedIndexMapred {
 			String articleIdString = articleId.toString();
 			for (StringInteger lemmaFreq : siList.getIndices()) {
 				Text lemma = new Text(lemmaFreq.getString());
-				StringInteger articleFreq = new StringInteger(articleIdString,
-						lemmaFreq.getValue());
+				StringInteger articleFreq = new StringInteger(articleIdString, lemmaFreq.getValue());
 				context.write(lemma, articleFreq);
 			}
 		}
@@ -63,8 +61,7 @@ public class InvertedIndexMapred {
 			Reducer<Text, StringInteger, Text, StringIntegerList> {
 
 		@Override
-		public void reduce(Text lemma,
-				Iterable<StringInteger> articlesAndFreqs, Context context)
+		public void reduce(Text lemma, Iterable<StringInteger> articlesAndFreqs, Context context)
 				throws IOException, InterruptedException {
 
 			/*
