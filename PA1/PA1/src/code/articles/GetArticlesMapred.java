@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -22,44 +22,50 @@ import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**
+ * This class is used for Section A of assignment 1. You are supposed to
+ * implement a main method that has first argument to be the dump wikipedia
+ * input filename , and second argument being an output filename that only
+ * contains articles of people as mentioned in the people auxiliary file.
+ * 
  * @author Hadoop 08 (Steven, Calvin, Paul, Georg)
  * @version 0.2
  * @since 10/2/14
  */
 public class GetArticlesMapred {
 
-	public static class GetArticlesMapper extends Mapper<LongWritable, WikipediaPage, Text, Text> {
-		
-		public static List<String> peopleList = new ArrayList<String>(); //used to store people names to match up with Wikipedia articles
+	public static class GetArticlesMapper extends
+			Mapper<LongWritable, WikipediaPage, Text, Text> {
+		public static Set<String> peopleArticlesTitles = new HashSet<String>();
 
 		@Override
-		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
+		protected void setup(
+				Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
 			File file = new File("people.txt");
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
-			//loop used to add each line from people.txt into peopleList
+			// read from people file, add each line to people set
 			while ((line = br.readLine()) != null) {
-				peopleList.add(line);
+				peopleArticlesTitles.add(line);
 			}
 			br.close();
 		}
 
 		@Override
-		public void map(LongWritable offset, WikipediaPage inputPage, Context context) 
-				throws IOException, InterruptedException {
+		public void map(LongWritable offset, WikipediaPage inputPage,
+				Context context) throws IOException, InterruptedException {
 
-			//conditional to take out the articles that have titles matching in peopleList
-			if(peopleList.contains(inputPage.getTitle())) {
+			// input page's title is in our set of wanted articles -> take it
+			if (peopleArticlesTitles.contains(inputPage.getTitle())) {
 				Text articleXML = new Text(inputPage.getRawXML());
 				context.write(new Text(), articleXML);
 			}
 		}
 	}
 
-	public static void main(String[] args) 
-			throws IOException, URISyntaxException, InterruptedException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException,
+			URISyntaxException, InterruptedException, ClassNotFoundException {
 
 		Job job = Job.getInstance(new Configuration());
 

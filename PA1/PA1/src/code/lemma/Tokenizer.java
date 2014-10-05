@@ -19,7 +19,7 @@ public class Tokenizer{
 	private StanfordCoreNLP pipeline; //tool used for lemmatization
 	private List<String> stopWords;
 	
-	public Tokenizer(){
+	public Tokenizer() throws FileNotFoundException{
         //set up and initialize the Stanford Core NLP Tool
 		Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma");
@@ -27,16 +27,10 @@ public class Tokenizer{
         
         //loading stop-words into an ArrayList
         stopWords = new ArrayList<String>();
-        Scanner in;
-		try {
-			in = new Scanner(new FileReader("stopwords.txt"));
+        Scanner in = new Scanner(new FileReader("stopwords.txt"));
 	        while(in.hasNext())
 	        	stopWords.add(in.next());
 	        in.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -49,7 +43,7 @@ public class Tokenizer{
 		List<String> words = new ArrayList<String>();
 		//splitting using regex
 		//this implementation *can* be consolidated into method lemmatize(s), but could be messy with italics ('') and bolds (''')
-		words = Arrays.asList(sentence.split("\\s+|('')|(''')|(``)|[!.?:;,{}|=<>/*%&#$_`'~+·・]|-|\\[|\\]"));
+		words = Arrays.asList(sentence.split("\\s+|('')|(''')|(``)|[!.?:;,{}|=<>/*%&#$_`'~+?????]|-|\\[|\\]"));
 		//kinda weird, but this basically turns the current words ArrayList back into a String... sort've
 		sentence = Arrays.toString(words.toArray());
 		
