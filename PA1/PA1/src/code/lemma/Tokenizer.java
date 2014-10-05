@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
@@ -23,14 +24,16 @@ import edu.stanford.nlp.util.CoreMap;
  */
 public class Tokenizer {
 
-	private final StanfordCoreNLP pipeline; // tool used for lemmatization
+	private final StanfordCoreNLP pipeLine; // tool used for lemmatization
 	private final Set<String> stopWords;
+
+	private final static Pattern NOISE_PATTERN = getNoisePattern();
 
 	public Tokenizer() throws FileNotFoundException {
 		// set up the Stanford Core NLP Tool
 		Properties props = new Properties();
 		props.put("annotators", "tokenize, ssplit, pos, lemma");
-		pipeline = new StanfordCoreNLP(props);
+		pipeLine = new StanfordCoreNLP(props);
 
 		// loading stop-words from file
 		stopWords = new HashSet<String>();
@@ -63,7 +66,9 @@ public class Tokenizer {
 		 * tokens. This removes the separators and extracts tokens before and
 		 * after each separator.
 		 */
-		return getSeparatorRegex().split(documentText);
+		Matcher matcher = NOISE_PATTERN.matcher(documentText);
+		documentText = matcher.replaceAll(" ").trim();
+		return documentText.split("\\s+");
 	}
 
 	public static String removeURLs(String documentText) {
@@ -90,7 +95,7 @@ public class Tokenizer {
 		return filtered;
 	}
 
-	public static Pattern getSeparatorRegex() {
+	public static Pattern getNoisePattern() {
 		List<String> patterns = new ArrayList<>();
 
 		// TODO are these needed? if HTML is decoded while reading in, it's not.
@@ -142,7 +147,7 @@ public class Tokenizer {
 			sb.append(token + " ");
 
 		Annotation document = new Annotation(sb.toString());
-		this.pipeline.annotate(document);
+		this.pipeLine.annotate(document);
 
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 		for (CoreMap sentence : sentences) {
