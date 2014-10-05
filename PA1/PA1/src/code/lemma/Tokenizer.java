@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
@@ -62,7 +63,7 @@ public class Tokenizer {
 		 * tokens. This removes the separators and extracts tokens before and
 		 * after each separator.
 		 */
-		return documentText.split(getSeparatorRegex());
+		return getSeparatorRegex().split(documentText);
 	}
 
 	public static String removeURLs(String documentText) {
@@ -89,7 +90,16 @@ public class Tokenizer {
 		return filtered;
 	}
 
-	public static String getSeparatorRegex() {
+	public static Pattern getSeparatorRegex() {
+		List<String> patterns = new ArrayList<>();
+
+		// TODO are these needed? if HTML is decoded while reading in, it's not.
+		patterns.add("&lt"); // "<" in HTML encoding
+		patterns.add("&gt"); // ">" in HTML encoding
+		patterns.add("&amp"); // "&" in HTML encoding
+
+		patterns.add("\\{\\{Infobox.*\\}\\}"); // remove InfoBox
+
 		/*
 		 * Unwanted characters, separated by a blank. Used as separators between
 		 * tokens. The character " as well as \ has to be escaped using \ in
@@ -98,22 +108,22 @@ public class Tokenizer {
 		String sep = "\" ' ` ´ . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # § $ _ - ~ * ° ^ +";
 		sep += " s d"; // white space (s) and digits (s)
 
-		StringBuilder sb = new StringBuilder();
-		for (String s : sep.split(" ")) {
+		for (String c : sep.split(" "))
 			// escape to avoid mis-interpretation as a special regex character
-			sb.append("\\" + s);
+			patterns.add("\\" + c);
 
-			// "OR"
-			sb.append("|");
-		}
+		StringBuilder sb = new StringBuilder();
+		for (String pattern : patterns)
+			// group each pattern and separate with OR
+			sb.append("(" + pattern + ")|");
 
-		// TODO are these needed? if HTML is decoded while reading in, it's not.
-		sb.append("&lt|"); // "<" in HTML encoding
-		sb.append("&gt|"); // ">" in HTML encoding
-		sb.append("&amp"); // "&" in HTML encoding
+		// remove last OR
+		sb.deleteCharAt(sb.length() - 1);
 
 		// successive separators should be treated as one separation match
-		return "(" + sb.toString() + ")+";
+		String regex = "(" + sb.toString() + ")+";
+
+		return Pattern.compile(regex, Pattern.DOTALL);
 	}
 
 	/**

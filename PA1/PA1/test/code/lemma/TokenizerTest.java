@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
+
+import code.TestUtils;
 
 /**
  * 
@@ -14,6 +17,8 @@ import org.junit.Test;
  * @author Georg Konwisser, gekonwi@brandeis.edu
  */
 public class TokenizerTest {
+
+	TestUtils utils = new TestUtils("TokenizerTest");
 
 	@Test
 	public void testGetLemmas() throws FileNotFoundException {
@@ -49,7 +54,8 @@ public class TokenizerTest {
 
 	@Test
 	public void testRegexDoesNotEndWithOr() {
-		String regex = Tokenizer.getSeparatorRegex();
+		String regex = Tokenizer.getSeparatorRegex().pattern();
+		System.out.println(regex);
 		assertFalse(regex.charAt(regex.length() - 1) == "|".charAt(0));
 	}
 
@@ -94,7 +100,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testTokenize() {
+	public void testTokenize1() {
 		String doc = "cool -this is# /really   |good ''bad'' {some} [one|two] dog.";
 		String[] tokens = Tokenizer.tokenize(doc);
 
@@ -119,5 +125,17 @@ public class TokenizerTest {
 		assertEquals("dog", tokens[9]); // "." should be removed
 
 		assertEquals(10, tokens.length); // there should be no more tokens
+	}
+
+	@Test
+	public void testTokenizeRemovesInfobox() throws IOException {
+		String doc = utils.readFile("Infobox");
+
+		String[] tokens = Tokenizer.tokenize(doc);
+
+		assertEquals("First", tokens[0]);
+		assertEquals("line", tokens[1]);
+		assertEquals("Second", tokens[2]);
+		assertEquals("line", tokens[3]);
 	}
 }
