@@ -1,6 +1,7 @@
 package code.lemma;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.stream.XMLInputFactory;
@@ -34,7 +35,11 @@ public class LemmaIndexMapred {
 		private final XMLInputFactory xmlInputFactory = XMLInputFactory
 				.newInstance(); // for XML parsing
 		private XMLStreamReader xmlStreamReader; // for XML parsing
-		private final Tokenizer tokenizer = new Tokenizer();
+		private final Tokenizer tokenizer;
+
+		public LemmaIndexMapper() throws FileNotFoundException {
+			tokenizer = new Tokenizer();
+		}
 
 		@Override
 		public void map(LongWritable offset, WikipediaPage page, Context context)
@@ -48,7 +53,7 @@ public class LemmaIndexMapred {
 				int event = xmlStreamReader.getEventType();
 				while (true) {
 					// Using general STaX technique where the current event is
-					// checked if it is a open tag
+					// checked if it is an open tag
 					switch (event) {
 					case XMLStreamConstants.START_ELEMENT:
 						// text is the tag name for the article body
