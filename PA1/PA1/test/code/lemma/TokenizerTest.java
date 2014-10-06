@@ -191,4 +191,15 @@ public class TokenizerTest {
 		String expected = "Tōgō Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
+
+	@Test
+	public void testRemovesCitationsPreservingDescriptionTitleAuthor() {
+		String doc = "Mentioned in {{cite web|url=http://www.congreso.es/consti|title=Disposiciones transitorias";
+		doc += "|work=Constitución española|author=Congreso de los Diputados|date=1978|accessdate=22 October 2012}}";
+		doc += " and also ...";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Mentioned in Disposiciones transitorias Constitución española Congreso de los Diputados";
+		assertEquals(expected, doc);
+	}
 }

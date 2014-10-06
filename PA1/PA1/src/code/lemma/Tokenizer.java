@@ -110,6 +110,15 @@ public class Tokenizer {
 		// remove whole references
 		patterns.add("<ref>.+</ref>");
 
+		// remove date and accessdate completely in any link / file
+		patterns.add("\\|(access)?date=.*(\\||\\})");
+
+		// remove attribute names like "title=", "author="
+		patterns.add("\\|.*\\=");
+
+		// remove citation prefixes (but keep title and author values etc.)
+		patterns.add("\\{\\{cite web\\|url=");
+
 		// TODO are these needed? if HTML is decoded while XML parsing, then
 		// it's not.
 		patterns.add("&lt"); // "<" in HTML encoding
