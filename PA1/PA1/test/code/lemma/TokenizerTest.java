@@ -21,7 +21,7 @@ public class TokenizerTest {
 	TestUtils utils = new TestUtils("TokenizerTest");
 
 	@Test
-	public void testGetLemmas() throws FileNotFoundException {
+	public void testLemmatization() throws FileNotFoundException {
 		Tokenizer tocenizer = new Tokenizer();
 
 		String doc = "hi I am so Cool and or is we he she -this &is really |good ''cats'' {people} [gives] came.";
@@ -60,7 +60,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemoveURL_HTTP() {
+	public void testRemovesURL_HTTP() {
 		String doc = "Here is some URL [http://www.url.com] which starts with http.";
 
 		String expected = "Here is some URL which starts with http";
@@ -70,7 +70,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemoveURL_HTTPS() {
+	public void testRemovesURL_HTTPS() {
 		String doc = "Here is some URL [https://www.url.com] which starts with https.";
 
 		String expected = "Here is some URL which starts with https";
@@ -80,7 +80,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemoveURL_HTTPS_Without_WWW() {
+	public void testRemovesURL_HTTPS_Without_WWW() {
 		String doc = "Here is some URL [https://url.com] which starts with https but does not have a www.";
 
 		String expected = "Here is some URL which starts with https but does not have a www";
@@ -90,7 +90,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemoveURL_WWW() {
+	public void testRemovesURL_WWW() {
 		String doc = "Here is some URL www.url.com without http and brackets.";
 
 		String expected = "Here is some URL without http and brackets";
@@ -128,7 +128,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testTokenizeRemovesInfobox() throws IOException {
+	public void testRemovesInfobox() throws IOException {
 		String doc = utils.readFile("Infobox");
 
 		String cleared = Tokenizer.removeNoise(doc);
@@ -161,13 +161,23 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemovesPicturesPreservingDescription() {
+	public void testRemovesPicturesPreservingDescription_WithPixel() {
 		String doc = "Here is ";
 		doc += "[[File:Tsushima battle map-en.svg|thumb|250px|Map showing the routes of both fleets]]";
 		doc += " - well.";
 
 		doc = Tokenizer.removeNoise(doc);
 		String expected = "Here is Map showing the routes of both fleets well";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesPicturesPreservingDescription_WithoutPixel() {
+		String doc = "Very nice: ";
+		doc += "[[File:Constitucion espanola 1978.JPG|thumb|Spanish Constitution of 1978]]";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Very nice Spanish Constitution of";
 		assertEquals(expected, doc);
 	}
 

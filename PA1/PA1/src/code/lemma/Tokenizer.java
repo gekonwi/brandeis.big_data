@@ -105,15 +105,17 @@ public class Tokenizer {
 		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+");
 
 		// leave only the description of a picture
-		patterns.add("\\[\\[File:.+px\\|");
+		patterns.add("\\[\\[File:.+\\|thumb\\|(\\d+px\\|)?");
 
 		// remove whole references
 		patterns.add("<ref>.+</ref>");
 
-		// TODO are these needed? if HTML is decoded while reading in, it's not.
+		// TODO are these needed? if HTML is decoded while XML parsing, then
+		// it's not.
 		patterns.add("&lt"); // "<" in HTML encoding
 		patterns.add("&gt"); // ">" in HTML encoding
 		patterns.add("&amp"); // "&" in HTML encoding
+		patterns.add("&quot"); // " (quotation mark) in HTML encoding
 
 		// '' for italic, ''' for bold, but preserve the single '
 		patterns.add("''+");
