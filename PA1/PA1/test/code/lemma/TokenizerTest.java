@@ -182,6 +182,16 @@ public class TokenizerTest {
 	}
 
 	@Test
+	public void testRemovesPicturesPreservingDescription_WithAlignment() {
+		String doc = "Very nice: ";
+		doc += "[[File:Michael Richards HS Yearbook.jpeg|thumb|left|Richards as a senior in high school, 1967.]]";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Very nice Richards as a senior in high school";
+		assertEquals(expected, doc);
+	}
+
+	@Test
 	public void testRemovesReferences() {
 		String doc = "Tōgō  [[Crossing the T|crossed the Russian 'T']]";
 		doc += "<ref>Semenoff (1907) p. 70</ref>";
