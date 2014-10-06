@@ -105,7 +105,7 @@ public class Tokenizer {
 		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+");
 
 		// leave only the description of a picture
-		patterns.add("\\[\\[File:.+\\|thumb\\|(\\d+px\\|)?");
+		patterns.add("\\[\\[File:.+\\|thumb(\\|\\d+px)?(\\|(left|center|right))?");
 
 		// remove whole references
 		patterns.add("<ref>.+</ref>");
