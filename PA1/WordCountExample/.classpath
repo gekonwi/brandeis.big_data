@@ -7,7 +7,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/WordCountExample/libs/apache-commons-cli-1.2/commons-cli-1.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/hadoop-common/target/hadoop-common-2.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/hadoop/hadoop-common-2.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
