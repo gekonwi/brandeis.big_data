@@ -28,7 +28,8 @@ public class Tokenizer {
 	private final StanfordCoreNLP pipeLine; // tool used for lemmatization
 	private final Set<String> stopWords;
 
-	private final static Pattern NOISE_PATTERN = buildNoisePattern();
+	private static final Pattern NOISE_PATTERN = buildNoisePattern();
+	private static final String STOPWORDS_FILENAME = "stopwords.csv";
 
 	public Tokenizer() throws FileNotFoundException {
 		// set up the Stanford Core NLP Tool
@@ -38,7 +39,7 @@ public class Tokenizer {
 
 		// loading stop-words from file
 		stopWords = new HashSet<String>();
-		Scanner in = new Scanner(new FileReader("stopwords.txt"));
+		Scanner in = new Scanner(new FileReader(STOPWORDS_FILENAME));
 		while (in.hasNext())
 			stopWords.add(in.next());
 		in.close();
