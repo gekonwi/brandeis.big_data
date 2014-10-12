@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>PA1</name>
+	<name>Hadoop08</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,11 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar</name>
-			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/TooBigLibs/stanford-corenlp-3.4.1-models.jar</locationURI>
-		</link>
-	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D</value>
+		</variable>
+	</variableList>
 </projectDescription>
