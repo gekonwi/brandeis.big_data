@@ -1,14 +1,16 @@
 package code.articles;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -35,17 +37,25 @@ public class GetArticlesMapred {
 		// used to store people names to match up with Wikipedia articles
 		public static Set<String> wantedTitles = new HashSet<String>();
 
+		Log LOG = LogFactory.getLog(GetArticlesMapper.class);
+
+		private static final String PEOPLE_FILE_PATH = "people.txt";
+
 		@Override
 		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
-			File file = new File("people.txt");
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			String line;
 			// read from people file, add each line to people set
+
+			Path peoplePath = new Path(PEOPLE_FILE_PATH);
+			FileSystem fs = peoplePath.getFileSystem(new Configuration());
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(peoplePath)));
+
+			String line;
 			while ((line = br.readLine()) != null) {
 				wantedTitles.add(line);
 			}
+
 			br.close();
 		}
 
@@ -82,7 +92,7 @@ public class GetArticlesMapred {
 		// so we don't have to specify the job name when starting job on cluster
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
-		job.submit();
-
+		// job.submit();
+		job.waitForCompletion(true);
 	}
 }

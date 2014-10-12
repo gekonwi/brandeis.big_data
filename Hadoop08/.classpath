@@ -9,8 +9,16 @@
 			<attribute name="javadoc_location" value="http://lintool.github.io/Cloud9/docs/api"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/hadoop/hadoop-common-2.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/hadoop/hadoop-common-2.5.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
