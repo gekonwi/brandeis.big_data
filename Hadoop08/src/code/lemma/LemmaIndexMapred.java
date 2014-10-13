@@ -1,7 +1,6 @@
 package code.lemma;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ public class LemmaIndexMapred {
 
 		private final Tokenizer tokenizer;
 
-		public LemmaIndexMapper() throws FileNotFoundException {
+		public LemmaIndexMapper() throws IOException {
 			tokenizer = new Tokenizer();
 		}
 
@@ -141,7 +140,7 @@ public class LemmaIndexMapred {
 		// so we don't have to specify the job name when starting job on cluster
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
-		job.submit();
-
+		// execute the job with verbose prints
+		job.waitForCompletion(true);
 	}
 }
