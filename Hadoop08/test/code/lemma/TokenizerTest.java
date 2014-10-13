@@ -3,7 +3,6 @@ package code.lemma;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class TokenizerTest {
 	TestUtils utils = new TestUtils("TokenizerTest");
 
 	@Test
-	public void testLemmatization() throws FileNotFoundException {
+	public void testLemmatization() throws IOException {
 		Tokenizer tocenizer = new Tokenizer();
 
 		String doc = "hi I am so Cool and or is we he she -this &is really |good ''cats'' {people} [gives] came.";

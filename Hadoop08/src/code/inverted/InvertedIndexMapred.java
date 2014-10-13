@@ -115,6 +115,7 @@ public class InvertedIndexMapred {
 		// so we don't have to specify the job name when starting job on cluster
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
-		job.submit();
+		// execute the job with verbose prints
+		job.waitForCompletion(true);
 	}
 }

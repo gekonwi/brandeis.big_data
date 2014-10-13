@@ -1,16 +1,14 @@
 package code.lemma;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import util.HDFSUtils;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
@@ -29,20 +27,16 @@ public class Tokenizer {
 	private final Set<String> stopWords;
 
 	private static final Pattern NOISE_PATTERN = buildNoisePattern();
-	private static final String STOPWORDS_FILENAME = "stopwords.csv";
+	private static final String STOPWORDS_FILEPATH = "stopwords.csv";
 
-	public Tokenizer() throws FileNotFoundException {
+	public Tokenizer() throws IOException {
 		// set up the Stanford Core NLP Tool
 		Properties props = new Properties();
 		props.put("annotators", "tokenize, ssplit, pos, lemma");
 		pipeLine = new StanfordCoreNLP(props);
 
-		// loading stop-words from file
-		stopWords = new HashSet<String>();
-		Scanner in = new Scanner(new FileReader(STOPWORDS_FILENAME));
-		while (in.hasNext())
-			stopWords.add(in.next());
-		in.close();
+		// loading stop-words from HDFS file
+		stopWords = HDFSUtils.readLines(STOPWORDS_FILEPATH);
 	}
 
 	/**
