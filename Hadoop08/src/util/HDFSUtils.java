@@ -1,6 +1,9 @@
 package util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 //import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -111,5 +114,24 @@ public class HDFSUtils {
 		} finally {
 			is.close();
 		}
+	}
+	
+	/**
+	 * Write professions count list out to file, professions_count.txt
+	 * @param filePath
+	 * @throws IOException
+	 */
+	public static void writeProfessions(String filePath) throws IOException{
+		File file = new File("professions_count.txt");
+		if(!file.exists())
+			file.createNewFile();
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		
+		HashMap<String, Integer> professions = readProfessions(filePath);
+		
+		for(String s:professions.keySet())
+			bw.write(s + " " + professions.get(s));
+		
+		bw.close();
 	}
 }
