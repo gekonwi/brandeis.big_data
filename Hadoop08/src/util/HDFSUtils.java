@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileWriter;
 //import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -70,32 +69,6 @@ public class HDFSUtils {
 		}
 
 		return result;
-	}
-
-	// don't know if we need really, but here is a method for counting the lines
-	// of an input file
-	// http://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
-	public static int countLines(String filePath) throws IOException {
-		Path professionsPath = new Path(filePath);
-		FileSystem fs = professionsPath.getFileSystem(new Configuration());
-		InputStream is = fs.open(professionsPath);
-		try {
-			byte[] c = new byte[1024];
-			int count = 0;
-			int readChars = 0;
-			boolean empty = true;
-			while ((readChars = is.read(c)) != -1) {
-				empty = false;
-				for (int i = 0; i < readChars; ++i) {
-					if (c[i] == '\n') {
-						++count;
-					}
-				}
-			}
-			return (count == 0 && !empty) ? 1 : count;
-		} finally {
-			is.close();
-		}
 	}
 
 	/**
