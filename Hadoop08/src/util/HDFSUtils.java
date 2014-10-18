@@ -83,16 +83,23 @@ public class HDFSUtils {
 	 * @throws IOException
 	 */
 	public static void writeProfessionCounts(String filePath) throws IOException {
-		File file = new File("professions_count.txt");
-		if (!file.exists())
-			file.createNewFile();
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-
+		Path outputFile = new Path("professions_count.txt");
+		
+		FileSystem fs = FileSystem.get(new Configuration());
+		
+		if (!fs.exists(outputFile)) {
+			fs.create(outputFile);
+		} else {
+			System.err.println("Output file '" + outputFile.toString() + "' already exists.");
+			System.exit(1);
+		}
+		BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile.getName()));
+	
 		HashMap<String, Integer> professions = getProfessionCounts(filePath);
-
+	
 		for (String s : professions.keySet())
 			bw.write(s + "\t" + professions.get(s));
-
+	
 		bw.close();
 	}
 }
