@@ -51,12 +51,17 @@ public class HDFSUtils {
 	 * Read all lines from a given professions training file in HDFS
 	 * 
 	 * @param filePath
-	 *            the full (absolute or relative) path to the file to be read
+	 *            the full (absolute or relative) path to the file to be read.
+	 *            It has to have the format:
+	 *            <p>
+	 *            article1 name : profession1, profession2, ... <br>
+	 *            article2 name : profession3 ... ...
+	 *            <p>
 	 * @return a HashMap<String, Integer> where the key is a profession and the
 	 *         value is the frequency of the profession from the input file
 	 * @throws IOException
 	 */
-	public static HashMap<String, Integer> readProfessions(String filePath) throws IOException {
+	public static HashMap<String, Integer> getProfessionCounts(String filePath) throws IOException {
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 
 		for (String line : readLines(filePath)) {
@@ -77,16 +82,16 @@ public class HDFSUtils {
 	 * @param filePath
 	 * @throws IOException
 	 */
-	public static void writeProfessions(String filePath) throws IOException {
+	public static void writeProfessionCounts(String filePath) throws IOException {
 		File file = new File("professions_count.txt");
 		if (!file.exists())
 			file.createNewFile();
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
-		HashMap<String, Integer> professions = readProfessions(filePath);
+		HashMap<String, Integer> professions = getProfessionCounts(filePath);
 
 		for (String s : professions.keySet())
-			bw.write(s + " " + professions.get(s));
+			bw.write(s + "\t" + professions.get(s));
 
 		bw.close();
 	}
