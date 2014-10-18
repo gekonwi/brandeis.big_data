@@ -3,6 +3,7 @@ package code.profession;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.io.Text;
@@ -58,12 +59,35 @@ public class ProfessionIndexMapredTest {
 
 	@Test
 	public void testMapper() throws IOException {
+		
+		/*
+		 * This was my original implementation -- should be the same as below
+		// convert the example text to StringIntegerList first
+		List<StringInteger> siList = new ArrayList<>();
+		siList.add(new StringInteger("boyz",1));
+		siList.add(new StringInteger("debutlp",1));
+		siList.add(new StringInteger("parent",1));
+		siList.add(new StringInteger("year",13));
+		
+		mapDriver.withInput(new Text("2 Pistols"), new StringIntegerList(siList));
+		*/
+		
+		// create StringIntegerList from example text (github issue #22)
+		StringIntegerList siList = new StringIntegerList();
+		siList.readFromString("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>");
+
 		// feed input into the mapper
-		mapDriver.withInput(new Text("articleThing"), new Text("<run,5>,<star,3>,<hip,2>"));
+		mapDriver.withInput(new Text("2 Pistols"), siList);
+		
 		// compare to expected outputs
-		mapDriver.withOutput(new Text("run"), new StringInteger("articleThing",5));
-		mapDriver.withOutput(new Text("star"), new StringInteger("articleThing",3));
-		mapDriver.withOutput(new Text("hip"), new StringInteger("articleThing",2));
+		mapDriver.withOutput(new Text("singer"), new StringInteger("boyz", 1));
+		mapDriver.withOutput(new Text("singer"), new StringInteger("debutlp", 1));
+		mapDriver.withOutput(new Text("singer"), new StringInteger("parent", 1));
+		mapDriver.withOutput(new Text("singer"), new StringInteger("year", 13));
+		mapDriver.withOutput(new Text("musician"), new StringInteger("boyz", 1));
+		mapDriver.withOutput(new Text("musician"), new StringInteger("debutlp", 1));
+		mapDriver.withOutput(new Text("musician"), new StringInteger("parent", 1));
+		mapDriver.withOutput(new Text("musician"), new StringInteger("year", 13));
 		
 		// must get object representations instead of mapDriver.runTests()
 		// because of lack of equals/hashCode method
