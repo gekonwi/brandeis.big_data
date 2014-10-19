@@ -4,6 +4,10 @@ import java.io.DataInput;
 import java.io.IOException;
 import java.util.regex.Matcher;
 
+/**
+ * 
+ * @author Steven Hu, stevenhh@brandeis.edu
+ */
 public class StringInteger extends StringNumber {
 
 	public StringInteger(String s, int t) {

@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableUtils;
 
+/**
+ * 
+ * @author Steven Hu, stevenhh@brandeis.edu
+ */
 public class StringDoubleList implements Writable {
 
 	private List<StringDouble> indices;

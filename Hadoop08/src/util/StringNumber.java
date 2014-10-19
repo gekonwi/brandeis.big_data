@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 import org.apache.hadoop.io.Writable;
 
+/**
+ * 
+ * @author Steven Hu, stevenhh@brandeis.edu
+ */
 public abstract class StringNumber implements Writable {
 	
 	protected String s;
