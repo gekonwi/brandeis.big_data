@@ -19,8 +19,8 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import util.StringDoubleList;
+import util.StringInteger;
 import util.StringIntegerList;
-import util.StringIntegerList.StringInteger;
 
 /**
  * This class is used for 3.3 Section B of assignment 2.

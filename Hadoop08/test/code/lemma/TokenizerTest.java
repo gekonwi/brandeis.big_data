@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,14 +22,17 @@ import code.TestUtils;
  */
 public class TokenizerTest {
 
-	TestUtils utils = new TestUtils(getClass());
+	private static final Path STOPWORDS_FILEPATH = Paths.get("stopwords.csv");
+	private final TestUtils utils = new TestUtils(getClass());
 
 	@Test
 	public void testLemmatization() throws IOException {
-		Tokenizer tocenizer = new Tokenizer();
+		List<String> lines = Files.readAllLines(STOPWORDS_FILEPATH, Charset.forName("UTF-8"));
+		HashSet<String> stopWords = new HashSet<>(lines);
+		Tokenizer tokenizer = new Tokenizer(stopWords);
 
 		String doc = "hi I am so Cool and or is we he she -this &is really |good ''cats'' {people} [gives] came.";
-		List<String> lemmas = tocenizer.getLemmas(doc);
+		List<String> lemmas = tokenizer.getLemmas(doc);
 
 		assertEquals("hi", lemmas.get(0));
 
@@ -39,13 +47,9 @@ public class TokenizerTest {
 		assertEquals("really", lemmas.get(2));
 
 		assertEquals("good", lemmas.get(3)); // "|", removed
-
 		assertEquals("cat", lemmas.get(4)); // "''" removed, singular
-
 		assertEquals("people", lemmas.get(5)); // "{", "}" removed, no singular
-
 		assertEquals("give", lemmas.get(6)); // "[", "]" removed, infinitive
-
 		assertEquals("come", lemmas.get(7)); // "." removed, present tense
 
 		assertEquals(lemmas.size(), 8); // no more lemmas
@@ -104,23 +108,14 @@ public class TokenizerTest {
 		String[] tokens = Tokenizer.removeNoise(doc).split(" ");
 
 		assertEquals("cool", tokens[0]);
-
 		assertEquals("this", tokens[1]); // "-" should be removed
-
 		assertEquals("is", tokens[2]); // "#" should be removed
-
 		assertEquals("really", tokens[3]); // "/" should be removed
-
 		assertEquals("good", tokens[4]); // "|" and all blanks should be removed
-
 		assertEquals("bad", tokens[5]); // "''" should be removed
-
 		assertEquals("some", tokens[6]); // "{" and "}" should be removed
-
 		assertEquals("one", tokens[7]); // "[" and "]" should be removed
-
 		assertEquals("two", tokens[8]); // "|" should split
-
 		assertEquals("dog", tokens[9]); // "." should be removed
 
 		assertEquals(10, tokens.length); // there should be no more tokens

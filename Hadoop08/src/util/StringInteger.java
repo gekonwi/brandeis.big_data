@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
  * 
  * @author Steven Hu, stevenhh@brandeis.edu
  */
-public class StringDouble extends StringNumber<Double> {
+public class StringInteger extends StringNumber<Integer> {
 
-	public StringDouble(String string, double value) {
+	public StringInteger(String string, int value) {
 		super(string, value);
 	}
 
@@ -21,7 +21,7 @@ public class StringDouble extends StringNumber<Double> {
 		Matcher m = p.matcher(indexStr);
 		if (m.matches()) {
 			super.string = m.group(1);
-			super.value = Double.parseDouble(m.group(2));
+			super.value = Integer.parseInt(m.group(2));
 		}
 	}
 
