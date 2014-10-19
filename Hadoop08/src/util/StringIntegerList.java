@@ -44,7 +44,7 @@ public class StringIntegerList implements Writable {
 		if (this.indiceMap == null) {
 			indiceMap = new HashMap<String, Integer>();
 			for (StringInteger index : this.indices) {
-				indiceMap.put(index.s, (Integer) index.t);
+				indiceMap.put(index.string, (Integer) index.value);
 			}
 		}
 		return indiceMap;

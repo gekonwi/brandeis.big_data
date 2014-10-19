@@ -44,7 +44,7 @@ public class StringDoubleList implements Writable {
 		if (this.indiceMap == null) {
 			indiceMap = new HashMap<String, Double>();
 			for (StringDouble index : this.indices) {
-				indiceMap.put(index.s, (Double) index.t);
+				indiceMap.put(index.string, (Double) index.value);
 			}
 		}
 		return indiceMap;

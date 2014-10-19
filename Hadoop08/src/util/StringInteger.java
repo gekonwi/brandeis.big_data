@@ -8,14 +8,10 @@ import java.util.regex.Matcher;
  * 
  * @author Steven Hu, stevenhh@brandeis.edu
  */
-public class StringInteger extends StringNumber {
+public class StringInteger extends StringNumber<Integer> {
 
-	public StringInteger(String s, int t) {
-		super(s,t);
-	}
-
-	public Integer getValue() {
-		return (Integer) super.getValue();
+	public StringInteger(String string, int value) {
+		super(string, value);
 	}
 
 	@Override
@@ -24,8 +20,8 @@ public class StringInteger extends StringNumber {
 
 		Matcher m = p.matcher(indexStr);
 		if (m.matches()) {
-			super.s = m.group(1);
-			super.t = Integer.parseInt(m.group(2));
+			super.string = m.group(1);
+			super.value = Integer.parseInt(m.group(2));
 		}
 	}
 
