@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -47,5 +48,23 @@ public class HDFSUtilsTest {
 		System.out.println("finished reading + parsing after " + millisTotal + " millis");
 
 		assertTrue(millisTotal < ACCEPTED_TOTAL_MILLIS);
+	}
+
+	@Test
+	public void getProfessionCountsTest() throws IOException {
+		Path path = utils.getInputFilePath("getProfessionCountsTest_input.txt");
+		List<String> professions = Files.readAllLines(path, Charset.forName("UTF-8"));
+
+		Map<String, Integer> counts = HDFSUtils.getProfessionCounts(professions);
+		assertEquals("there are 8 unique professions in the test set", 8, counts.size());
+
+		assertEquals(1, (int) counts.get("rugby union player"));
+		assertEquals(6, (int) counts.get("footballer"));
+		assertEquals(1, (int) counts.get("historian"));
+		assertEquals(1, (int) counts.get("legal scholar"));
+		assertEquals(1, (int) counts.get("social scientist"));
+		assertEquals(1, (int) counts.get("biographer"));
+		assertEquals(1, (int) counts.get("footballer2"));
+		assertEquals(1, (int) counts.get("basketball player"));
 	}
 }
