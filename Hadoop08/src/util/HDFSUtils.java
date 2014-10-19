@@ -1,14 +1,12 @@
 package util;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 //import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -26,16 +24,15 @@ public class HDFSUtils {
 	 * Read all lines of the given file from HDFS.
 	 * 
 	 * @param filePath
-	 *            the full (absolute or relative) path to the file to be read
-	 * @return a set with one entry for each (unique) line
+	 *            the path to the file to be read
+	 * @return a list with one entry for each line in the file
 	 * @throws IOException
 	 */
-	public static HashSet<String> readLines(String filePath) throws IOException {
-		HashSet<String> result = new HashSet<>();
+	public static List<String> readLines(Path filePath) throws IOException {
+		List<String> result = new ArrayList<>();
 
-		Path peoplePath = new Path(filePath);
-		FileSystem fs = peoplePath.getFileSystem(new Configuration());
-		BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(peoplePath)));
+		FileSystem fs = filePath.getFileSystem(new Configuration());
+		BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(filePath)));
 
 		String line;
 		while ((line = br.readLine()) != null) {
@@ -50,21 +47,18 @@ public class HDFSUtils {
 	/**
 	 * Read all lines from a given professions training file in HDFS
 	 * 
-	 * @param filePath
-	 *            the full (absolute or relative) path to the file to be read.
-	 *            It has to have the format:
+	 * @param fileLines
+	 *            each entry has to have the format:
 	 *            <p>
-	 *            article1 name : profession1, profession2, ... <br>
-	 *            article2 name : profession3 ... ...
+	 *            article name : profession1, profession2, ... <br>
 	 *            <p>
 	 * @return a HashMap<String, Integer> where the key is a profession and the
 	 *         value is the frequency of the profession from the input file
-	 * @throws IOException
 	 */
-	public static HashMap<String, Integer> getProfessionCounts(String filePath) throws IOException {
+	public static HashMap<String, Integer> getProfessionCounts(List<String> fileLines) {
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 
-		for (String line : readLines(filePath)) {
+		for (String line : fileLines) {
 			String[] professions = line.split(" : ")[1].split(", ");
 			for (String p : professions)
 				if (result.containsKey(p))
@@ -74,25 +68,5 @@ public class HDFSUtils {
 		}
 
 		return result;
-	}
-
-	/**
-	 * Write professions count list out to file, professions_count.txt
-	 * 
-	 * @param filePath
-	 * @throws IOException
-	 */
-	public static void writeProfessionCounts(String filePath) throws IOException {
-		File file = new File("professions_count.txt");
-		if (!file.exists())
-			file.createNewFile();
-		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-
-		HashMap<String, Integer> professions = getProfessionCounts(filePath);
-
-		for (String s : professions.keySet())
-			bw.write(s + "\t" + professions.get(s));
-
-		bw.close();
 	}
 }
