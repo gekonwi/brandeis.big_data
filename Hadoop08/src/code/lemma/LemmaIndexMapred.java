@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+import util.HDFSUtils;
 import util.StringIntegerList;
 import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
@@ -39,12 +41,15 @@ public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
+		private static final Path STOPWORDS_FILEPATH = new Path("stopwords.csv");
+
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
 		private final Tokenizer tokenizer;
 
 		public LemmaIndexMapper() throws IOException {
-			tokenizer = new Tokenizer();
+			HashSet<String> stopWords = new HashSet<>(HDFSUtils.readLines(STOPWORDS_FILEPATH));
+			tokenizer = new Tokenizer(stopWords);
 		}
 
 		@Override
