@@ -28,22 +28,27 @@ public class InvertedIndexMapred {
 
 	public static class InvertedIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
 
+		/**
+		 * transforms:
+		 * 
+		 * <pre>
+		 * {@code
+		 * (article_id1, <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>)
+		 * }
+		 * </pre>
+		 * <p>
+		 * into:
+		 * 
+		 * <pre>
+		 * {@code lemma1 <article_id1,freq1>
+		 * (lemma2, <article_id1,freq2>)
+		 * (lemma3, <article_id1,freq3>)
+		 * }
+		 * </pre>
+		 */
 		@Override
 		public void map(Text articleId, Text indices, Context context) throws IOException,
 				InterruptedException {
-			/*
-			 * transform:
-			 * 
-			 * article_id1 <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>
-			 * 
-			 * into:
-			 * 
-			 * lemma1 <article_id1,freq1>
-			 * 
-			 * lemma2 <article_id1,freq2>
-			 * 
-			 * lemma3 <article_id1,freq3>
-			 */
 
 			StringIntegerList siList = new StringIntegerList();
 			siList.readFromString(indices.toString());
@@ -60,25 +65,29 @@ public class InvertedIndexMapred {
 	public static class InvertedIndexReducer extends
 			Reducer<Text, StringInteger, Text, StringIntegerList> {
 
+		/**
+		 * transforms:
+		 * 
+		 * <pre>
+		 * {@code
+		 * (lemma1, <article_id1,freq1>)
+		 * (lemma1, <article_id2,freq2>)
+		 * (lemma2, <article_id1,freq3>)
+		 * }
+		 * </pre>
+		 * <p>
+		 * into:
+		 * 
+		 * <pre>
+		 * {@code
+		 * lemma1 : <article_id1,freq1>,<article_id2,freq2>
+		 * lemma2 : <article_id1,freq3>
+		 * }
+		 * </pre>
+		 */
 		@Override
 		public void reduce(Text lemma, Iterable<StringInteger> articlesAndFreqs, Context context)
 				throws IOException, InterruptedException {
-
-			/*
-			 * transform:
-			 * 
-			 * lemma1 <article_id1,freq1>
-			 * 
-			 * lemma1 <article_id2,freq2>
-			 * 
-			 * lemma2 <article_id1,freq3>
-			 * 
-			 * into:
-			 * 
-			 * lemma1 <article_id1,freq1>,<article_id2,freq2>
-			 * 
-			 * lemma2 <article_id1,freq3>
-			 */
 
 			List<StringInteger> siList = new ArrayList<>();
 
@@ -112,8 +121,15 @@ public class InvertedIndexMapred {
 
 		job.setJarByClass(InvertedIndexMapred.class);
 
+		final Configuration conf = job.getConfiguration();
+
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		// assignment requires " : " instead of the default "\t" as separator
+		final String separator = " : ";
+		conf.set("mapreduce.textoutputformat.separator", separator);
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", separator);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
