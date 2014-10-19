@@ -17,7 +17,7 @@ import code.TestUtils;
  */
 public class TokenizerTest {
 
-	TestUtils utils = new TestUtils("TokenizerTest");
+	TestUtils utils = new TestUtils(getClass());
 
 	@Test
 	public void testLemmatization() throws IOException {
@@ -128,7 +128,7 @@ public class TokenizerTest {
 
 	@Test
 	public void testRemovesInfobox() throws IOException {
-		String doc = utils.readFile("Infobox");
+		String doc = utils.fileToString("Infobox");
 
 		String cleared = Tokenizer.removeNoise(doc);
 

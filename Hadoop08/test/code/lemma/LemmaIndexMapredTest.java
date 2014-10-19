@@ -18,7 +18,7 @@ import code.TestUtils;
  */
 public class LemmaIndexMapredTest {
 
-	TestUtils utils = new TestUtils("LemmaIndexMapredTest");
+	TestUtils utils = new TestUtils(getClass());
 
 	@Test
 	public void testGetArticle() throws IOException, XMLStreamException {
@@ -30,9 +30,9 @@ public class LemmaIndexMapredTest {
 	}
 
 	private void testArticleContent(String fileName) throws IOException, XMLStreamException {
-		String xml = utils.readFile(fileName);
+		String xml = utils.fileToString(fileName);
 
-		String expected = utils.readFile(fileName + " - text");
+		String expected = utils.fileToString(fileName + " - text");
 
 		String actual;
 		try {

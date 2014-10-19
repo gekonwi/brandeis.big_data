@@ -13,19 +13,43 @@ import java.util.List;
  * 
  */
 public class TestUtils {
-	private final Path testDir;
+	private final Path testInputFilesDir;
+	public static final String TEST_DATA_DIR_NAME = "test_data";
 
 	/**
+	 * Create a {@link TestUtils} instance for the provided testing class. The
+	 * test data is expected to be in the directory
+	 * <code>{@value #TEST_DATA_DIR_NAME} + "/" + testingClass.getSinpleName()</code>
+	 * .
+	 * <p>
+	 * Example: the if <code>testingClass == TokenizerTest.class</code> the
+	 * corresponding test files are expected to be found in:<br>
+	 * <code>{@value #TEST_DATA_DIR_NAME} + "/TokenizerTest"</code>
 	 * 
-	 * @param path
-	 *            within test_data
+	 * @param testingClass
+	 *            the class which intends to use this instance to read in its
+	 *            test input files
 	 */
-	public TestUtils(String... path) {
-		this.testDir = Paths.get("test_data", path);
+	public TestUtils(Class<?> testingClass) {
+		this.testInputFilesDir = Paths.get(TEST_DATA_DIR_NAME, testingClass.getSimpleName());
 	}
 
-	public String readFile(String fileName) throws IOException {
-		Path path = testDir.resolve(fileName);
+	public Path getInputFilePath(String fileName) {
+		return testInputFilesDir.resolve(fileName);
+	}
+
+	/**
+	 * Reads in he whole file and returns it as a single String. All line breaks
+	 * are preserved with \n characters.
+	 * 
+	 * @param fileName
+	 *            the name of the file to be read in. This file has to be inside
+	 *            the test_data/TestClass directory.
+	 * @return
+	 * @throws IOException
+	 */
+	public String fileToString(String fileName) throws IOException {
+		Path path = testInputFilesDir.resolve(fileName);
 
 		List<String> allLines = Files.readAllLines(path, Charset.forName("UTF-8"));
 
