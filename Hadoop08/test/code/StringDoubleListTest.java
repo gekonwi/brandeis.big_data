@@ -17,90 +17,113 @@ import util.StringDoubleList;
 
 public class StringDoubleListTest {
 
-	StringDoubleList sd_1;
-	StringDoubleList sd_2;
-	StringDoubleList sd_3;
-
-	List<StringDouble> list;
-	Map<String, Double> map;
-
 	@Test
 	public void testEmptyConstructor() {
-		sd_1 = new StringDoubleList();
+		StringDoubleList list = new StringDoubleList();
 
 		// check to see if indices and indiceMap were created
-		assertNotNull(sd_1.getIndices());
-		assertNotNull(sd_1.getMap());
+		assertNotNull(list.getIndices());
+		assertNotNull(list.getMap());
 	}
 
 	@Test
 	public void testListConstructor() {
-		list = new ArrayList<>();
-		list.add(new StringDouble("SD1", 100.001));
-		list.add(new StringDouble("SD2", 200.002));
-		list.add(new StringDouble("SD3", 300.003));
+		List<StringDouble> arrayList = new ArrayList<>();
+		arrayList.add(new StringDouble("SD1", 100.001));
+		arrayList.add(new StringDouble("SD2", 200.002));
+		arrayList.add(new StringDouble("SD3", 300.003));
 
-		map = new HashMap<>();
+		Map<String, Double> map = new HashMap<>();
 		map.put("SD1", 100.001);
 		map.put("SD2", 200.002);
 		map.put("SD3", 300.003);
 
-		sd_2 = new StringDoubleList(list);
+		StringDoubleList sdList = new StringDoubleList(arrayList);
 
 		// check equality in list and indices
-		assertEquals(list, sd_2.getIndices());
+		assertEquals(arrayList, sdList.getIndices());
 
 		// check equality in map and indiceMap
-		assertEquals(map, sd_2.getMap());
+		assertEquals(map, sdList.getMap());
 	}
 
 	@Test
 	public void testMapConstructor() {
-		map = new HashMap<>();
+		Map<String, Double> map = new HashMap<>();
 		map.put("SD1", 100.001);
 		map.put("SD2", 200.002);
 		map.put("SD3", 300.003);
 
-		sd_3 = new StringDoubleList(map);
+		StringDoubleList sdList = new StringDoubleList(map);
 
 		// check equality in map and indiceMap
-		assertEquals(map, sd_3.getMap());
+		assertEquals(map, sdList.getMap());
 
-		list = new ArrayList<>();
-		list.add(new StringDouble("SD1", 100.001));
-		list.add(new StringDouble("SD2", 200.002));
-		list.add(new StringDouble("SD3", 300.003));
+		List<StringDouble> arrayList = new ArrayList<>();
+		arrayList.add(new StringDouble("SI1", 100));
+		arrayList.add(new StringDouble("SI2", 200));
+		arrayList.add(new StringDouble("SI3", 300));
 
 		// traverse through all the StringDouble objects in indices and then
 		// at each StringDouble object traverse through list until the
 		// StringDouble object with the same String value is found, then check
 		// to see if the first loops StringDouble object has the same value as
 		// the second StringDouble object
-		for (StringDouble sd : sd_3.getIndices()) {
-			for (StringDouble ld : list) {
-				if (ld.getString().equals(sd.getString()))
-					assertTrue(sd.getValue().equals(ld.getValue()));
+		for (StringDouble si : sdList.getIndices()) {
+			for (StringDouble li : arrayList) {
+				if (li.getString().equals(si.getString()))
+					assertTrue(si.getValue().equals(li.getValue()));
 			}
 		}
 	}
 
 	@Test
-	public void testReadFromStringAndToString() throws IOException {
-		sd_1 = new StringDoubleList();
+	public void testReadFromStringWithNoise() throws IOException {
+		StringDoubleList sdList = new StringDoubleList();
 
 		// added some noise inside the String to make sure that it is ignored
 		// when reading in from String
-		sd_1.readFromString("<SD1,100.001>qweqwe>><SD2,200.002>   <>#123das <SD3,300.003>");
+		sdList.readFromString("<SD1,100.001>qweqwe>><SD2,200.002>   <>#123das <SD3,300.003>");
 
-		// testing both readFromString (whether parsing is correct) and toString
-		// (whether it is returning the String in the correct format)
-		assertEquals("<SD1,100.001>,<SD2,200.002>,<SD3,300.003>", sd_1.toString());
+		final List<StringDouble> indices = sdList.getIndices();
+		assertEquals(3, indices.size());
+		assertEqualsSI(new StringDouble("SD1", 100.001), indices.get(0));
+		assertEqualsSI(new StringDouble("SD2", 200.002), indices.get(1));
+		assertEqualsSI(new StringDouble("SD3", 300.003), indices.get(2));
+	}
+
+	@Test
+	public void testReadFromStringProper() throws IOException {
+		StringDoubleList sdList = new StringDoubleList();
+		sdList.readFromString("<SD1,100.001>,<SD2,200.002>,<SD3,300.003>");
+
+		final List<StringDouble> indices = sdList.getIndices();
+		assertEquals(3, indices.size());
+		assertEqualsSI(new StringDouble("SD1", 100.001), indices.get(0));
+		assertEqualsSI(new StringDouble("SD2", 200.002), indices.get(1));
+		assertEqualsSI(new StringDouble("SD3", 300.003), indices.get(2));
+	}
+
+	@Test
+	public void testToString() {
+		List<StringDouble> arrayList = new ArrayList<>();
+		arrayList.add(new StringDouble("SD1", 100.001));
+		arrayList.add(new StringDouble("SD2", 200.002));
+		arrayList.add(new StringDouble("SD3", 300.003));
+
+		StringDoubleList sdList = new StringDoubleList(arrayList);
+		assertEquals("<SD1,100.001>,<SD2,200.002>,<SD3,300.003>", sdList.toString());
 	}
 
 	@Test
 	// will need implementation after figuring out how to pass in readFields
 	// parameters correctly
 	public void testReadFields() {
+	}
+
+	private void assertEqualsSI(StringDouble expected, StringDouble actual) {
+		assertEquals(expected.getString(), actual.getString());
+		assertEquals(expected.getValue(), actual.getValue());
 	}
 
 }

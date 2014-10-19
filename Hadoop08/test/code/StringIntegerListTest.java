@@ -17,67 +17,60 @@ import util.StringIntegerList;
 
 public class StringIntegerListTest {
 
-	StringIntegerList sl_1;
-	StringIntegerList sl_2;
-	StringIntegerList sl_3;
-
-	List<StringInteger> list;
-	Map<String, Integer> map;
-
 	@Test
 	public void testEmptyConstructor() {
-		sl_1 = new StringIntegerList();
+		StringIntegerList list = new StringIntegerList();
 
 		// check to see if indices and indiceMap were created
-		assertNotNull(sl_1.getIndices());
-		assertNotNull(sl_1.getMap());
+		assertNotNull(list.getIndices());
+		assertNotNull(list.getMap());
 	}
 
 	@Test
 	public void testListConstructor() {
-		list = new ArrayList<>();
-		list.add(new StringInteger("SI1", 100));
-		list.add(new StringInteger("SI2", 200));
-		list.add(new StringInteger("SI3", 300));
+		List<StringInteger> arrayList = new ArrayList<>();
+		arrayList.add(new StringInteger("SI1", 100));
+		arrayList.add(new StringInteger("SI2", 200));
+		arrayList.add(new StringInteger("SI3", 300));
 
-		map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		map.put("SI1", 100);
 		map.put("SI2", 200);
 		map.put("SI3", 300);
 
-		sl_2 = new StringIntegerList(list);
+		StringIntegerList siList = new StringIntegerList(arrayList);
 
 		// check equality in list and indices
-		assertEquals(list, sl_2.getIndices());
+		assertEquals(arrayList, siList.getIndices());
 
 		// check equality in map and indiceMap
-		assertEquals(map, sl_2.getMap());
+		assertEquals(map, siList.getMap());
 	}
 
 	@Test
 	public void testMapConstructor() {
-		map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		map.put("SI1", 100);
 		map.put("SI2", 200);
 		map.put("SI3", 300);
 
-		sl_3 = new StringIntegerList(map);
+		StringIntegerList siList = new StringIntegerList(map);
 
 		// check equality in map and indiceMap
-		assertEquals(map, sl_3.getMap());
+		assertEquals(map, siList.getMap());
 
-		list = new ArrayList<>();
-		list.add(new StringInteger("SI1", 100));
-		list.add(new StringInteger("SI2", 200));
-		list.add(new StringInteger("SI3", 300));
+		List<StringInteger> arrayList = new ArrayList<>();
+		arrayList.add(new StringInteger("SI1", 100));
+		arrayList.add(new StringInteger("SI2", 200));
+		arrayList.add(new StringInteger("SI3", 300));
 
 		// traverse through all the StringInteger objects in indices and then
 		// at each StringInteger object traverse through list until the
 		// StringInteger object with the same String value is found, then check
 		// to see if the first loops StringInteger object has the same value as
 		// the second StringInteger object
-		for (StringInteger si : sl_3.getIndices()) {
-			for (StringInteger li : list) {
+		for (StringInteger si : siList.getIndices()) {
+			for (StringInteger li : arrayList) {
 				if (li.getString().equals(si.getString()))
 					assertTrue(si.getValue().equals(li.getValue()));
 			}
@@ -85,22 +78,52 @@ public class StringIntegerListTest {
 	}
 
 	@Test
-	public void testReadFromStringAndToString() throws IOException {
-		sl_1 = new StringIntegerList();
+	public void testReadFromStringWithNoise() throws IOException {
+		StringIntegerList siList = new StringIntegerList();
 
 		// added some noise inside the String to make sure that it is ignored
 		// when reading in from String
-		sl_1.readFromString("<SI1,100>qweqwe>><SI2,200>   <>#123das <SI3,300>");
+		siList.readFromString("<SI1,100>qweqwe>><SI2,200>   <>#123das <SI3,300>");
 
-		// testing both readFromString (whether parsing is correct) and toString
-		// (whether it is returning the String in the correct format)
-		assertEquals("<SI1,100>,<SI2,200>,<SI3,300>", sl_1.toString());
+		final List<StringInteger> indices = siList.getIndices();
+		assertEquals(3, indices.size());
+		assertEqualsSI(new StringInteger("SI1", 100), indices.get(0));
+		assertEqualsSI(new StringInteger("SI2", 200), indices.get(1));
+		assertEqualsSI(new StringInteger("SI3", 300), indices.get(2));
+	}
+
+	@Test
+	public void testReadFromStringProper() throws IOException {
+		StringIntegerList siList = new StringIntegerList();
+		siList.readFromString("<SI1,100>,<SI2,200>,<SI3,300>");
+
+		final List<StringInteger> indices = siList.getIndices();
+		assertEquals(3, indices.size());
+		assertEqualsSI(new StringInteger("SI1", 100), indices.get(0));
+		assertEqualsSI(new StringInteger("SI2", 200), indices.get(1));
+		assertEqualsSI(new StringInteger("SI3", 300), indices.get(2));
+	}
+
+	@Test
+	public void testToString() {
+		List<StringInteger> arrayList = new ArrayList<>();
+		arrayList.add(new StringInteger("SI1", 100));
+		arrayList.add(new StringInteger("SI2", 200));
+		arrayList.add(new StringInteger("SI3", 300));
+
+		StringIntegerList siList = new StringIntegerList(arrayList);
+		assertEquals("<SI1,100>,<SI2,200>,<SI3,300>", siList.toString());
 	}
 
 	@Test
 	// will need implementation after figuring out how to pass in readFields
 	// parameters correctly
 	public void testReadFields() {
+	}
+
+	private void assertEqualsSI(StringInteger expected, StringInteger actual) {
+		assertEquals(expected.getString(), actual.getString());
+		assertEquals(expected.getValue(), actual.getValue());
 	}
 
 }

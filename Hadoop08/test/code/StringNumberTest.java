@@ -13,37 +13,42 @@ import util.StringInteger;
  * 
  * @author Steven Hu, stevenhh@brandeis.edu
  */
-public class StringNumbersTest {
+public class StringNumberTest {
+
+	private static final double DOUBLE_COURTESY = 0.00001;
 
 	@Test
 	public void testStringInteger() throws IOException {
-		StringInteger si_1 = new StringInteger("StringIntegerTest1", 100);
+		final String string = "StringIntegerTest1";
+		final int value = 100;
+		StringInteger si = new StringInteger(string, value);
 
-		assertEquals("StringIntegerTest1", si_1.getString());
-
-		assertEquals((Integer) 100, si_1.getValue());
-
-		assertEquals("StringIntegerTest1,100", si_1.toString());
+		assertEquals(string, si.getString());
+		assertEquals(value, (int) si.getValue());
+		assertEquals(string + "," + value, si.toString());
 	}
 
 	@Test
-	public void testStringDouble() {
-		StringDouble sd_1 = new StringDouble("StringDoubleTest1", 100.001);
-		// 2nd StringDouble test is to test out double without a leading 0 and
-		// is < 1
-		StringDouble sd_2 = new StringDouble("StringDoubleTest2", .1111);
+	public void testStringDouble1() {
+		testStringDouble("StringDoubleTest1", 100.001);
+	}
 
-		assertEquals("StringDoubleTest1", sd_1.getString());
+	/**
+	 * test out double without a leading 0 and is < 1
+	 */
+	@Test
+	public void testStringDouble2() {
+		testStringDouble("StringDoubleTest2", .1111);
+	}
 
-		assertEquals((Double) 100.001, sd_1.getValue());
+	private void testStringDouble(String string, double value) {
+		StringDouble sd = new StringDouble(string, value);
 
-		assertEquals("StringDoubleTest1,100.001", sd_1.toString());
+		assertEquals(string, sd.getString());
 
-		assertEquals("StringDoubleTest2", sd_2.getString());
+		assertEquals(value, sd.getValue(), DOUBLE_COURTESY);
 
-		assertEquals((Double) .1111, sd_2.getValue());
-
-		assertEquals("StringDoubleTest2,0.1111", sd_2.toString());
+		assertEquals(string + "," + value, sd.toString());
 	}
 
 	@Test
