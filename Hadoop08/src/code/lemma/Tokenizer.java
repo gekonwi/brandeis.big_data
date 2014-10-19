@@ -2,11 +2,14 @@ package code.lemma;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.hadoop.fs.Path;
 
 import util.HDFSUtils;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
@@ -27,7 +30,7 @@ public class Tokenizer {
 	private final Set<String> stopWords;
 
 	private static final Pattern NOISE_PATTERN = buildNoisePattern();
-	private static final String STOPWORDS_FILEPATH = "stopwords.csv";
+	private static final Path STOPWORDS_FILEPATH = new Path("stopwords.csv");
 
 	public Tokenizer() throws IOException {
 		// set up the Stanford Core NLP Tool
@@ -36,7 +39,7 @@ public class Tokenizer {
 		pipeLine = new StanfordCoreNLP(props);
 
 		// loading stop-words from HDFS file
-		stopWords = HDFSUtils.readLines(STOPWORDS_FILEPATH);
+		stopWords = new HashSet<>(HDFSUtils.readLines(STOPWORDS_FILEPATH));
 	}
 
 	/**

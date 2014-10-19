@@ -2,6 +2,7 @@ package code.articles;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -36,14 +37,14 @@ public class GetArticlesMapred {
 
 		Log LOG = LogFactory.getLog(GetArticlesMapper.class);
 
-		private static final String PEOPLE_FILEPATH = "people.txt";
+		private static final Path PEOPLE_FILEPATH = new Path("people.txt");
 
 		@Override
 		protected void setup(Mapper<LongWritable, WikipediaPage, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
 			// read from people file in HDFS, add each line to people set
-			wantedTitles = HDFSUtils.readLines(PEOPLE_FILEPATH);
+			wantedTitles = new HashSet<>(HDFSUtils.readLines(PEOPLE_FILEPATH));
 		}
 
 		@Override
