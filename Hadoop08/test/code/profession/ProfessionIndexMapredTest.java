@@ -15,24 +15,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 import code.profession.ProfessionIndexMapred.ProfessionIndexMapper;
-import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
+//import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
 import util.StringIntegerList;
 import util.StringIntegerList.StringInteger;
-import util.StringDoubleList;
-import util.StringDoubleList.StringDouble;
+//import util.StringDoubleList;
+//import util.StringDoubleList.StringDouble;
 
 /**
  * 
  * @author Calvin Wang, minwang@brandeis.edu
  */
 public class ProfessionIndexMapredTest {
-	MapDriver<Text, StringIntegerList, Text, StringInteger> mapDriver;
-	ReduceDriver<Text, StringInteger, Text, StringDoubleList> reduceDriver;
-	MapReduceDriver<Text, StringIntegerList, Text, StringInteger, 
-						Text, StringDoubleList> mapReduceDriver;
+	MapDriver<Text, Text, Text, StringInteger> mapDriver;
+	//ReduceDriver<Text, StringInteger, Text, StringDoubleList> reduceDriver;
+	//MapReduceDriver<Text, Text, Text, StringInteger, 
+	//					Text, StringDoubleList> mapReduceDriver;
 	
 	private ProfessionIndexMapper mapper = new ProfessionIndexMapper();
-	private ProfessionIndexReducer reducer = new ProfessionIndexReducer();
+	//private ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 
 	
 	@Before
@@ -42,19 +42,19 @@ public class ProfessionIndexMapredTest {
 		
 		// Initialize Mapper, create a mapDriver for mapper
 		ProfessionIndexMapper mapper = new ProfessionIndexMapper();
-		mapDriver = new MapDriver<Text, StringIntegerList, Text, StringInteger>();
+		mapDriver = new MapDriver<Text, Text, Text, StringInteger>();
 		mapDriver.setMapper(mapper);
-
+/*
 		// Initialize Reducer, create a mapDriver for reducer
 		ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 		reduceDriver = new ReduceDriver<Text, StringInteger, Text, StringDoubleList>();
 		reduceDriver.setReducer(reducer);
 
 		// Create a mapReduceDriver for mapred, for testing both together
-		mapReduceDriver = new MapReduceDriver<Text, StringIntegerList, Text, StringInteger, 
+		mapReduceDriver = new MapReduceDriver<Text, Text, Text, StringInteger, 
 														Text, StringIntegerList>();
 		mapReduceDriver.setMapper(mapper);
-		mapReduceDriver.setReducer(reducer);
+		mapReduceDriver.setReducer(reducer);*/
 	}
 
 	@Test
@@ -73,11 +73,11 @@ public class ProfessionIndexMapredTest {
 		*/
 		
 		// create StringIntegerList from example text (github issue #22)
-		StringIntegerList siList = new StringIntegerList();
-		siList.readFromString("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>");
+		//StringIntegerList siList = new StringIntegerList();
+		//siList.readFromString("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>");
 
 		// feed input into the mapper
-		mapDriver.withInput(new Text("2 Pistols"), siList);
+		mapDriver.withInput(new Text("2 Pistols"), new Text("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>"));
 		
 		// compare to expected outputs
 		mapDriver.withOutput(new Text("singer"), new StringInteger("boyz", 1));

@@ -35,5 +35,9 @@
 	<classpathentry kind="lib" path="libs/MRUnit/powermock-module-junit4-1.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/MRUnit/powermock-module-junit4-common-1.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/MRUnit/powermock-reflect-1.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/MRUnit/commons-configuration-1.6.jar"/>
+	<classpathentry kind="lib" path="libs/MRUnit/hadoop-auth-2.5.0.jar"/>
+	<classpathentry kind="lib" path="libs/MRUnit/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="libs/MRUnit/slf4j-log4j12-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

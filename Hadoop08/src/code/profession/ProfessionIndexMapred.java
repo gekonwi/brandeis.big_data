@@ -40,8 +40,8 @@ public class ProfessionIndexMapred {
 			peopleProfessions = new HashMap<String, List<String>>();
 			for (String s: peopleLines) {
 				// Assuming that there is no whitespace in each line (name:prof1,prof2,prof3)
-				String name = s.substring(0,s.indexOf(";"));
-				String prof = s.substring(s.indexOf(";") + 1);
+				String name = s.substring(0,s.indexOf(":"));
+				String prof = s.substring(s.indexOf(":") + 1);
 				// Chose to implement a list because of http://stackoverflow.com/questions/7488643/java-how-to-convert-comma-separated-string-to-arraylist
 				List<String> items = Arrays.asList(prof.split("\\s*,\\s*"));
 				peopleProfessions.put(name, items);
@@ -81,7 +81,7 @@ public class ProfessionIndexMapred {
 			}
 		}
 	}
-	
+	/*
 	public static class InvertedIndexReducer extends Reducer<Text, StringInteger, Text, StringIntegerList> {
 		
 		@Override
@@ -115,13 +115,13 @@ public class ProfessionIndexMapred {
 			 * object contents. Thus, without duplicating, we would add the same
 			 * object multiple times to the list, in the end containing the data
 			 * from the last iteration.
-			 */
+			 
 			for (StringInteger si : articlesAndFreqs)
 				siList.add(new StringInteger(si.getString(), si.getValue()));
 
 			context.write(lemma, new StringIntegerList(siList));
 		}
-	}
+	}*/
 		public static void main(String[] args) throws Exception {
 			
 			Job job = Job.getInstance(new Configuration());
@@ -129,7 +129,7 @@ public class ProfessionIndexMapred {
 			job.setOutputValueClass(StringInteger.class);
 
 			job.setMapperClass(ProfessionIndexMapper.class);
-			job.setReducerClass(ProfessionIndexReducer.class);
+			//job.setReducerClass(ProfessionIndexReducer.class);
 
 			job.setInputFormatClass(KeyValueTextInputFormat.class);
 
@@ -145,4 +145,4 @@ public class ProfessionIndexMapred {
 			job.waitForCompletion(true);
 		}
 	}
-}
+
