@@ -97,8 +97,42 @@ public class ProfessionIndexMapredTest {
 		// because of lack of equals/hashCode method
 		List<Pair<Text, StringInteger>> input = mapDriver.run();
 		List<Pair<Text, StringInteger>> output = mapDriver.getExpectedOutputs();
+
+		assertEquals("the input and expected output should match:\r\n" + input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
+						0, input.toString().compareTo(output.toString()));
+	}
+
+	@Test
+	public void testReducer() throws IOException {
 		
-		assertEquals("the input and expected output should match",
+		List<StringInteger> list1 = new ArrayList<StringInteger>();
+		list1.add(new StringInteger("boyz,", 1));
+		list1.add(new StringInteger("debutlp", 1));
+		list1.add(new StringInteger("parent", 1));
+		list1.add(new StringInteger("year", 13));
+		list1.add(new StringInteger("parent", 2));
+		list1.add(new StringInteger("year", 20));
+		
+		// feed input into the mapper
+		reduceDriver.withInput(new Text("singer"), list1);
+		
+		// compare to expected outputs
+		
+		List<StringDouble> list2 = new ArrayList<>();
+		// the tiny profession_train has only 1 singer
+		list2.add(new StringDouble("boyz", 1.0 / 1.0));
+		list2.add(new StringDouble("debutlp", 1.0 / 1.0));
+		list2.add(new StringDouble("parent", 2.0 / 1.0));
+		list2.add(new StringDouble("year", 2.0 / 1.0));
+
+		reduceDriver.withOutput(new Text("singer"), new StringDoubleList(list2));
+				
+		// must get object representations instead of mapDriver.runTests()
+		// because of lack of equals/hashCode method
+		List<Pair<Text, StringDoubleList>> input = reduceDriver.run();
+		List<Pair<Text, StringDoubleList>> output = reduceDriver.getExpectedOutputs();
+
+		assertEquals("the input and expected output should match:\r\n" + input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
 						0, input.toString().compareTo(output.toString()));
 	}
 	
