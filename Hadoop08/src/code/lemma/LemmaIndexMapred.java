@@ -45,10 +45,13 @@ public class LemmaIndexMapred {
 
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
-		private final Tokenizer tokenizer;
+		private Tokenizer tokenizer;
 
-		public LemmaIndexMapper() throws IOException {
-			HashSet<String> stopWords = new HashSet<>(HDFSUtils.readLines(STOPWORDS_FILEPATH));
+		@Override
+		protected void setup(Context context) throws IOException, InterruptedException {
+			List<String> lines = HDFSUtils
+					.readLines(STOPWORDS_FILEPATH, context.getConfiguration());
+			HashSet<String> stopWords = new HashSet<>(lines);
 			tokenizer = new Tokenizer(stopWords);
 		}
 
@@ -123,6 +126,8 @@ public class LemmaIndexMapred {
 		}
 	}
 
+	private static final String KEY_VALUE_SEPARATOR = " : ";
+
 	public static void main(String[] args) throws IOException, InterruptedException,
 			ClassNotFoundException {
 
@@ -142,8 +147,13 @@ public class LemmaIndexMapred {
 
 		job.setJarByClass(LemmaIndexMapred.class);
 
+		final Configuration conf = job.getConfiguration();
+
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		// assignment requires " : " instead of the default "\t" as separator
+		conf.set("mapred.textoutputformat.separator", KEY_VALUE_SEPARATOR);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
