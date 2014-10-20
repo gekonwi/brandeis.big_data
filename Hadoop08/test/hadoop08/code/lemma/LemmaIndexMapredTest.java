@@ -1,7 +1,7 @@
 package hadoop08.code.lemma;
 
 import static org.junit.Assert.assertEquals;
-import hadoop08.code.TestUtils;
+import hadoop08.TestUtils;
 import hadoop08.code.lemma.LemmaIndexMapred;
 
 import java.io.IOException;

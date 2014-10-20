@@ -2,7 +2,7 @@ package hadoop08.code.lemma;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import hadoop08.code.TestUtils;
+import hadoop08.TestUtils;
 import hadoop08.code.lemma.Tokenizer;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package hadoop08.code;
+package hadoop08;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

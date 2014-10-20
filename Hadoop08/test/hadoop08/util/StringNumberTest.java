@@ -1,4 +1,4 @@
-package hadoop08.code;
+package hadoop08.util;
 
 import static org.junit.Assert.assertEquals;
 import hadoop08.utils.StringDouble;

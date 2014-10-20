@@ -2,7 +2,7 @@ package hadoop08.code.profession;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import hadoop08.code.TestUtils;
+import hadoop08.TestUtils;
 import hadoop08.code.profession.ProfessionUtils;
 
 import java.io.IOException;
