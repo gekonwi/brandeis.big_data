@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -22,7 +21,7 @@ public class LemmaIndexMapredTest {
 
 	@Test
 	public void testGetArticle() throws IOException, XMLStreamException {
-		Path testDir = Paths.get("test_data", "LemmaIndexMapredTest");
+		Path testDir = new TestUtils(getClass()).getInputDir();
 		for (String fileName : testDir.toFile().list())
 			if (!fileName.endsWith(" - text"))
 				testArticleContent(fileName);
