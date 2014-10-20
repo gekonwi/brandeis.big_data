@@ -35,7 +35,7 @@ public class ProfessionIndexMapred {
 
 			// read from people_train file in HDFS, add each line to
 			// peopleProfessions map.
-			wantedPeople = HDFSUtils.readLines(PROFESSION_FILEPATH);
+			wantedPeople = HDFSUtils.readLines(PROFESSION_FILEPATH, context.getConfiguration());
 			// create a HashMap that separates each line into a person and its
 			// professions.
 			peopleProfessions = new HashMap<String, List<String>>();
@@ -95,8 +95,8 @@ public class ProfessionIndexMapred {
 		@Override
 		protected void setup(Reducer<Text, StringInteger, Text, StringDoubleList>.Context context)
 				throws IOException, InterruptedException {
-			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils
-					.readLines(PROFESSION_FILEPATH));
+			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils.readLines(
+					PROFESSION_FILEPATH, context.getConfiguration()));
 		}
 
 		@Override
