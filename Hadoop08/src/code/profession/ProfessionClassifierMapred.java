@@ -146,8 +146,14 @@ public class ProfessionClassifierMapred {
 			for (StringInteger lemmaFreq : lemmaCountsList.getIndices()) {
 				if (!lemmaProbsMap.containsKey(lemmaFreq.getString()))
 					continue;
-
-				double lemmaProb = lemmaProbsMap.get(lemmaFreq.getString());
+				/*
+				 * we add 1 to each probability because log(x) is negative for x
+				 * < 1 and log(1.0) = 0. If a lemma x appears in all articles of
+				 * people with profession p, meaning P(lemma = x | profession =
+				 * p) == 1.0, we don't want to ignore this important lemma in
+				 * our sum by having log(P(lemma = x | profession = p)) == 0.
+				 */
+				double lemmaProb = lemmaProbsMap.get(lemmaFreq.getString()) + 1;
 				profProb += lemmaFreq.getValue() * Math.log(lemmaProb);
 			}
 
