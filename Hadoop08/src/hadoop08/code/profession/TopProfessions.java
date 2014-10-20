@@ -1,6 +1,6 @@
 package hadoop08.code.profession;
 
-import hadoop08.util.StringDouble;
+import hadoop08.utils.StringDouble;
 
 import java.util.LinkedList;
 

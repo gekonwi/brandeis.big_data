@@ -3,9 +3,6 @@ package hadoop08.code.inverted;
 import hadoop08.utils.StringInteger;
 import hadoop08.utils.StringIntegerList;
 
-import hadoop08.util.StringInteger;
-import hadoop08.util.StringIntegerList;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

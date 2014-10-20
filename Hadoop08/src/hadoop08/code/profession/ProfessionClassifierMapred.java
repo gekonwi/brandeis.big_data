@@ -1,9 +1,9 @@
 package hadoop08.code.profession;
 
-import hadoop08.util.HDFSUtils;
-import hadoop08.util.StringDoubleList;
-import hadoop08.util.StringInteger;
-import hadoop08.util.StringIntegerList;
+import hadoop08.utils.HDFSUtils;
+import hadoop08.utils.StringDoubleList;
+import hadoop08.utils.StringInteger;
+import hadoop08.utils.StringIntegerList;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

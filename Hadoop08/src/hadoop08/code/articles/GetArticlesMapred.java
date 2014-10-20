@@ -3,9 +3,6 @@ package hadoop08.code.articles;
 import hadoop08.utils.HDFSUtils;
 import hadoop08.utils.WikipediaPageInputFormat;
 
-import hadoop08.util.HDFSUtils;
-import hadoop08.util.WikipediaPageInputFormat;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
