@@ -15,11 +15,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import code.profession.ProfessionIndexMapred.ProfessionIndexMapper;
-//import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
-import util.StringIntegerList;
-import util.StringIntegerList.StringInteger;
-//import util.StringDoubleList;
-//import util.StringDoubleList.StringDouble;
+import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
+import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
+import utils.StringIntegerList;
+import utils.StringInteger;
+import utils.StringDoubleList;
+import utils.StringDouble;
 
 /**
  * 
@@ -27,11 +28,11 @@ import util.StringIntegerList.StringInteger;
  */
 public class ProfessionIndexMapredTest {
 	MapDriver<Text, Text, Text, StringInteger> mapDriver;
-	//ReduceDriver<Text, StringInteger, Text, StringDoubleList> reduceDriver;
-	//MapReduceDriver<Text, Text, Text, StringInteger, 
-	//					Text, StringDoubleList> mapReduceDriver;
+	ReduceDriver<Text, StringInteger, Text, StringDoubleList> reduceDriver;
+	MapReduceDriver<Text, Text, Text, StringInteger, 
+						Text, StringDoubleList> mapReduceDriver;
 	
-	private ProfessionIndexMapper mapper = new ProfessionIndexMapper();
+	//private ProfessionIndexMapper mapper = new ProfessionIndexMapper();
 	//private ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 
 	
@@ -44,7 +45,7 @@ public class ProfessionIndexMapredTest {
 		ProfessionIndexMapper mapper = new ProfessionIndexMapper();
 		mapDriver = new MapDriver<Text, Text, Text, StringInteger>();
 		mapDriver.setMapper(mapper);
-/*
+
 		// Initialize Reducer, create a mapDriver for reducer
 		ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 		reduceDriver = new ReduceDriver<Text, StringInteger, Text, StringDoubleList>();
@@ -52,14 +53,14 @@ public class ProfessionIndexMapredTest {
 
 		// Create a mapReduceDriver for mapred, for testing both together
 		mapReduceDriver = new MapReduceDriver<Text, Text, Text, StringInteger, 
-														Text, StringIntegerList>();
+														Text, StringDoubleList>();
 		mapReduceDriver.setMapper(mapper);
-		mapReduceDriver.setReducer(reducer);*/
+		mapReduceDriver.setReducer(reducer);
 	}
 
 	@Test
 	public void testMapper() throws IOException {
-		
+	
 		/*
 		 * This was my original implementation -- should be the same as below
 		// convert the example text to StringIntegerList first

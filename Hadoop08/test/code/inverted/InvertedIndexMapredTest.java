@@ -16,8 +16,8 @@ import static org.mockito.Mockito.*;
 
 import org.junit.*;
 
-import util.StringIntegerList;
-import util.StringIntegerList.StringInteger;
+import utils.StringIntegerList;
+import utils.StringInteger;
 import code.inverted.InvertedIndexMapred.InvertedIndexMapper;
 import code.inverted.InvertedIndexMapred.InvertedIndexReducer;
 

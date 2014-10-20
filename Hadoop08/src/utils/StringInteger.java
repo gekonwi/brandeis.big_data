@@ -10,6 +10,8 @@ import java.util.regex.Matcher;
  */
 public class StringInteger extends StringNumber<Integer> {
 
+	public StringInteger() {}
+	
 	public StringInteger(String string, int value) {
 		super(string, value);
 	}
