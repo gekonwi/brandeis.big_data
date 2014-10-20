@@ -1,0 +1,112 @@
+== Will Smith ==
+
+actor: 
+movie: 4 * log(0.8 + 1) = 1.0210900204132243 
+black: 10 * log(0.1 + 1) = 0.4139268515822508
+P(profession = actor | person = Will Smith) = 1.435016871995475
+
+doctor:
+P(profession = doctor | person = Will Smith) = 0
+
+soccer player: 
+P(profession = soccer player | person = Will Smith) = 0
+
+soccer coach: 
+P(profession = soccer coach | person = Will Smith) = 0
+
+scientist: 
+P(profession = scientist | person = Will Smith) = 0
+
+teacher: 
+P(profession = teacher | person = Will Smith) = 0
+
+
+== expected ==
+Will Smith : actor, doctor, soccer player
+(actor is most likely, doctor and soccer player were just added first)
+=========================================================
+
+== Bill Clinton ==
+
+actor: 
+P(profession = actor | person = Bill Clinton) = 0
+
+doctor:
+P(profession = doctor | person = Bill Clinton) = 0
+
+soccer player: 
+P(profession = soccer player | person = Bill Clinton) = 0
+
+soccer coach: 
+P(profession = soccer coach | person = Bill Clinton) = 0
+
+scientist: 
+P(profession = scientist | person = Bill Clinton) = 0
+
+teacher: 
+P(profession = teacher | person = Bill Clinton) = 0
+
+== expected ==
+Bill Clinton : actor, doctor, soccer player
+(all are equally unlikely, these are just the first three tested)
+=========================================================
+
+== Mario Gömez ==
+
+actor: 
+P(profession = actor | person = Mario Gömez) = 0
+
+doctor:
+hospital: 5 * log(0.4 + 1) = 0.73064017839119
+P(profession = doctor | person = Mario Gömez) = 0.73064017839119
+
+soccer player:
+soccer: 15 * log(1.0 + 1) = 4.515449934959718
+champion: 3 * log(0.1 + 1) = 0.12417805547467523
+goal: 20 * log(0.5 + 1) = 3.5218251811136247
+P(profession = soccer player | person = Mario Gömez) = 8.161453171548018
+
+soccer coach:
+soccer: 15 * log(1.0 + 1) = 4.515449934959718
+champion: 3 * log(0.1 + 1) = 0.12417805547467523
+P(profession = soccer coach | person = Mario Gömez) = 4.639627990434393
+
+scientist: 
+P(profession = scientist | person = Mario Gömez) = 0
+
+teacher:
+school: 1 * log(1.0 + 1) = 0.3010299956639812
+P(profession = teacher | person = Mario Gömez) = 0.3010299956639812
+
+== expected ==
+Mario Gömez : soccer player, soccer coach, doctor
+(the three most likely out of four with probability > 0)
+=========================================================
+
+== Albert Einstein ==
+
+actor: 
+P(profession = actor | person = Albert Einstein) = 0
+
+doctor:
+P(profession = doctor | person = Albert Einstein) = 0
+
+soccer player: 
+P(profession = soccer player | person = Albert Einstein) = 0
+
+soccer coach: 
+P(profession = soccer coach | person = Albert Einstein) = 0
+
+scientist: 
+physics: 20 * log(0.1 + 1) = 0.8278537031645016
+university: 5 * log(0.9 + 1) = 1.3937680047641445
+professor: 3 * log(0.2 + 1) = 0.23754373814287444
+P(profession = scientist | person = Albert Einstein) = 2.4591654460715207
+
+teacher:
+physics: 20 * log(0.1 + 1) = 0.8278537031645016
+P(profession = teacher | person = Albert Einstein) = 0.8278537031645016
+
+== expected ==
+Albert Einstein : scientist, teacher, actor
+(scientist, teacher are most likely, actor was added first)

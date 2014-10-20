@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/code/lemma/Tokenizer.java=UTF-8
 encoding//test/code/lemma/TokenizerTest.java=UTF-8
+encoding//test/code/profession/ProfessionClassifierMapredTest.java=UTF-8
 encoding//test_data/LemmaIndexMapredTest/Battle\ of\ Tsushima\ -\ text=UTF-8
 encoding//test_data/LemmaIndexMapredTest/Bishounen\ -\ text=UTF-8
+encoding//test_data/ProfessionClassifierMapredTest/math.txt=UTF-8
 encoding//test_data/TokenizerTest/Infobox=UTF-8

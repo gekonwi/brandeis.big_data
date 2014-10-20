@@ -1,0 +1,6 @@
+actor : <movie,0.8><black,0.1><jewish,0.1>
+doctor : <medicine,0.7><hospital,0.4><patient,0.1><study,0.1>
+soccer player : <soccer,1.0><goal,0.5><champion,0.1><school,0.1>
+soccer coach : <soccer,1.0><champion,0.1><train,0.6>
+scientist : <university,0.9><science,0.5><study,0.3><professor,0.2><physics,0.1>
+teacher : <school,1.0><math,0.1><physics,0.1><education,0.2>

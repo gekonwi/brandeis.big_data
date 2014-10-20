@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+import util.HDFSUtils;
 import util.StringIntegerList;
 import util.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
@@ -39,12 +41,18 @@ public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
+		private static final Path STOPWORDS_FILEPATH = new Path("stopwords.csv");
+
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
-		private final Tokenizer tokenizer;
+		private Tokenizer tokenizer;
 
-		public LemmaIndexMapper() throws IOException {
-			tokenizer = new Tokenizer();
+		@Override
+		protected void setup(Context context) throws IOException, InterruptedException {
+			List<String> lines = HDFSUtils
+					.readLines(STOPWORDS_FILEPATH, context.getConfiguration());
+			HashSet<String> stopWords = new HashSet<>(lines);
+			tokenizer = new Tokenizer(stopWords);
 		}
 
 		@Override
@@ -118,6 +126,8 @@ public class LemmaIndexMapred {
 		}
 	}
 
+	private static final String KEY_VALUE_SEPARATOR = " : ";
+
 	public static void main(String[] args) throws IOException, InterruptedException,
 			ClassNotFoundException {
 
@@ -137,8 +147,13 @@ public class LemmaIndexMapred {
 
 		job.setJarByClass(LemmaIndexMapred.class);
 
+		final Configuration conf = job.getConfiguration();
+
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		// assignment requires " : " instead of the default "\t" as separator
+		conf.set("mapred.textoutputformat.separator", KEY_VALUE_SEPARATOR);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
