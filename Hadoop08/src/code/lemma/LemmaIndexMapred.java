@@ -45,10 +45,13 @@ public class LemmaIndexMapred {
 
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
-		private final Tokenizer tokenizer;
+		private Tokenizer tokenizer;
 
-		public LemmaIndexMapper() throws IOException {
-			HashSet<String> stopWords = new HashSet<>(HDFSUtils.readLines(STOPWORDS_FILEPATH));
+		@Override
+		protected void setup(Context context) throws IOException, InterruptedException {
+			List<String> lines = HDFSUtils
+					.readLines(STOPWORDS_FILEPATH, context.getConfiguration());
+			HashSet<String> stopWords = new HashSet<>(lines);
 			tokenizer = new Tokenizer(stopWords);
 		}
 
@@ -146,7 +149,7 @@ public class LemmaIndexMapred {
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
 
 		// assignment requires " : " instead of the default "\t" as separator
-		job.getConfiguration().set("mapreduce.textoutputformat.separator", " : ");
+		job.getConfiguration().set("mapreduce.textoutputformat.separator", ":");
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);

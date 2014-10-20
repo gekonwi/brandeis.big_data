@@ -9,10 +9,10 @@ public class ProfessionClassifierMapredTest {
 	 * DIR/wanted_people.txt as the list of people we care about.
 	 * 
 	 * The expected output is:
-	 * Will Smith : actor, doctor, soccer player
+	 * Albert Einstein : scientist, teacher, actor
 	 * Bill Clinton : actor, doctor, soccer player
 	 * Mario Gömez : soccer player, soccer coach, doctor
-	 * Albert Einstein : scientist, teacher, actor
+	 * Will Smith : actor, doctor, soccer player
 	 * 
 	 * (see DIR/math.txt for details)
 	 * </pre>

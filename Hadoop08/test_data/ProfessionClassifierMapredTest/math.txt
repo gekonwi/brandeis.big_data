@@ -98,13 +98,14 @@ soccer coach:
 P(profession = soccer coach | person = Albert Einstein) = 0
 
 scientist: 
+physics: 20 * log(0.1 + 1) = 0.8278537031645016
 university: 5 * log(0.9 + 1) = 1.3937680047641445
-professor: 3 * log(0.2 + 1) = 0.5469646703818638
-P(profession = scientist | person = Albert Einstein) = 1.9407326751460083
+professor: 3 * log(0.2 + 1) = 0.23754373814287444
+P(profession = scientist | person = Albert Einstein) = 2.4591654460715207
 
 teacher:
-school: 3 * log(1.0 + 1) = 0.9030899869919435 
-P(profession = teacher | person = Albert Einstein) = 9030899869919435
+physics: 20 * log(0.1 + 1) = 0.8278537031645016
+P(profession = teacher | person = Albert Einstein) = 0.8278537031645016
 
 == expected ==
 Albert Einstein : scientist, teacher, actor

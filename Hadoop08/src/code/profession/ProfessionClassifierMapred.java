@@ -1,11 +1,10 @@
 package code.profession;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +17,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import util.HDFSUtils;
 import util.StringDoubleList;
 import util.StringInteger;
 import util.StringIntegerList;
@@ -29,12 +29,8 @@ import util.StringIntegerList;
  */
 public class ProfessionClassifierMapred {
 
-	public static Path PEOPLE_FILEPATH;
-	private static Path PROFESSION_INDEX_PATH;
-
 	public static class ProfessionClassifierMapper extends Mapper<Text, Text, Text, Text> {
 
-		private static final String KEY_VALUE_SEPARATOR = " : ";
 		private Set<String> wantedPeople;
 
 		@Override
@@ -43,21 +39,10 @@ public class ProfessionClassifierMapred {
 
 			/*
 			 * read people to be classified from local cache
-			 * 
-			 * Hadoop puts all cached files in the working directory of the
-			 * slave node, regardless of the original path of the cached file.
-			 * Therefore we just need the file's name.
 			 */
-
-			File f = new File(PEOPLE_FILEPATH.getName());
-			BufferedReader br = new BufferedReader(new FileReader(f));
-
-			wantedPeople = new HashSet<>();
-			String line;
-			while ((line = br.readLine()) != null)
-				wantedPeople.add(line);
-
-			br.close();
+			Path peoplePath = new Path(context.getCacheFiles()[0]);
+			List<String> lines = HDFSUtils.readLines(peoplePath, context.getConfiguration());
+			wantedPeople = new HashSet<>(lines);
 		}
 
 		/**
@@ -87,10 +72,19 @@ public class ProfessionClassifierMapred {
 		@Override
 		public void map(Text person, Text lemmaCounts, Context context) throws IOException,
 				InterruptedException {
+
+			/*
+			 * TODO this is not needed if we figure out how to separate by " : "
+			 * instead of ":" or change the read in files to separate keys from
+			 * values by ":" instead of " : "
+			 */
+			person = new Text(person.toString().trim());
+			lemmaCounts = new Text(lemmaCounts.toString().trim());
+
 			if (!wantedPeople.contains(person.toString()))
 				return;
 
-			TopProfessions topProf = getTopProfessions(lemmaCounts.toString());
+			TopProfessions topProf = getTopProfessions(lemmaCounts.toString(), context);
 
 			StringBuilder sb = new StringBuilder();
 			for (String prof : topProf.getProfessions())
@@ -102,8 +96,8 @@ public class ProfessionClassifierMapred {
 			context.write(person, new Text(sb.toString()));
 		}
 
-		private TopProfessions getTopProfessions(String lemmaCounts) throws FileNotFoundException,
-				IOException {
+		private TopProfessions getTopProfessions(String lemmaCounts, Context context)
+				throws FileNotFoundException, IOException {
 			TopProfessions topProf = new TopProfessions();
 
 			/*
@@ -114,12 +108,13 @@ public class ProfessionClassifierMapred {
 			 * Therefore we just need the file's name.
 			 */
 
-			File f = new File(PROFESSION_INDEX_PATH.getName());
-			BufferedReader br = new BufferedReader(new FileReader(f));
+			Path profPath = new Path(context.getCacheFiles()[1]);
+			BufferedReader br = HDFSUtils.getFileReader(profPath, context.getConfiguration());
 
 			String profIndexLine;
 			while ((profIndexLine = br.readLine()) != null) {
-				String[] parts = profIndexLine.split(KEY_VALUE_SEPARATOR);
+
+				String[] parts = profIndexLine.split(" : ");
 				String profession = parts[0];
 				String lemmaProbs = parts[1];
 
@@ -194,16 +189,15 @@ public class ProfessionClassifierMapred {
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		PEOPLE_FILEPATH = new Path(args[2]);
-		PROFESSION_INDEX_PATH = new Path(args[3]);
-
-		job.addCacheFile(PEOPLE_FILEPATH.toUri());
-		job.addCacheFile(PROFESSION_INDEX_PATH.toUri());
+		HDFSUtils.addCacheFile(job, args[2]);
+		HDFSUtils.addCacheFile(job, args[3]);
 
 		job.setJarByClass(ProfessionClassifierMapred.class);
 
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		final Configuration conf = job.getConfiguration();
+		conf.set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ":");
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
