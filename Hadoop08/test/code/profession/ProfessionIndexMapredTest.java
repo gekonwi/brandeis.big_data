@@ -75,7 +75,10 @@ public class ProfessionIndexMapredTest {
 		// create StringIntegerList from example text (github issue #22)
 		//StringIntegerList siList = new StringIntegerList();
 		//siList.readFromString("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>");
+			// removed above because current ProfessionIndexMapper does this conversion in mapper
 
+		
+		
 		// feed input into the mapper
 		mapDriver.withInput(new Text("2 Pistols"), new Text("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>"));
 		
@@ -88,7 +91,7 @@ public class ProfessionIndexMapredTest {
 		mapDriver.withOutput(new Text("musician"), new StringInteger("debutlp", 1));
 		mapDriver.withOutput(new Text("musician"), new StringInteger("parent", 1));
 		mapDriver.withOutput(new Text("musician"), new StringInteger("year", 13));
-		
+				
 		// must get object representations instead of mapDriver.runTests()
 		// because of lack of equals/hashCode method
 		List<Pair<Text, StringInteger>> input = mapDriver.run();
