@@ -12,8 +12,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import util.StringDouble;
-import util.StringDoubleList;
+import utils.StringDouble;
+import utils.StringDoubleList;
 
 public class StringDoubleListTest {
 

@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import java.io.DataInputStream;
 import java.io.IOException;

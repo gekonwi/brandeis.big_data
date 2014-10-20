@@ -14,8 +14,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import util.StringInteger;
-import util.StringIntegerList;
+import utils.StringInteger;
+import utils.StringIntegerList;
 
 /**
  * This class is used for Section C.2 of assignment 1. You are supposed to run

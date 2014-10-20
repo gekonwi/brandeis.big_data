@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import util.StringDouble;
-import util.StringInteger;
+import utils.StringDouble;
+import utils.StringInteger;
 
 /**
  * 

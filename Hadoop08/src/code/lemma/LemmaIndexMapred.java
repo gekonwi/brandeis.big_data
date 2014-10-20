@@ -25,9 +25,9 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import util.HDFSUtils;
-import util.StringIntegerList;
-import util.WikipediaPageInputFormat;
+import utils.HDFSUtils;
+import utils.StringIntegerList;
+import utils.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**

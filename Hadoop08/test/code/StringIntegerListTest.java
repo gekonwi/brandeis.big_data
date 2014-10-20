@@ -12,8 +12,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import util.StringInteger;
-import util.StringIntegerList;
+import utils.StringInteger;
+import utils.StringIntegerList;
 
 public class StringIntegerListTest {
 

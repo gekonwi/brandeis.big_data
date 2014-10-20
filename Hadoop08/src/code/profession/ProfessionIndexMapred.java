@@ -16,11 +16,11 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import util.StringDouble;
-import util.StringDoubleList;
-import util.StringIntegerList;
-import util.StringInteger;
-import util.HDFSUtils;
+import utils.StringDouble;
+import utils.StringDoubleList;
+import utils.StringIntegerList;
+import utils.StringInteger;
+import utils.HDFSUtils;
 
 public class ProfessionIndexMapred {
 
@@ -43,8 +43,8 @@ public class ProfessionIndexMapred {
 			for (String s : peopleLines) {
 				// Assuming that there is no whitespace in each line
 				// (name:prof1,prof2,prof3)
-				String name = s.substring(0, s.indexOf(":"));
-				String prof = s.substring(s.indexOf(":") + 1);
+				String name = s.substring(0, s.indexOf(" : "));
+				String prof = s.substring(s.indexOf(" : ") + 1);
 				// Chose to implement a list because of
 				// http://stackoverflow.com/questions/7488643/java-how-to-convert-comma-separated-string-to-arraylist
 				List<String> items = Arrays.asList(prof.split("\\s*,\\s*"));
@@ -141,7 +141,7 @@ public class ProfessionIndexMapred {
 
 		Job job = Job.getInstance(new Configuration());
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(StringDoubleList.class);
+		job.setOutputValueClass(StringDouble.class);
 
 		job.setMapperClass(ProfessionIndexMapper.class);
 		job.setReducerClass(ProfessionIndexReducer.class);
