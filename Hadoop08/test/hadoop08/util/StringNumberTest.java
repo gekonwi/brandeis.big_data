@@ -1,8 +1,8 @@
 package hadoop08.util;
 
 import static org.junit.Assert.assertEquals;
-import hadoop08.utils.StringDouble;
-import hadoop08.utils.StringInteger;
+import hadoop08.util.StringDouble;
+import hadoop08.util.StringInteger;
 
 import java.io.IOException;
 

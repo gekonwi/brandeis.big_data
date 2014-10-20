@@ -1,8 +1,8 @@
 package hadoop08.code.lemma;
 
-import hadoop08.utils.HDFSUtils;
-import hadoop08.utils.StringIntegerList;
-import hadoop08.utils.WikipediaPageInputFormat;
+import hadoop08.util.HDFSUtils;
+import hadoop08.util.StringIntegerList;
+import hadoop08.util.WikipediaPageInputFormat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

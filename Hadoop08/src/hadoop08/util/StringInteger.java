@@ -1,4 +1,4 @@
-package hadoop08.utils;
+package hadoop08.util;
 
 import java.io.DataInput;
 import java.io.IOException;

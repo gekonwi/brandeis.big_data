@@ -1,4 +1,4 @@
-package hadoop08.utils;
+package hadoop08.util;
 
 public class Test {
 

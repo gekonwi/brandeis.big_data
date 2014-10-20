@@ -3,8 +3,8 @@ package hadoop08.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import hadoop08.utils.StringInteger;
-import hadoop08.utils.StringIntegerList;
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
 
 import java.io.IOException;
 import java.util.ArrayList;

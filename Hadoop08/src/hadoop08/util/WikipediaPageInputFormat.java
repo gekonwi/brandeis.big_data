@@ -14,9 +14,9 @@
  * permissions and limitations under the License.
  */
 
-package hadoop08.utils;
+package hadoop08.util;
 
-import hadoop08.utils.XMLInputFormat.XMLRecordReader;
+import hadoop08.util.XMLInputFormat.XMLRecordReader;
 
 import java.io.IOException;
 

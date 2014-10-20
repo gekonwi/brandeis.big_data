@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-package hadoop08.utils;
+package hadoop08.util;
 
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
