@@ -1,9 +1,15 @@
 package code.profession;
 
 import static org.junit.Assert.assertEquals;
+import hadoop08.util.StringDouble;
+import hadoop08.util.StringDoubleList;
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.hadoop.io.Text;
@@ -17,10 +23,6 @@ import org.junit.Test;
 import code.profession.ProfessionIndexMapred.ProfessionIndexMapper;
 import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
 import code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
-import utils.StringIntegerList;
-import utils.StringInteger;
-import utils.StringDoubleList;
-import utils.StringDouble;
 
 /**
  * 
@@ -81,7 +83,8 @@ public class ProfessionIndexMapredTest {
 		
 		
 		// feed input into the mapper
-		mapDriver.withInput(new Text("2 Pistols"), new Text("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>"));
+		mapDriver.withInput(new Text("2 Pistols"),
+							new Text("<boyz,1>,<debutlp,1>,<parent,1>,<year,13>"));
 		
 		// compare to expected outputs
 		mapDriver.withOutput(new Text("singer"), new StringInteger("boyz", 1));
@@ -98,7 +101,8 @@ public class ProfessionIndexMapredTest {
 		List<Pair<Text, StringInteger>> input = mapDriver.run();
 		List<Pair<Text, StringInteger>> output = mapDriver.getExpectedOutputs();
 
-		assertEquals("the input and expected output should match:\r\n" + input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
+		assertEquals("the input and expected output should match:\r\n" +
+						input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
 						0, input.toString().compareTo(output.toString()));
 	}
 
@@ -132,8 +136,26 @@ public class ProfessionIndexMapredTest {
 		List<Pair<Text, StringDoubleList>> input = reduceDriver.run();
 		List<Pair<Text, StringDoubleList>> output = reduceDriver.getExpectedOutputs();
 
-		assertEquals("the input and expected output should match:\r\n" + input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
+		assertEquals("the input and expected output should match:\r\n" + 
+						input.toString() + " \r\nto\r\n " + output.toString() + "\r\n",
 						0, input.toString().compareTo(output.toString()));
+		//TODO: test " : " separator instead of "\t" separator
+	}
+	
+	@Test
+	public void testProfessionUtils() {
+		String test = "2 Pistols : singer, musician";
+		List<String> testList = new ArrayList<String>();
+		testList.add(test);
+		
+		HashMap<String, Integer> result = ProfessionUtils.getProfessionCounts(testList);
+		HashMap<String, Integer> expected = new HashMap<String, Integer>();
+		expected.put("singer", 1);
+		expected.put("musician", 1);
+		
+		assertEquals("result of getProfessionCounts should be same as expected:\r\n" +
+						result.toString() + "\r\n\tshould == \r\n" + expected.toString() + "\r\n",
+						expected.toString(), result.toString());
 	}
 	
 	

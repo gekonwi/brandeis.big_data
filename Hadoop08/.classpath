@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="libs/apache-commons-logging-1.2/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="libs/cloud9/cloud9-1.1.1.jar" sourcepath="/Users/georg/.m2/repository/edu/umd/cloud9/1.1.1/cloud9-1.1.1-sources.jar">
+	<classpathentry kind="src" path="src" />
+	<classpathentry kind="src" path="test" />
+	<classpathentry kind="con"
+		path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7" />
+	<classpathentry kind="lib"
+		path="libs/apache-commons-logging-1.2/commons-logging-1.2.jar" />
+	<classpathentry kind="lib" path="libs/cloud9/cloud9-1.1.1.jar"
+		sourcepath="/Users/georg/.m2/repository/edu/umd/cloud9/1.1.1/cloud9-1.1.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://lintool.github.io/Cloud9/docs/api"/>
+			<attribute name="javadoc_location" value="http://lintool.github.io/Cloud9/docs/api" />
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar">
+	<classpathentry kind="lib"
+		path="libs/hadoop/hadoop-mapreduce-client-core-2.5.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api"/>
+			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api" />
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/hadoop/hadoop-common-2.5.1.jar">
+	<classpathentry kind="lib"
+		path="libs/hadoop/hadoop-common-2.5.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api"/>
+			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api" />
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="libs/mockito-1.9.5/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/avro-1.7.4.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/guava-11.0.2.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/mrunit-1.1.0-hadoop2.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/mrunit-1.1.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-api-mockito-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-api-support-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-core-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-module-junit4-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-module-junit4-common-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/powermock-reflect-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/commons-configuration-1.6.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/hadoop-auth-2.5.0.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/slf4j-api-1.7.5.jar"/>
-	<classpathentry kind="lib" path="libs/MRUnit/slf4j-log4j12-1.7.5.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib"
+		path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar" />
+	<classpathentry kind="con"
+		path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" />
+	<classpathentry kind="lib"
+		path="libs/mockito-1.9.5/mockito-all-1.9.5.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/avro-1.7.4.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/commons-collections-3.2.1.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/commons-lang-2.6.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/guava-11.0.2.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/log4j-1.2.17.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/mrunit-1.1.0-hadoop2.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/mrunit-1.1.0-javadoc.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-api-mockito-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-api-support-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-core-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-module-junit4-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-module-junit4-common-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/powermock-reflect-1.5.1.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/commons-configuration-1.6.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/hadoop-auth-2.5.0.jar" />
+	<classpathentry kind="lib" path="libs/MRUnit/slf4j-api-1.7.5.jar" />
+	<classpathentry kind="lib"
+		path="libs/MRUnit/slf4j-log4j12-1.7.5.jar" />
+	<classpathentry kind="output" path="bin" />
 </classpath>

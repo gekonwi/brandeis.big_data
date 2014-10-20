@@ -1,5 +1,9 @@
 package code.lemma;
 
+import hadoop08.util.HDFSUtils;
+import hadoop08.util.StringIntegerList;
+import hadoop08.util.WikipediaPageInputFormat;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,9 +29,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import utils.HDFSUtils;
-import utils.StringIntegerList;
-import utils.WikipediaPageInputFormat;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**

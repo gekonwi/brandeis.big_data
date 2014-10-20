@@ -1,5 +1,8 @@
 package code.inverted;
 
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +16,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-import utils.StringInteger;
-import utils.StringIntegerList;
 
 /**
  * This class is used for Section C.2 of assignment 1. You are supposed to run

@@ -1,5 +1,10 @@
 package code.profession;
 
+import hadoop08.util.HDFSUtils;
+import hadoop08.util.StringDoubleList;
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,11 +21,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
-import util.HDFSUtils;
-import util.StringDoubleList;
-import util.StringInteger;
-import util.StringIntegerList;
 
 /**
  * This class is used for 3.3 Section B of assignment 2.

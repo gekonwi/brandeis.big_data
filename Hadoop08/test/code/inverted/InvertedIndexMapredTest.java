@@ -1,6 +1,8 @@
 package code.inverted;
 
 import static org.junit.Assert.*;
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,8 +18,6 @@ import static org.mockito.Mockito.*;
 
 import org.junit.*;
 
-import utils.StringIntegerList;
-import utils.StringInteger;
 import code.inverted.InvertedIndexMapred.InvertedIndexMapper;
 import code.inverted.InvertedIndexMapred.InvertedIndexReducer;
 

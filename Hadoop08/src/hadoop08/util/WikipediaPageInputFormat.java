@@ -14,7 +14,9 @@
  * permissions and limitations under the License.
  */
 
-package utils;
+package hadoop08.util;
+
+import hadoop08.util.XMLInputFormat.XMLRecordReader;
 
 import java.io.IOException;
 
@@ -25,7 +27,6 @@ import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
-import utils.XMLInputFormat.XMLRecordReader;
 import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
 
 /**

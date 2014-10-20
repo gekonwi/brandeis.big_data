@@ -1,5 +1,11 @@
 package code.profession;
 
+import hadoop08.util.HDFSUtils;
+import hadoop08.util.StringDouble;
+import hadoop08.util.StringDoubleList;
+import hadoop08.util.StringInteger;
+import hadoop08.util.StringIntegerList;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,12 +22,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import utils.StringDouble;
-import utils.StringDoubleList;
-import utils.StringIntegerList;
-import utils.StringInteger;
-import utils.HDFSUtils;
-
 public class ProfessionIndexMapred {
 
 	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
@@ -36,7 +36,7 @@ public class ProfessionIndexMapred {
 
 			// read from people_train file in HDFS, add each line to
 			// peopleProfessions map.
-			peopleLines = HDFSUtils.readLines(PROFESSION_FILEPATH);
+			peopleLines = HDFSUtils.readLines(PROFESSION_FILEPATH, context.getConfiguration());
 			// create a HashMap that separates each line into a person and its
 			// professions.
 			peopleProfessions = new HashMap<String, List<String>>();
@@ -94,7 +94,7 @@ public class ProfessionIndexMapred {
 		@Override
 		protected void setup(Reducer<Text, StringInteger, Text, StringDoubleList>.Context context)
 				throws IOException, InterruptedException {
-			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils.readLines(PROFESSION_FILEPATH));
+			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils.readLines(PROFESSION_FILEPATH, context.getConfiguration()));
 		}
 		
 		@Override

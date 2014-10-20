@@ -1,4 +1,4 @@
-package utils;
+package hadoop08.util;
 
 import java.io.DataInput;
 import java.io.DataOutput;

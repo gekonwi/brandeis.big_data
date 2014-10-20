@@ -1,8 +1,8 @@
 package code.profession;
 
-import java.util.LinkedList;
+import hadoop08.util.StringDouble;
 
-import util.StringDouble;
+import java.util.LinkedList;
 
 /**
  * Used to hold the three most likely professions. New professions can be added

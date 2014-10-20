@@ -1,13 +1,12 @@
 package code;
 
 import static org.junit.Assert.assertEquals;
+import hadoop08.util.StringDouble;
+import hadoop08.util.StringInteger;
 
 import java.io.IOException;
 
 import org.junit.Test;
-
-import utils.StringDouble;
-import utils.StringInteger;
 
 /**
  * 
