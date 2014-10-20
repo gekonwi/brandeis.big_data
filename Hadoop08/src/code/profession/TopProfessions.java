@@ -18,6 +18,7 @@ import util.StringDouble;
  */
 public class TopProfessions {
 	private final LinkedList<StringDouble> professions = new LinkedList<>();
+	private static final int MAX_PROFESSIONS_COUNT = 3;
 
 	/**
 	 * Check if the given profession is more likely than one of the previously
@@ -33,19 +34,22 @@ public class TopProfessions {
 	public void check(String profession, double probability) {
 		final StringDouble sd = new StringDouble(profession, probability);
 
-		if (professions.isEmpty()) {
-			professions.add(sd);
-			return;
-		}
+		boolean added = false;
 
 		for (int i = 0; i < professions.size(); i++) {
 			if (probability > professions.get(i).getValue()) {
 				professions.add(i, sd);
+				added = true;
 				break;
 			}
 		}
 
-		if (professions.size() > 3)
+		if (!added && professions.size() < MAX_PROFESSIONS_COUNT) {
+			professions.add(sd);
+			return;
+		}
+
+		if (professions.size() > MAX_PROFESSIONS_COUNT)
 			professions.removeLast();
 	}
 
@@ -63,16 +67,5 @@ public class TopProfessions {
 			result[i] = professions.get(i).getString();
 
 		return result;
-	}
-
-	/**
-	 * Calls {@link #check(String, double)} with
-	 * <code>profession = profProb.getString()</code> and
-	 * <code>probability = profProb.getDouble()</code>.
-	 * 
-	 * @param profProb
-	 */
-	public void check(StringDouble profProb) {
-		check(profProb.getString(), profProb.getValue());
 	}
 }
