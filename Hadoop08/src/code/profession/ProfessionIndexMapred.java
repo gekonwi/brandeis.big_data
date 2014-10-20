@@ -43,8 +43,8 @@ public class ProfessionIndexMapred {
 			for (String s : peopleLines) {
 				// Assuming that there is no whitespace in each line
 				// (name:prof1,prof2,prof3)
-				String name = s.substring(0, s.indexOf(":"));
-				String prof = s.substring(s.indexOf(":") + 1);
+				String name = s.substring(0, s.indexOf(":")).trim();;
+				String prof = s.substring(s.indexOf(":") + 1).trim();;
 				// Chose to implement a list because of
 				// http://stackoverflow.com/questions/7488643/java-how-to-convert-comma-separated-string-to-arraylist
 				List<String> items = Arrays.asList(prof.split("\\s*,\\s*"));
