@@ -13,7 +13,7 @@ import java.util.List;
  * 
  */
 public class TestUtils {
-	private final Path testInputFilesDir;
+	private final Path testInputDir;
 	public static final String TEST_DATA_DIR_NAME = "test_data";
 
 	/**
@@ -31,11 +31,15 @@ public class TestUtils {
 	 *            test input files
 	 */
 	public TestUtils(Class<?> testingClass) {
-		this.testInputFilesDir = Paths.get(TEST_DATA_DIR_NAME, testingClass.getSimpleName());
+		this.testInputDir = Paths.get(TEST_DATA_DIR_NAME, testingClass.getSimpleName());
 	}
 
 	public Path getInputFilePath(String fileName) {
-		return testInputFilesDir.resolve(fileName);
+		return testInputDir.resolve(fileName);
+	}
+
+	public Path getInputDir() {
+		return testInputDir;
 	}
 
 	/**
@@ -49,7 +53,7 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public String fileToString(String fileName) throws IOException {
-		Path path = testInputFilesDir.resolve(fileName);
+		Path path = testInputDir.resolve(fileName);
 
 		List<String> allLines = Files.readAllLines(path, Charset.forName("UTF-8"));
 
