@@ -16,6 +16,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import util.StringDouble;
 import util.StringDoubleList;
 import util.StringIntegerList;
 import util.StringInteger;
@@ -84,7 +85,7 @@ public class ProfessionIndexMapred {
 		}
 	}
 
-	public static class InvertedIndexReducer extends
+	public static class ProfessionIndexReducer extends
 			Reducer<Text, StringInteger, Text, StringDoubleList> {
 
 		public static HashMap<String, Integer> professionsCount;
@@ -140,10 +141,10 @@ public class ProfessionIndexMapred {
 
 		Job job = Job.getInstance(new Configuration());
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(StringInteger.class);
+		job.setOutputValueClass(StringDoubleList.class);
 
 		job.setMapperClass(ProfessionIndexMapper.class);
-		// job.setReducerClass(ProfessionIndexReducer.class);
+		job.setReducerClass(ProfessionIndexReducer.class);
 
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
 
