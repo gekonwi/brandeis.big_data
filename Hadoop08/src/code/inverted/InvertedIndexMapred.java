@@ -26,6 +26,8 @@ import util.StringIntegerList;
  */
 public class InvertedIndexMapred {
 
+	public static final String KEY_VALUE_SEPARATOR = " : ";
+
 	public static class InvertedIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
 
 		/**
@@ -49,6 +51,10 @@ public class InvertedIndexMapred {
 		@Override
 		public void map(Text articleId, Text indices, Context context) throws IOException,
 				InterruptedException {
+
+			// blanks result from ":" instead of " : " as key-value separator
+			articleId = new Text(articleId.toString().trim());
+			indices = new Text(indices.toString().trim());
 
 			StringIntegerList siList = new StringIntegerList();
 			siList.readFromString(indices.toString());
@@ -126,10 +132,10 @@ public class InvertedIndexMapred {
 		// so we don't have to specify the job name when starting job on cluster
 		conf.set("mapreduce.job.queuename", "hadoop08");
 
-		// assignment requires " : " instead of the default "\t" as separator
-		final String separator = " : ";
-		conf.set("mapreduce.textoutputformat.separator", separator);
-		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", separator);
+		// unfortunately this only takes one character as separator so we can't
+		// use " : ". The mapper makes up for it.
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ":");
+		conf.set("mapred.textoutputformat.separator", KEY_VALUE_SEPARATOR);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);

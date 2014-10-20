@@ -194,10 +194,13 @@ public class ProfessionClassifierMapred {
 
 		job.setJarByClass(ProfessionClassifierMapred.class);
 
-		// so we don't have to specify the job name when starting job on cluster
 		final Configuration conf = job.getConfiguration();
+		// so we don't have to specify the job name when starting job on cluster
 		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		// required key-value separator is colon instead of tab (default)
 		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ":");
+		conf.set("mapred.textoutputformat.separator", " : ");
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
