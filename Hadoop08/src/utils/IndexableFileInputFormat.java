@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
 
-package util;
+package utils;
 
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 

@@ -1,4 +1,4 @@
-package code.util;
+package code.profession;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import util.HDFSUtils;
 import code.TestUtils;
 
 /**
@@ -20,7 +19,7 @@ import code.TestUtils;
  * @author Georg Konwisser, gekonwi@brandeis.edu
  * 
  */
-public class HDFSUtilsTest {
+public class ProfessionUtilsTest {
 	TestUtils utils = new TestUtils(getClass());
 
 	@Test
@@ -39,7 +38,7 @@ public class HDFSUtilsTest {
 
 		System.out.println("starting parsing");
 		long millisBeforeParsing = System.currentTimeMillis();
-		HDFSUtils.getProfessionCounts(fileLines);
+		ProfessionUtils.getProfessionCounts(fileLines);
 
 		long millisParsing = System.currentTimeMillis() - millisBeforeParsing;
 		System.out.println("finished parsing after " + millisParsing + " millis");
@@ -55,7 +54,7 @@ public class HDFSUtilsTest {
 		Path path = utils.getInputFilePath("getProfessionCountsTest_input.txt");
 		List<String> professions = Files.readAllLines(path, Charset.forName("UTF-8"));
 
-		Map<String, Integer> counts = HDFSUtils.getProfessionCounts(professions);
+		Map<String, Integer> counts = ProfessionUtils.getProfessionCounts(professions);
 		assertEquals("there are 8 unique professions in the test set", 8, counts.size());
 
 		assertEquals(1, (int) counts.get("rugby union player"));

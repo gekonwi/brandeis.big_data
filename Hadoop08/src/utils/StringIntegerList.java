@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -14,54 +14,12 @@ import java.util.regex.Pattern;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableUtils;
 
+/**
+ * 
+ * @author Steven Hu, stevenhh@brandeis.edu
+ */
 public class StringIntegerList implements Writable {
-	public static class StringInteger implements Writable {
-		private String s;
-		private int t;
-		public static Pattern p = Pattern.compile("(.+),(\\d+)");
-
-		public StringInteger() {
-		}
-
-		public StringInteger(String s, int t) {
-			this.s = s;
-			this.t = t;
-		}
-
-		public String getString() {
-			return s;
-		}
-
-		public int getValue() {
-			return t;
-		}
-
-		@Override
-		public void readFields(DataInput arg0) throws IOException {
-			String indexStr = arg0.readUTF();
-
-			Matcher m = p.matcher(indexStr);
-			if (m.matches()) {
-				this.s = m.group(1);
-				this.t = Integer.parseInt(m.group(2));
-			}
-		}
-
-		@Override
-		public void write(DataOutput arg0) throws IOException {
-			StringBuffer sb = new StringBuffer();
-			sb.append(s);
-			sb.append(",");
-			sb.append(t);
-			arg0.writeUTF(sb.toString());
-		}
-
-		@Override
-		public String toString() {
-			return s + "," + t;
-		}
-	}
-
+	
 	private List<StringInteger> indices;
 	private Map<String, Integer> indiceMap;
 	private Pattern p = Pattern.compile("<([^>]+),(\\d+)>");
@@ -86,7 +44,7 @@ public class StringIntegerList implements Writable {
 		if (this.indiceMap == null) {
 			indiceMap = new HashMap<String, Integer>();
 			for (StringInteger index : this.indices) {
-				indiceMap.put(index.s, index.t);
+				indiceMap.put(index.string, (Integer) index.value);
 			}
 		}
 		return indiceMap;
