@@ -1,8 +1,6 @@
 package hadoop08.code.profession;
 
 import static org.junit.Assert.assertEquals;
-import hadoop08.code.profession.ProfessionIndexMapred.ProfessionIndexMapper;
-import hadoop08.code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
 import hadoop08.util.StringDoubleList;
 import hadoop08.util.StringInteger;
 
@@ -31,26 +29,25 @@ public class ProfessionIndexMapredTest {
 	// private ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 
 	@Before
-	public void setUp() {
-		// quick and dirty -- basic logging to console instead of to file
-		org.apache.log4j.BasicConfigurator.configure();
-
-		// Initialize Mapper, create a mapDriver for mapper
-		ProfessionIndexMapper mapper = new ProfessionIndexMapper();
-		mapDriver = new MapDriver<>();
-		mapDriver.setMapper(mapper);
-
-		// Initialize Reducer, create a mapDriver for reducer
-		ProfessionIndexReducer reducer = new ProfessionIndexReducer();
-		reduceDriver = new ReduceDriver<>();
-		reduceDriver.setReducer(reducer);
-
-		// Create a mapReduceDriver for mapred, for testing both together
-		mapReduceDriver = new MapReduceDriver<>();
-		mapReduceDriver.setMapper(mapper);
-		mapReduceDriver.setReducer(reducer);
-	}
-
+	// public void setUp() {
+	// // quick and dirty -- basic logging to console instead of to file
+	// org.apache.log4j.BasicConfigurator.configure();
+	//
+	// // Initialize Mapper, create a mapDriver for mapper
+	// ProfessionIndexMapper mapper = new ProfessionIndexMapper();
+	// mapDriver = new MapDriver<>();
+	// mapDriver.setMapper(mapper);
+	//
+	// // Initialize Reducer, create a mapDriver for reducer
+	// ProfessionIndexReducer reducer = new ProfessionIndexReducer();
+	// reduceDriver = new ReduceDriver<>();
+	// reduceDriver.setReducer(reducer);
+	//
+	// // Create a mapReduceDriver for mapred, for testing both together
+	// mapReduceDriver = new MapReduceDriver<>();
+	// mapReduceDriver.setMapper(mapper);
+	// mapReduceDriver.setReducer(reducer);
+	// }
 	/*
 	 * @Test public void testMapper() throws IOException {
 	 * 
@@ -166,7 +163,6 @@ public class ProfessionIndexMapredTest {
 	 * + result.toString() + "\r\n\tshould == \r\n" + expected.toString() +
 	 * "\r\n", expected.toString(), result.toString()); }
 	 */
-
 	@Test
 	public void mapReducer2() throws IOException {
 

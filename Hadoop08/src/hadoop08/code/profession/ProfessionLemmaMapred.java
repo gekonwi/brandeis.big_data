@@ -23,6 +23,11 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+/**
+ * 
+ * @author Georg Konwisser, gekonwi@brandeis.edu
+ * 
+ */
 public class ProfessionLemmaMapred {
 	private static final String PROFESSIONS_PATH_KEY = ProfessionLemmaMapred.class.getName()
 			+ ".PROFESSION_PATH_KEY";

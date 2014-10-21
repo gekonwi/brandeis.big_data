@@ -1,15 +1,11 @@
 package hadoop08.code.profession;
 
-import hadoop08.util.HDFSUtils;
+import hadoop08.util.StringDouble;
 import hadoop08.util.StringDoubleList;
-import hadoop08.util.StringInteger;
-import hadoop08.util.StringIntegerList;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -22,139 +18,47 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class ProfessionIndexMapred {
+	private static final String OUTPUT_KEY_VALUE_SEPARATOR = " : ";
 
-	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
-
-		private static final Path PROFESSION_FILEPATH = new Path("profession_train.txt");
-		private Map<String, List<String>> peopleProfessions;
-
-		@Override
-		protected void setup(Mapper<Text, Text, Text, StringInteger>.Context context)
-				throws IOException, InterruptedException {
-			/*
-			 * create a HashMap that separates each line from the
-			 * profession_train file into a person and list of its professions
-			 */
-
-			List<String> lines = HDFSUtils.readLines(PROFESSION_FILEPATH,
-					context.getConfiguration());
-
-			peopleProfessions = new HashMap<String, List<String>>();
-			for (String s : lines) {
-				String[] parts = s.split(" : ");
-				String name = parts[0];
-				String profs = parts[1];
-
-				List<String> profsList = Arrays.asList(profs.split(", "));
-				peopleProfessions.put(name, profsList);
-			}
-		}
+	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringDouble> {
 
 		/**
-		 * transform the ((key), (value)) pair:
-		 * 
-		 * <pre>
-		 * {@code
-		 * ((person1), (<lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>))
-		 * }
-		 * </pre>
-		 * 
-		 * 
-		 * with
-		 * 
-		 * <pre>
-		 * {@code
-		 * person1 : profession1, profession2, profession3
-		 * }
-		 * </pre>
-		 * 
-		 * into the Cartesian product of professions and lemmas like the
-		 * following ((key), (value)) pairs:
-		 * 
-		 * <pre>
-		 * {@code
-		 * ((profession1), (<lemma1,freq1>))
-		 * ((profession1), (<lemma2,freq2>))
-		 * ((profession1), (<lemma3,freq3>))
-		 * ((profession2), (<lemma1,freq1>))
-		 * ((profession2), (<lemma2,freq2>))
-		 * ((profession2), (<lemma3,freq3>))
-		 * ((profession3), (<lemma1,freq1>))
-		 * ((profession3), (<lemma2,freq2>))
-		 * ((profession3), (<lemma3,freq3>))
-		 * }
-		 * </pre>
+		 * Just parses value into a StringDouble object
 		 */
 		@Override
-		public void map(Text person, Text lemmaFreqs, Context context) throws IOException,
+		public void map(Text profession, Text lemmaProb, Context context) throws IOException,
 				InterruptedException {
 
-			if (!peopleProfessions.containsKey(person))
-				return;
+			String[] parts = lemmaProb.toString().split(",");
+			String lemma = parts[0];
+			double prob = Double.parseDouble(parts[1]);
 
-			StringIntegerList lemmaFreqList = new StringIntegerList();
-			lemmaFreqList.readFromString(lemmaFreqs.toString());
-
-			// For each lemma in the article
-			for (StringInteger lemmaFreq : lemmaFreqList.getIndices()) {
-				// For each profession associated with the article
-				for (String p : peopleProfessions.get(person.toString())) {
-					// Write the profession, all LemmaFreqs associated with that
-					// profession
-					context.write(new Text(p), lemmaFreq);
-				}
-			}
+			context.write(profession, new StringDouble(lemma, prob));
 		}
 	}
 
 	public static class ProfessionIndexReducer extends
-			Reducer<Text, StringInteger, Text, StringDoubleList> {
-
-		public static HashMap<String, Integer> professionsCount;
-		private static final Path PROFESSION_FILEPATH = new Path("profession_train.txt");
-
-		@Override
-		protected void setup(Reducer<Text, StringInteger, Text, StringDoubleList>.Context context)
-				throws IOException, InterruptedException {
-			final List<String> lines = HDFSUtils.readLines(PROFESSION_FILEPATH,
-					context.getConfiguration());
-			professionsCount = ProfessionUtils.getProfessionCounts(lines);
-		}
+			Reducer<Text, StringDouble, Text, StringDoubleList> {
 
 		/**
-		 * transform the ((key), (value)) pair:
+		 * collects all lemma probabilities (<code>values</code>) associated
+		 * with the given profession (<code>key</code>) into a
+		 * {@link StringDoubleList} as output value. This results in the
+		 * required output format:
 		 * 
 		 * <pre>
-		 * {@code
-		 * ((profession1), (<lemma1,freq1>,<lemma2,freq2>,<lemma1,freq3>))
-		 * }
-		 * </pre>
-		 * 
-		 * into a ((key), (value)) pair like:
-		 * 
-		 * <pre>
-		 * {@code
-		 * ((profession1), (<lemma1,probability1>,<lemma2,probability2>))
-		 * }
+		 * PROFESSION : <LEMMA1,PROB1>,<LEMMA2,PROB2>
 		 * </pre>
 		 */
 		@Override
-		public void reduce(Text profession, Iterable<StringInteger> lemmaFreqs, Context context)
+		public void reduce(Text profession, Iterable<StringDouble> lemmaProbs, Context context)
 				throws IOException, InterruptedException {
 
-			Map<String, Double> lemmaProbs = new HashMap<>();
-			double probabilityAdd = 1.0 / professionsCount.get(profession.toString());
+			List<StringDouble> list = new ArrayList<>();
+			for (StringDouble sd : lemmaProbs)
+				list.add(sd);
 
-			for (StringInteger si : lemmaFreqs) {
-
-				if (!lemmaProbs.containsKey(si.getString()))
-					lemmaProbs.put(si.getString(), probabilityAdd);
-				else
-					lemmaProbs.put(si.getString(), lemmaProbs.get(si.getString()) + probabilityAdd);
-
-			}
-
-			StringDoubleList lemmaProbsList = new StringDoubleList(lemmaProbs);
+			StringDoubleList lemmaProbsList = new StringDoubleList(list);
 			context.write(profession, lemmaProbsList);
 		}
 	}
@@ -165,7 +69,7 @@ public class ProfessionIndexMapred {
 
 		// mapper
 		job.setMapOutputKeyClass(Text.class);
-		job.setMapOutputValueClass(StringInteger.class);
+		job.setMapOutputValueClass(StringDouble.class);
 
 		// reducer
 		job.setOutputKeyClass(Text.class);
@@ -182,7 +86,10 @@ public class ProfessionIndexMapred {
 		job.setJarByClass(ProfessionIndexMapred.class);
 
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		final Configuration conf = job.getConfiguration();
+
+		conf.set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapred.textoutputformat.separator", OUTPUT_KEY_VALUE_SEPARATOR);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
