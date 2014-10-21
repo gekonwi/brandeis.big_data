@@ -106,7 +106,7 @@ public class ProfessionLemmaMapred {
 			person = new Text(person.toString().trim());
 			lemmaFreqs = new Text(lemmaFreqs.toString().trim());
 
-			if (!personProfessions.containsKey(person))
+			if (!personProfessions.containsKey(person.toString()))
 				return;
 
 			StringIntegerList lemmaFreqList = new StringIntegerList();
