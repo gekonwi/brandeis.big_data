@@ -22,6 +22,7 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class ProfessionIndexMapred {
+	private static final String KEY_VALUE_SEPARATOR = " : ";
 
 	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
 
@@ -173,13 +174,30 @@ public class ProfessionIndexMapred {
 
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
 
+		/*
+		 * TODO in previous assignment we kept the default \t (tab) key value
+		 * separator for our output. thus our current ARTICLE_LEMMA_INDEX output
+		 * file has a \t between key and value in each line. Having this and
+		 * using the KeyValueTextInputFormat as we do here with the default
+		 * key-value separator bit (which is \t) works fine for now. As soon as
+		 * we run the LemmaIndexMapred again with all the tunings we did since
+		 * the last run and the added stop words, we will get " : " between key
+		 * and value in each output line as we changed LemmaIndexMapred to do so
+		 * according to the assignment and the expected TA test input. Then we
+		 * will have to deal with this input as done in
+		 * ProfessionClassifierMapred
+		 */
+
+		final Configuration conf = job.getConfiguration();
+		conf.set("mapred.textoutputformat.separator", KEY_VALUE_SEPARATOR);
+
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 		job.setJarByClass(ProfessionIndexMapred.class);
 
 		// so we don't have to specify the job name when starting job on cluster
-		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");
+		conf.set("mapreduce.job.queuename", "hadoop08");
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
