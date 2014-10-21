@@ -58,7 +58,6 @@ public class TokenizerTest {
 	@Test
 	public void testRegexDoesNotEndWithOr() {
 		String regex = Tokenizer.buildNoisePattern().pattern();
-		System.out.println(regex);
 		assertFalse(regex.charAt(regex.length() - 1) == "|".charAt(0));
 	}
 

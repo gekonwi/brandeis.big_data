@@ -82,6 +82,8 @@ public class Tokenizer {
 		// successive separators should be treated as one separation match
 		String regex = "(" + sb.toString() + ")+";
 
+		System.out.println(regex);
+
 		// make sure the regex dot character includes line breaks
 		// (e.g. for the multi-line info box)
 		return Pattern.compile(regex, Pattern.DOTALL);
@@ -115,6 +117,10 @@ public class Tokenizer {
 
 		// '' for italic, ''' for bold, but preserve the single '
 		patterns.add("''+");
+
+		// remove 's and s' suffixes indicating either possession or "is" or
+		// "has" - all three cases are irrelevant for indexing
+		patterns.add("('s|s')\\s");
 
 		addUnwantedCharPatterns(patterns);
 
