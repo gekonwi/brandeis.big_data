@@ -74,9 +74,9 @@ public class ProfessionClassifierMapred {
 				InterruptedException {
 
 			/*
-			 * TODO this is not needed if we figure out how to separate by " : "
-			 * instead of ":" or change the read in files to separate keys from
-			 * values by ":" instead of " : "
+			 * make up for the fact that the input key-value pairs are separated
+			 * by " : " but the KeyValueLineRecordReader can only separate by
+			 * one character (in our case ":")
 			 */
 			person = new Text(person.toString().trim());
 			lemmaCounts = new Text(lemmaCounts.toString().trim());
@@ -198,7 +198,11 @@ public class ProfessionClassifierMapred {
 		// so we don't have to specify the job name when starting job on cluster
 		conf.set("mapreduce.job.queuename", "hadoop08");
 
-		// required key-value separator is colon instead of tab (default)
+		/*
+		 * required key-value separator is " : " instead of tab (default).
+		 * However KeyValueLineRecordReader only accepts one separator bit. Our
+		 * mapper makes up for it.
+		 */
 		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ":");
 		conf.set("mapred.textoutputformat.separator", " : ");
 

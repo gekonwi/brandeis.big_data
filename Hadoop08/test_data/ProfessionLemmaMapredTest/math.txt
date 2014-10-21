@@ -1,0 +1,157 @@
+=== profession counts ===
+
+actor:		1	(Will Smith)
+singer:		1	(Will Smith)
+father:		3	(Will Smith, Bill Clinton, Albert Einstein)
+politician:	1	(Bill Clinton)
+scientist:	1	(Albert Einstein)
+soccer plaeyer:	1	(Mario Gömez)
+soccer couch:	1	(Mario Gömez)
+model:	1	(Mario Gömez)
+hobby singer:	2	(Mario Gömez, Bill Clinton)
+hobby surfer:	1	(Mario Gömez)
+physicist:	1	(Albert Einstein)
+
+
+===	(profession, lemma) counts and probabilities ===
+
+(actor, actor):	1	(Will Smith)			probability: 1 / 1 = 1
+(actor, black):	1	(Will Smith)			probability: 1 / 1 = 1
+(actor, singer):	1	(Will Smith)		probability: 1 / 1 = 1
+(actor, movie):	1	(Will Smith)		probability: 1 / 1 = 1
+(actor, live):	1	(Will Smith)		probability: 1 / 1 = 1
+(actor, school):	1	(Will Smith)		probability: 1 / 1 = 1
+
+(singer, actor):	1	(Will Smith)		probability: 1 / 1 = 1
+(singer, black):	1	(Will Smith)		probability: 1 / 1 = 1
+(singer, singer):	1	(Will Smith)		probability: 1 / 1 = 1
+(singer, movie):	1	(Will Smith)		probability: 1 / 1 = 1
+(singer, live):	1	(Will Smith)		probability: 1 / 1 = 1
+(singer, school):	1	(Will Smith)		probability: 1 / 1 = 1
+
+(father, actor):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, black):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, singer):	2	(Will Smith, Bill Clinton)		probability: 2 / 3 = 0.66666
+(father, movie):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, live):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, school):	3	(Will Smith, Bill Clinton, Albert Einstein)		probability: 3 / 3 = 1
+(father, white):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, house):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, president):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, physics):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, theory):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, relativity):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, university):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+
+(politician, white):	1	(Bill Clinton)		probability: 1 / 1 = 1
+(politician, house):	1	(Bill Clinton)		probability: 1 / 1 = 1
+(politician, singer):	1	(Bill Clinton)		probability: 1 / 1 = 1
+(politician, president):	1	(Bill Clinton)		probability: 1 / 1 = 1
+(politician, school):	1	(Bill Clinton)		probability: 1 / 1 = 1
+
+(soccer player, world):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, champion):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, soccer):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, germany):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, goal):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, dortmund):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, school):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer player, hospital):	1	(Mario Gömez)		probability: 1 / 1 = 1
+
+(soccer couch, world):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, champion):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, soccer):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, germany):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, goal):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, dortmund):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, school):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(soccer couch, hospital):	1	(Mario Gömez)		probability: 1 / 1 = 1
+
+(model, world):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, champion):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, soccer):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, germany):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, goal):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, dortmund):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, school):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(model, hospital):	1	(Mario Gömez)		probability: 1 / 1 = 1
+
+(hobby singer, world):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, champion):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, soccer):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, germany):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, goal):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, dortmund):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, school):	2	(Mario Gömez, Bill Clinton)		probability: 2 / 2 = 1
+(hobby singerer, hospital):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, white):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, house):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, singer):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, president):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+
+(hobby surfer, world):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, champion):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, soccer):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, germany):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, goal):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, dortmund):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, school):	1	(Mario Gömez)		probability: 1 / 1 = 1
+(hobby surfer, hospital):	1	(Mario Gömez)		probability: 1 / 1 = 1
+
+(scientist, physics):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(scientist, theory):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(scientist, relativity):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(scientist, university):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(scientist, school):	1	(Albert Einstein)		probability: 1 / 1 = 1
+
+(physicist, physics):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(physicist, theory):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(physicist, relativity):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(physicist, university):	1	(Albert Einstein)		probability: 1 / 1 = 1
+(physicist, school):	1	(Albert Einstein)		probability: 1 / 1 = 1
+
+
+===	Summary of (profession, lemma) counts and probabilities ===
+
+84 (profession, lemma) pairs in total
+
+
+11 pairs with probability 0.33333:
+
+(father, actor):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, black):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, movie):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, live):	1	(Will Smith)		probability: 1 / 3 = 0.33333
+(father, white):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, house):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, president):	1	(Bill Clinton)		probability: 1 / 3 = 0.33333
+(father, physics):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, theory):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, relativity):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+(father, university):	1	(Albert Einstein)		probability: 1 / 3 = 0.33333
+
+
+11 pairs with probability 0.5:
+
+(hobby singer, world):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, champion):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, soccer):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, germany):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, goal):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, dortmund):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singerer, hospital):	1	(Mario Gömez)		probability: 1 / 2 = 0.5
+(hobby singer, white):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, house):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, singer):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+(hobby singer, president):	1	(Bill Clinton)		probability: 1 / 2 = 0.5
+
+
+1 pair with probability 0.66666:
+
+(father, singer):	2	(Will Smith, Bill Clinton)		probability: 2 / 3 = 0.66666
+
+
+61 pairs with probability 1.0, the more interesting ones are:
+
+(father, school):	3	(Will Smith, Bill Clinton, Albert Einstein)		probability: 3 / 3 = 1
+(hobby singer, school):	2	(Mario Gömez, Bill Clinton)		probability: 2 / 2 = 1

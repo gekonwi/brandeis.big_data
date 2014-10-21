@@ -1,0 +1,5 @@
+Will Smith : <actor,3>,<black,10>,<singer,2>,<movie,4>,<live,3>,<school,3>
+Bill Clinton : <white,7>,<house,7>,<singer,3>,<president,10>,<school,2>
+Unimportant Person : <hobby,5>,<soccer,100>,<school,30>
+Mario Gömez : <world,3>,<champion,3>,<soccer,15>,<germany,5>,<goal,20>,<dortmund,5>,<school,1>,<hospital,5>
+Albert Einstein : <physics,20>,<theory,15>,<relativity,10>,<university,5>,<school,3>
