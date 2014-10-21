@@ -71,8 +71,6 @@ public class ProfessionIndexMapred {
 			 */
 
 			StringIntegerList siList = new StringIntegerList();
-			System.out.println("********************************\r\n" + indices.toString() + "***************************");
-			System.err.println("********************************\r\n" + indices.toString() + "***************************");
 			siList.readFromString(indices.toString());
 
 			String articleIdString = articleId.toString();
