@@ -1,4 +1,5 @@
 == Will Smith ==
+-> test case: only one profession is more likely than 0
 
 actor: 
 movie: 4 * log(0.8 + 1) = 1.0210900204132243 
@@ -27,6 +28,7 @@ Will Smith : actor, doctor, soccer player
 =========================================================
 
 == Bill Clinton ==
+-> test case: all professions are equally unlikely because no lemma matches
 
 actor: 
 P(profession = actor | person = Bill Clinton) = 0
@@ -52,6 +54,7 @@ Bill Clinton : actor, doctor, soccer player
 =========================================================
 
 == Mario Gömez ==
+-> test case: four professions are more likely than 0, take the top 3
 
 actor: 
 P(profession = actor | person = Mario Gömez) = 0
@@ -84,6 +87,7 @@ Mario Gömez : soccer player, soccer coach, doctor
 =========================================================
 
 == Albert Einstein ==
+-> test case: only two professions are more likely than 0
 
 actor: 
 P(profession = actor | person = Albert Einstein) = 0
