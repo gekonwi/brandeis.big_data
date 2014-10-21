@@ -1,11 +1,13 @@
 package hadoop08.code.profession;
 
 import hadoop08.utils.HDFSUtils;
+import hadoop08.utils.StringDouble;
 import hadoop08.utils.StringDoubleList;
 import hadoop08.utils.StringInteger;
 import hadoop08.utils.StringIntegerList;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +45,7 @@ public class ProfessionIndexMapred {
 				// Assuming that there is no whitespace in each line
 				// (name:prof1,prof2,prof3)
 				String name = s.substring(0, s.indexOf(":")).trim();
-				;
 				String prof = s.substring(s.indexOf(":") + 1).trim();
-				;
 				// Chose to implement a list because of
 				// http://stackoverflow.com/questions/7488643/java-how-to-convert-comma-separated-string-to-arraylist
 				List<String> items = Arrays.asList(prof.split("\\s*,\\s*"));
@@ -71,16 +71,20 @@ public class ProfessionIndexMapred {
 			 */
 
 			StringIntegerList siList = new StringIntegerList();
+			System.out.println("********************************\r\n" + indices.toString() + "***************************");
+			System.err.println("********************************\r\n" + indices.toString() + "***************************");
 			siList.readFromString(indices.toString());
 
 			String articleIdString = articleId.toString();
 			// For each lemma in the article
 			for (StringInteger lemmaFreq : siList.getIndices()) {
 				// For each profession associated with the article
-				for (String s : peopleProfessions.get(articleIdString)) {
-					// Write the profession, all LemmaFreqs associated with that
-					// profession
-					context.write(new Text(s), lemmaFreq);
+				if (peopleProfessions.containsKey(articleIdString)) {
+					for (String s : peopleProfessions.get(articleIdString)) {
+						// Write the profession, all LemmaFreqs associated with that
+						// profession
+						context.write(new Text(s), lemmaFreq);
+					}
 				}
 			}
 		}
@@ -122,7 +126,7 @@ public class ProfessionIndexMapred {
 			 */
 
 			Map<String, Double> lemmaProbs = new HashMap<>();
-			double probabilityAdd = 1.0 / professionsCount.get(profession);
+			double probabilityAdd = 1.0 / professionsCount.get(profession.toString());
 
 			for (StringInteger si : lemmasAndFreqs) {
 
@@ -134,7 +138,6 @@ public class ProfessionIndexMapred {
 			}
 
 			StringDoubleList sdl_lemmaProbs = new StringDoubleList(lemmaProbs);
-
 			context.write(profession, sdl_lemmaProbs);
 		}
 	}
@@ -142,8 +145,11 @@ public class ProfessionIndexMapred {
 	public static void main(String[] args) throws Exception {
 
 		Job job = Job.getInstance(new Configuration());
+		
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(StringInteger.class);
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(StringInteger.class);
+		job.setOutputValueClass(StringDouble.class);
 
 		job.setMapperClass(ProfessionIndexMapper.class);
 		job.setReducerClass(ProfessionIndexReducer.class);
