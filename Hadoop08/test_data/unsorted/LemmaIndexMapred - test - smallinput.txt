@@ -1,0 +1,346 @@
+<temp>
+	<page>
+    <title>Michael Richards</title>
+    <ns>0</ns>
+    <id>104998</id>
+    <revision>
+      <id>520440253</id>
+      <parentid>520440217</parentid>
+      <timestamp>2012-10-29T15:34:04Z</timestamp>
+      <contributor>
+        <username>WikiPuppies</username>
+        <id>14001956</id>
+      </contributor>
+      <minor />
+      <comment>Reverted edits by [[Special:Contributions/77.95.162.9|77.95.162.9]] ([[User talk:77.95.162.9|talk]]) addition of [[WP:References|unsourced]] content ([[WP:HG|HG]])</comment>
+      <text xml:space="preserve">{{Other people|Michael Richards}}
+{{Infobox person
+| name                  = Michael Richards
+| image                 = Michael Richards (1993)-flipped.jpg
+| caption               = Richards at the 1993 Emmy awards
+| birth_name             = Michael Anthony Richards
+| birth_date             = {{Birth date and age|1949|7|24|mf=y}}
+| birth_place            = [[Culver City, California]], United States
+| death_date             =
+| death_place            =
+| other_names             =
+| occupation            = Actor/Comedian
+| years_active           = 1979���present
+| spouse                = Cathleen Lyons (1974���1992; 1 child)
+| partner       =
+}}
+'''Michael Anthony Richards''' (born July 24, 1949) is an American [[actor]], [[comedian]], [[writer]] and [[television producer]], widely known for his portrayal of [[Cosmo Kramer]] on the television sitcom ''[[Seinfeld]]''. During the show's run, he received the [[Primetime Emmy Award for Outstanding Supporting Actor in a Comedy Series]] three times.
+
+Richards began his career as a stand-up comedian, first stepping into a national spotlight when he was featured on [[Billy Crystal]]'s first cable TV special. He went on to become a series regular on [[American Broadcasting Company|ABC's]] ''[[Fridays (TV series)|Fridays]]''. Prior to ''Seinfeld'', he made numerous guest appearances on a variety of television shows including ''[[Cheers]]'', ''[[Night Court]]'', ''[[Miami Vice]]'' and ''[[St. Elsewhere]]''. His film credits include ''[[So I Married an Axe Murderer]]'', ''[[Airheads]]'', ''[[Young Doctors in Love]]'', ''[[Problem Child (1990 film)|Problem Child]]'', ''[[Coneheads (film)|Coneheads]]'', ''[[UHF (film)|UHF]]'', and ''[[Trial and Error (1997 film)|Trial and Error]]'', one of his few starring roles. During the run of ''Seinfeld'', he made a guest appearance in ''[[Mad About You]]''. After ''Seinfeld'', Richards starred in his own sitcom, ''[[The Michael Richards Show]]'', which lasted less than one season. 
+
+After his series was cancelled, Richards returned to performing stand-up comedy. After inciting media furor for losing his temper and repeatedly shouting &quot;[[nigger]]&quot; at an African American heckler in late 2006,&lt;ref name=&quot;TMZ-2006&quot;/&gt; Richards announced his retirement from stand-up in 2007. Most recently, Richards appeared as himself in the [[Curb Your Enthusiasm Season 7|seventh season]] of ''[[Curb Your Enthusiasm]]'' in 2009, acting alongside his fellow ''Seinfeld'' cast members for the first time since ''Seinfeld'''s [[The Finale (Seinfeld)|finale]].
+
+== Early life ==
+[[File:Michael Richards HS Yearbook.jpeg|thumb|left|Richards as a senior in high school, 1967.]]
+Richards was born in [[Culver City, California]], the son of Phyllis (n��e Nardozzi), a [[medical record]]s librarian, and William Richards, an [[Engineer's degree|electrical engineer]].&lt;ref&gt;{{cite web|url=http://www.filmreference.com/film/97/Michael-Richards.html |title=Michael Richards Biography (1949?-) |publisher=Filmreference.com |date= |accessdate=2010-10-12}}&lt;/ref&gt; He was drafted during the [[Vietnam War]], served in the U.S. Army for two years,&lt;ref&gt;[http://www.imdb.com/name/nm0724245/bio IMDB Biography]&lt;/ref&gt; and was stationed in [[West Germany]] as one of the co-directors of the [[V Corps (United States)|V Corps]] Training Road Show.
+
+He attended the [[California Institute of the Arts]], and received a [[Bachelor of Arts|BA]] degree in drama from [[The Evergreen State College]] in 1975. He also had a short-lived [[Improvisational comedy|improv]] act with [[Ed Begley, Jr.]] during this period. Enrolled at [[Los Angeles Valley College]], he continued to appear in student productions. He later said: &quot;I am grateful that the public schools introduced me to the [[performing arts]].&quot;{{citequote|date=December 2011}} He also spent a few years &quot;finding himself&quot; at a [[commune (intentional community)|commune]] in the Santa Cruz Mountains. In 1979 he drove a bus and also developed his own nightclub act.
+
+==Career==
+Richards got his big TV break in 1979, appearing in [[Billy Crystal]]'s first cable TV special. In 1980, he began as one of the cast members on [[American Broadcasting Company|ABC's]] ''[[Fridays (TV series)|Fridays]]'' television show, where [[Larry David]] was a writer. This included a famous instance in which guest [[Andy Kaufman]] refused to deliver his scripted lines, leading Richards to bring the [[cue card]]s on screen to Kaufman, causing him to throw his drink into Richards' face before a small riot ensued (Richards later claimed he was in on the joke).&lt;ref name=&quot;fac&quot;&gt;[http://archive.firstamendmentcenter.org/about.aspx?id=12083 Michael Richards 'Speaking Freely' transcript] via [[First Amendment Center]], Recorded February 28, 2002, in Aspen, Colorado&lt;/ref&gt; The film ''[[Man on the Moon (film)|Man on the Moon]]'' featured a re-enactment of the [[Fridays (TV series)#The_Andy_Kaufman_incident|Andy Kaufman incident]] in which Richards was portrayed by actor [[Norm Macdonald]] (although he is never referred to by name so he could be seen as a composite character taking the place of Richards).
+
+He was also famous for a brief sketch that he did on the show, during which he simply improvised with a large pile of dirt and some army toys. In 1989, Richards had a supporting role in [[&quot;Weird Al&quot; Yankovic]]'s comedy film ''[[UHF (film)|UHF]]''. On television, Richards also appeared in ''[[Miami Vice]]'' (as an unscrupulous [[bookie]]), ''[[Cheers]]'' (as a character trying to collect on an old bet with [[Sam Malone]]), and made several guest appearances with [[Jay Leno]] as an accident-prone fitness expert.
+
+According to an interview with executive producer David Hoberman, ABC first conceived the series ''[[Monk (TV series)|Monk]]'' as a police show with an Inspector Clouseau-like character suffering from obsessive���compulsive disorder. Hoberman said that ABC wanted Richards for the Monk role, but Richards turned it down.&lt;ref&gt;from  &quot;Mr Monk and His Origins,&quot; a special feature packaged with the Season One DVDs.&lt;/ref&gt;
+
+=== ''Seinfeld'' ===
+In 1989, he was cast as [[Cosmo Kramer]] in the [[NBC]] [[television series]] ''[[Seinfeld]]'', which was created by fellow ''Fridays'' cast member [[Larry David]] and [[comedian]] [[Jerry Seinfeld]]. Although it got off to a slow start, by the mid-1990s, the show had become one of the most popular [[Situation comedy|sitcoms]] in television history. The series ended its nine-year run in 1998 at #1 in the [[Nielsen ratings]]. In the setting of ''Seinfeld'', Kramer is usually referred to by his last name only and is the neighbor of the show's [[Jerry Seinfeld (character)|eponymous character]]. Kramer's first name, Cosmo, was revealed in the sixth-season episode &quot;[[The Switch]]&quot;.
+
+Richards won more Emmys than any other cast member on ''Seinfeld''. He took home the award for Outstanding Supporting Actor in a Comedy Series in 1993, 1994 and 1997.
+
+Starting in 2004, he and his fellow ''Seinfeld'' cast members provided interviews and audio commentaries for the ''Seinfeld'' DVDs, but Richards stopped providing audio commentary after Season 5 though he continued to provide interviews.
+
+=== ''The Michael Richards Show'' ===
+In 2000, after the end of ''Seinfeld'', Richards began work on a new series for NBC, his first major project since ''Seinfeld'''s finale. ''[[The Michael Richards Show]]'', for which the actor received co-[[writer]] and co-[[Television producer|executive producer]] credits, was originally conceived as a comedy/mystery starring Richards as a bumbling private investigator. However, after the first pilot failed with test audiences, NBC ordered that the show be retooled into a more conventional, office-based sitcom before its premiere. After a few weeks of poor ratings and negative reviews, it was canceled.
+
+===Laugh Factory incident===
+During a November 17, 2006 performance at the [[Laugh Factory]] in [[West Hollywood, California]] Richards shouted a racially-charged response to black [[heckler]]s in the audience, shouting &quot;He's a [[nigger]]!&quot; several times and referring to [[lynching]].&lt;ref name=&quot;TMZ-2006&quot;&gt;{{cite web|url=http://www.tmz.com/2006/11/20/kramers-racist-tirade-caught-on-tape|title=&quot;Kramer's&quot; Racist Tirade -- Caught on Tape|accessdate=2006-11-20|publisher=TMZ.com|year=2006|author=TMZ Staff|work=In The Zone}}&lt;/ref&gt;&lt;ref name=&quot;Vibe&quot;&gt;{{cite web|url=http://www.vibe.com/news/news_headlines/2006/11/comedian_michael_kramer_richards_goes_into_racial_tirade|title=Comedian Michael &quot;Kramer&quot; Richards Goes Into Racial Tirade, Banned From Laugh Factory|accessdate=2006-11-21|publisher=[[VIBE|Vibe.com]]|year=2006|author=Mariel Concepci��n|work=News wire}}&lt;/ref&gt;&lt;ref name=&quot;washingtonpost.com&quot;&gt;{{cite news|author=Post Store |url=http://www.washingtonpost.com/wp-dyn/content/article/2006/11/21/AR2006112100242.html |title=&quot;Seinfeld&quot; Comic Richards Apologizes for Racial Rant |publisher=Washingtonpost.com |date= 2006-11-21|accessdate=2010-10-12}}&lt;/ref&gt;&lt;ref name=&quot;Canadian Broadcasting Corporation&quot;&gt;{{cite news|url=http://www.cbc.ca/arts/tv/story/2006/11/20/kramer-racial-slurs.html|title=Seinfeld's Richards utters racial taunts during routine|accessdate=2006-11-20|publisher=[[Canadian Broadcasting Corporation]]|work=CBC arts | date=2006-11-20}}&lt;/ref&gt;&lt;ref name=&quot;washingtonpost.com&quot;/&gt;&lt;ref name=&quot;Reuters-2006&quot;&gt;{{cite web|url=http://www.tiscali.co.uk/news/newswire.php/news/reuters/2006/11/21/entertainment/34seinfeld34-star-richards-under-fire-for-racial-outburst.html&amp;template=/news/templates/newswire/news_story_reuters.html|title=&quot;Seinfeld&quot; Star Richards Under Fire For Racial Outburst|accessdate=2006-02-23|publisher=Reuters|year=2006|work=News wire}}&lt;/ref&gt; &lt;!-- NOTE TO EDITORS: SEE REMARKS ABOVE THE PRECEDING PARAGRAPH ABOUT CONSENSUS ON THE LAUGH FACTORY INCIDENT, AS IN TALK ARCHIVE 2. CONSENSUS SECTION CONTINUES BELOW --&gt;Kyle Doss, a member of the group Richards addressed, said they had arrived in the middle of the performance, adding, &quot;I guess we were being a little loud, because there was 20 of us ordering drinks. And Richards said, 'Look at the stupid [[Mexico|Mexicans]] and [[Black people|blacks]] being loud up there.' And, then, after a while, I told him, my friend doesn't think you're funny,&quot; which triggered Richards' outburst.&lt;ref name=&quot;CNN-transcripts&quot;/&gt;&lt;!-- END OF CONSENSUS SECTION, WHICH COVERS THE LAUGH FACTORY INCIDENT. SEE TALK ARCHIVE 2. NEW DEVELOPMENTS SINCE FEBRUARY 2007 MAY BE ADDED AFTER HERE --&gt;
+
+Richards made a public apology via satellite on the ''[[Late Show with David Letterman]]'', when [[Jerry Seinfeld]] was the guest, saying, &quot;For me to be at a comedy club and to flip out and say this crap, I'm deeply, deeply sorry.&quot;&lt;ref name=&quot;CNN-transcripts2&quot;&gt;{{cite news|url=http://transcripts.cnn.com/TRANSCRIPTS/0611/21/cnr.01.html|title=CNN Newsroom|accessdate=2007-02-16|publisher=[[CNN|CNN.com]]|year=2006}}&lt;/ref&gt; He said he was trying to defuse heckling by being even more outrageous, but that it had backfired. Richards later called civil rights leaders [[Al Sharpton]] and [[Jesse Jackson]] to apologize.&lt;ref name=&quot;CNN-transcripts&quot;&gt;{{cite news|url=http://transcripts.cnn.com/TRANSCRIPTS/0611/22/sitroom.03.html|title=''The Situation Room'' transcript|accessdate=2006-12-04|publisher=CNN|year=2006|work=[[The Situation Room]]}}&lt;/ref&gt;&lt;ref name=&quot;CNN-article&quot;&gt;{{cite news|url=http://www.cnn.com/2006/SHOWBIZ/TV/11/22/sharpton.richard/index.html|title= Sharpton: Comedian's apology not enough|accessdate=2007-04-22|work=[[CNN]] |date=November 23, 2006 }}&lt;/ref&gt; He also appeared as a guest on Jackson's syndicated radio show.&lt;ref name=&quot;CBS-2007&quot;&gt;{{cite news|url=http://www.cbsnews.com/stories/2006/11/25/entertainment/main2208718.shtml?source=RSSattr=U.S._2208718|title=Jesse Jackson Talks To Michael Richards: Jackson Says Apology For Actor's Racist Rant Is Only A Beginning Before Healing|accessdate=2007-04-23|publisher=CBS|work=News wire | date=2006-11-25}}&lt;/ref&gt; The incident was later [[parody|parodied]] on several TV shows, including ''[[MadTV]]'', ''[[Family Guy]]'', ''[[With Apologies to Jesse Jackson|South Park]]'' and ''[[Extras#US and UK version differences|Extras]]''. In an episode of ''[[Curb Your Enthusiasm]]'', Richards appeared as himself and poked fun at the incident.
+
+=== Cameo roles, guest appearances, and film roles ===
+Richards played himself in Episode 2 of Season 1 &quot;The Flirt Episode&quot; (1992) of the [[HBO]] series, ''[[The Larry Sanders Show]]''. Richards also played a [[cameo role]] in ''[[So I Married an Axe Murderer]]'' where he was an &quot;insensitive man&quot;. Richards played radio station employee Doug Beech in [[Airheads]]. He also made guest appearances on ''[[Miami Vice]]'', ''[[Night Court]]'' and ''[[Cheers]]''. In 2007, Richards voiced character Bud Ditchwater in the animated film ''[[Bee Movie]]'', which starred, and was produced by, Jerry Seinfeld. In 2009, Richards and the other main ''Seinfeld'' cast members appeared in the seventh season of ''[[Curb Your Enthusiasm]]''.&lt;ref&gt;{{cite web|url=http://www.zap2it.com/tv/news/zap-seinfeld-cast-curb-your-enthusiasm,0,1065194.story|title='Curb Your Enthusiasm' hosts a 'Seinfeld' reunion|date=2009-03-06|publisher=Zap2It.com|accessdate=2009-07-23}}&lt;/ref&gt; In 2012, Richards appeared in comedy web series ''[[Comedians in Cars Getting Coffee]]'', hosted by [[Jerry Seinfeld]].&lt;ref&gt;{{cite web|title=Richards appears on ''Comedians in Cars Getting Coffee|url=http://comediansincarsgettingcoffee.com/michael-richards-its-bubbly-time-jerry/|accessdate=2012-10-07}}&lt;/ref&gt;
+
+== Personal life ==
+In July 2007, Richards announced that he has retired from stand-up comedy for &quot;spiritual healing&quot; purposes and would be traveling with his fianc��e to [[Cambodia]], where they would visit [[Angkor Wat]], as well as more remote temples, on a tour sponsored by the Los Angeles-based Nithyananda Foundation.&lt;ref&gt;{{cite news  |last = McDermid|first = Charles|coauthors =|title = Michael Richards finds inner solace in Cambodia|work =|pages =|language =|publisher = [[Los Angeles Times]]|date=2007-07-13|url = http://articles.latimes.com/2007/jul/13/entertainment/et-richards13  |accessdate = 2007-08-12}}&lt;/ref&gt;
+
+== TV ==
+* 1980���1982 ''[[Fridays (TV series)|Fridays]]'' (54 episodes) ��� Various
+* 1982���1984 ''[[Faerie Tale Theatre]]'' (2 episodes) ��� King Geoffrey, Vince
+* 1983 ''Herndon'' ��� Dr. Herndon P. Stool
+* 1984 ''At Your Service'' ��� Rick the Gardener
+* 1984 ''[[Night Court]]'' (1 episode) ��� Eugene Sleighbough
+* 1984 ''[[The Ratings Game]]'' ��� Sal
+* 1985 ''[[Tall Tales &amp; Legends]]'' (1 episode) ��� Sneaky Pete
+* 1984���1985 ''[[St. Elsewhere]]'' (5 episodes) ��� Bill Wolf
+* 1985 ''[[Cheers]]'' (1 episode) ��� Eddie Gordon
+* 1985 ''[[Scarecrow and Mrs. King]]'' (1 episode) ��� Petronus
+* 1985 ''Slickers'' ��� Mike Blade
+* 1985 ''[[It's a Living (1980 TV series)|It's a Living]]'' (1 episode) ��� Hager
+* 1985 ''[[Hill Street Blues]]'' ( 1 episode) ��� Special Agent Dupre
+* 1986 ''[[Miami Vice]]'' (1 episode) ��� Pagone
+* 1986 ''[[Fresno (TV miniseries)|Fresno]]'' (TV miniseries) ��� 2nd Henchman
+* 1987 ''Jonathan Winters: On the Ledge'' ��� Various Characters
+* 1987���1988 ''[[Marblehead Manor]]'' (10 episodes) ��� Rick the Gardener
+* 1989 ''[[Camp MTV]]'' ��� Stanley Spadowski
+* 1989���1998 ''[[Seinfeld]]'' (177 episodes) ��� Kramer
+* 1992 ''[[Dinosaurs (TV series)|Dinosaurs]]'' (voice 1 episode) ��� Director
+* 1992 ''[[Mad About You]]'' (1 episode) ��� Kramer
+* 1996 ''[[Universe of Energy|Ellen's Energy Adventure]]'' (uncredited) ��� Caveman discovering fire
+* 1996 ''[[London Suite]]'' ��� Mark Ferris
+* 2000 ''David Copperfield 2000'' ��� Mr. Wilkins Micawber
+* 2000 ''[[The Michael Richards Show]]'' (7 episodes) ��� Vic Nardozza
+* 2009 ''[[Curb Your Enthusiasm]]'' ��� with the entire cast of ''[[Seinfeld]]''
+
+== Filmography ==
+
+* 1982 ''[[Young Doctors in Love]]'' - Malamud Callahan
+* 1984 ''[[The House of God]]'' - Dr. Pinkus
+* 1985 ''[[Transylvania 6-5000 (1985 film)|Transylvania 6-5000]]'' - Fejos
+* 1986 ''[[Whoops Apocalypse]]'' - Lacrobat
+* 1989 ''[[UHF (film)|UHF]]'' - Stanley Spadowski
+* 1990 ''[[Problem Child (film)|Problem Child]]'' - Martin Beck
+* 1993 ''[[Coneheads (film)|Coneheads]]'' - Motel clerk
+* 1993 ''[[So I Married an Axe Murderer]]'' - Newspaper reporter
+* 1994 ''[[Airheads]]'' - Doug Beech
+* 1995 ''[[Unstrung Heroes]]'' - Danny Lidz
+* 1997 ''[[Redux Riding Hood]]'' (voice) - The Wolf
+* 1997 ''[[Trial and Error (1997 film)|Trial and Error]]'' - Richard 'Ricky' Rietti
+* 2007 ''[[Bee Movie]]'' (voice) - Bud Ditchwater
+* 2011 ''Jock'' (voice) - Mr. Morris
+
+== References ==
+{{Reflist}}
+
+== External links ==
+{{wikiquote}}
+{{commons}}
+*{{IMDb name|724245}}
+*{{ymovies name|1800121539}}
+
+{{EmmyAward ComedySupportingActor 1976-2000}}
+{{ScreenActorsGuildAwards EnsembleTVComedy 1994���1999}}
+
+&lt;!-- EDITORS BEWARE: Before tagging this article with any racism-related categories, please see the Talk page discussion. You may be blocked from Wikipedia for violation of 3RR if you continue making edits and do not participate in the discussion here: http://en.wikipedia.org/wiki/Talk:Michael_Richards#Addition_of_Category:Racism
+
+(See e.g., http://en.wikipedia.org/wiki/WP:3rr for more details)--&gt;
+
+{{Persondata
+|NAME=Richards, Michael
+|ALTERNATIVE NAMES=Richards, Michael Anthony
+|SHORT DESCRIPTION=Actor, comedian
+|DATE OF BIRTH=July 24, 1949
+|PLACE OF BIRTH=[[Culver City, California]], [[United States]]
+|DATE OF DEATH=
+|PLACE OF DEATH=
+}}
+{{DEFAULTSORT:Richards, Michael}}
+[[Category:1949 births]]
+[[Category:Living people]]
+[[Category:American film actors]]
+[[Category:Obscenity controversies]]
+[[Category:American stand-up comedians]]
+[[Category:American television actors]]
+[[Category:American voice actors]]
+[[Category:The Evergreen State College alumni]]
+[[Category:People from Los Angeles County, California]]
+[[Category:United States Army soldiers]]
+[[Category:Outstanding Performance by an Ensemble in a Comedy Series Screen Actors Guild Award winners]]
+[[Category:Emmy Award winners]]
+[[Category:Freemasons]]
+
+[[de:Michael Richards]]
+[[es:Michael Richards]]
+[[fr:Michael Richards]]
+[[ko:��������� ���������]]
+[[hr:Michael Richards]]
+[[is:Michael Richards]]
+[[it:Michael Richards]]
+[[he:���������� ������'������]]
+[[la:Michael Richards]]
+[[nl:Michael Richards]]
+[[ja:������������������������������]]
+[[no:Michael Richards]]
+[[pl:Michael Richards]]
+[[pt:Michael Richards]]
+[[ro:Michael Richards]]
+[[simple:Michael Richards]]
+[[sh:Michael Richards]]
+[[fi:Michael Richards]]
+[[sv:Michael Richards]]
+[[tl:Michael Richards]]</text>
+      <sha1>9439r8s5pr41vuxerp6zit36hsiuads</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+  </page>
+	<page>
+    <title>Steven Wright</title>
+    <ns>0</ns>
+    <id>104987</id>
+    <revision>
+      <id>519237265</id>
+      <parentid>517163173</parentid>
+      <timestamp>2012-10-22T17:35:19Z</timestamp>
+      <contributor>
+        <ip>67.242.176.37</ip>
+      </contributor>
+      <comment>Added cameo in Dr. Westchesterson's music video (I'm From) Western Mass. Please fix formatting if I did it improperly.</comment>
+      <text xml:space="preserve">{{Distinguish|Stephen Wright}}
+{{Other people|Steven Wright}}
+{{Infobox comedian
+| name              = Steven Wright
+| image             = Steven Wright 1994.jpg
+| imagesize         = 
+| caption           = Wright at [[Tufts University]], 1994
+| pseudonym         =
+| birth_name        = Steven Alexander Wright
+| birth_date        = {{birth date and age|1955|12|6}}
+| birth_place       = [[Cambridge, Massachusetts]], United States
+| death_date        =
+| death_place       =
+| medium            = [[stand-up comedy|stand-up]], [[film]], [[television]]
+| nationality       = [[United States|American]]
+| active            = 1979���present
+| genre             = [[surreal humor]], [[one-liners]], [[deadpan]], [[wit]]/[[word play]], [[observational comedy]], [[Musical comedy]]
+| subject           =
+| influences        = [[Woody Allen]], [[George Carlin]],&lt;ref&gt;{{cite web|url=http://comedycouch.com/interviews/swright.htm |title=Steven Wright Interview |publisher=The Comedy Couch |date=2002-04-10 |accessdate=2012-06-12}}&lt;/ref&gt; [[Bob Newhart]]&lt;ref&gt;{{cite web|last=Lapka |first=Larry |url=http://allmusic.com/artist/steven-wright-p253 |title=Steven Wright |publisher=AllMusic |date=1955-12-06 |accessdate=2012-06-12}}&lt;/ref&gt;
+| influenced        = [[Louis CK]], [[Mitch Hedberg]], [[Demetri Martin]], [[Milton Jones]], [[Jimmy Carr]], [[Anthony Jeselnik]], [[Zach Galifianakis]], [[Matt Kopache]], [[Billy Connolly]], [[Chris Dahlman]]
+| spouse            =
+| notable_work      = ''[[I Have a Pony]]''&lt;br /&gt;''[[I Still Have a Pony]]''
+| signature         =
+| website           = 
+| footnotes         =
+| current_members   =
+| past_members      =
+| module = {{Infobox comedian awards
+  |child=yes
+  | academyawards     = '''[[Academy Award for Live Action Short Film|Best Short Film, Live Action]]'''&lt;br /&gt;1988 ''[[The Appointments of Dennis Jennings]]''
+ }}
+}}
+'''Steven Alexander Wright''' (born December 6, 1955) is an American [[comedian]], [[actor]] and [[writer]]. He is known for his distinctly lethargic voice and slow, [[deadpan]] delivery of [[irony|ironic]], [[Philosophy#Contemporary philosophy (c. 1900 ��� present)|philosophical]] and sometimes nonsensical [[joke]]s, [[paraprosdokian]]s, and [[one-liner joke|one-liners]] with contrived situations.
+
+==Early life and career==
+Wright was born in Mount Auburn Hospital in [[Cambridge, Massachusetts]], and grew up in [[Burlington, Massachusetts]],&lt;ref name=&quot;newsday&quot;&gt;{{cite web |url=http://www.newsday.com/entertainment/music/ny-etent2812804889may26,0,6077734.story |title=Comedian Steven Wright plays Westbury Sunday |author=[[Frank Lovece]] |work=Newsday |deadurl=yes |date=May 28, 2009 |archiveurl=http://web.archive.org/web/20090531055218/http://www.newsday.com/entertainment/music/ny-etent2812804889may26,0,6077734.story |archivedate=2009-05-31 |accessdate=2012-03-22}}&lt;/ref&gt;&lt;ref&gt;{{cite news
+| title = a famous former Burlington resident
+| date = March 3, 2010
+| author = Gail Waterhouse
+| work = [[The Boston Globe]]
+}}&lt;/ref&gt; one of four children of Lucille ���Dolly��� (n��e Lomano) and Alexander K. Wright.&lt;ref name=&quot;newsday&quot;/&gt;&lt;ref&gt;{{cite web|url=http://www.sullivanfuneralhome.net/bio.aspx?id=301 |title=Obituary |publisher=Sullivanfuneralhome.net |date=2008-01-09 |accessdate=2012-06-12}}&lt;/ref&gt;&lt;ref&gt;{{cite news|last=|first=|coauthors=|title=Cover Story; The (sur)real Steven Wright; He laughs easily, works hard for material|pages=|work=[[The Atlanta Journal-Constitution]] |date=1987-08-01|url=http://nl.newsbank.com/nl-search/we/Archives?p_product=AT&amp;p_theme=at&amp;p_action=search&amp;p_maxdocs=200&amp;p_topdoc=1&amp;p_text_direct-0=0EB7C2D383BE2F59&amp;p_field_direct-0=document_id&amp;p_perpage=10&amp;p_sort=YMD_date:D&amp;s_trackval=GooglePM|accessdate=2010-02-22}}&lt;/ref&gt; He was raised [[Catholic]].&lt;ref&gt;{{cite web|url=http://www.stevenwright.com/latest/seattletimes20020517.html |title=Latest |publisher=Steven Wright |date=2002-05-17 |accessdate=2012-06-12}}&lt;/ref&gt; His mother was [[Italian American]] and his father was of Scottish descent.&lt;ref name=ref09&gt;{{cite news|last=Dana|first=Rebecca|coauthors=|title=Steven Wright on Letterman, Rembrandt and Being Short|pages=|publisher=Speakeasy|date=2009-06-05|url=http://blogs.wsj.com/speakeasy/2009/06/05/steven-wright-on-letterman-rembrandt-and-being-short/tab/article/|accessdate=2010-02-22}}&lt;/ref&gt; Wright's father, an electronics technician who &quot;tested a lot of stuff for the [[Apollo space program]],&quot; became a truck driver after that program ended.&lt;ref name=&quot;newsday&quot;/&gt;
+
+Wright spent two years obtaining an [[associate's degree]] from [[Middlesex Community College (Massachusetts)|Middlesex Community College]] in [[Bedford, Massachusetts]], before enrolling at [[Emerson College]].&lt;ref name=bostonglobe&gt;Crane, Joyce Pellino. &quot;Laugh Track: For more than five decades, Emerson College has been putting comics on the road to success&quot;, ''[[The Boston Globe]]'', October 7, 2007&lt;/ref&gt; He graduated from the latter in 1978&lt;ref name=bostonglobe /&gt; and began performing stand-up comedy in 1979&lt;ref name=&quot;newsday&quot;/&gt;&lt;ref&gt;[http://www.pittsburghcitypaper.ws/gyrobase/Content?oid=oid%3A36910 Young, Chris. &quot;Behind a new album, comedian Steven Wright plays Pittsburgh for the first time in five years&quot;], ''[[Pittsburgh City Paper]]'', October 11, 2007&lt;/ref&gt; at the Boston comedy club the Comedy Connection.&lt;ref name=&quot;newsday&quot;/&gt;&lt;ref name=&quot;bostonglobe&quot;/&gt; He cites [[George Carlin]] and [[Woody Allen]] among his influences.&lt;ref name=&quot;nyt1&quot;&gt;Keepnews, Peter. &quot;A Strange Career Takes an Odd Turn&quot;, ''[[The New York Times]]'', February 10, 2008, Section AR; Column 0; Arts and Leisure Desk; Television; Pg. 11&lt;/ref&gt;
+
+In 1982 [[Peter Lassally]], [[executive producer]] of ''[[The Tonight Show]]'', noticed Wright performing on a bill with other local comics at the comedy club Ding Ho,&lt;ref name=punch&gt;[http://punchlinemagazine.com/site/2008/12/steven-wright-inducted-into-hall-a-citys-comedy-history-celebrated/ Turbovsky, Rob. &quot;Steven Wright inducted into Hall, a city���s comedy history celebrated&quot;], ''[[Punchline Magazine]]'', December 22, 2008&lt;/ref&gt;  in Cambridge's [[Inman Square]],&lt;ref name=loaded&gt;[http://www.loadedgunboston.com/2008/04/steven-wright-headlines-ding-ho-reunion.html Baltrusis, Sam. &quot;Steven Wright headlines Ding Ho reunion benefit&quot;], LoadedGunBoston.com, April 8, 2008&lt;/ref&gt; a venue Wright described as &quot;half Chinese restaurant and half comedy club. It was a pretty weird place&quot;.&lt;ref name=newsday /&gt; Lassally booked Wright on ''The Tonight Show'', where the comic so impressed host [[Johnny Carson]] and the studio audience that Wright was brought back less than a week later.&lt;ref name=nyt1 /&gt; In May 2000, Wright and other Ding Ho alumni, including [[Lenny Clarke]], Barry Crimmins, [[Steve Sweeney]], Bill Sohonage, and [[Jimmy Tingle]], appeared at a reunion benefit for comic [[Bob Lazarus]], suffering from [[leukemia]].&lt;ref name=loaded /&gt;
+
+==Stand-up success==
+Wright's 1985 comedy album was entitled ''[[I Have a Pony]]''. It was released on [[Warner Bros. Records]], received critical acclaim and was nominated for the [[Grammy Award for Best Comedy Album]]. The success of this album landed him a much coveted HBO special which he recorded as a live college concert performance, ''A Steven Wright Special''. By now Wright had firmly developed a new brand of obscure, laid-back performing and was rapidly building a cult-like mystique and eclectic following of &quot;hip&quot;, savvy fans. His opening act for the HBO concert was fellow &quot;Ding Ho&quot; comedy alumni [[Bill Sohonage]] who recounts that Steven's ultra-casual, nearly catatonic demeanor was no act. &quot;He walked into my dressing room, minutes before I was to take the stage, and asked if he could borrow a shirt, as his had a giant pizza stain. You would think it might be normal to be a little nervous going on a college stage in front of 23,000, let alone having HBO out there filming but as I passed by his room while walking on-stage I saw him sound asleep and loudly snoring&quot;. The performance would become one of HBO's longest running and most requested comedy specials and propel him to huge success on the college arena concert circuits.
+
+In 1989 he and fellow producer [[Dean Parisot]] won an [[Academy Awards|Academy Award]] for their 30-minute [[short film]] &quot;[[The Appointments of Dennis Jennings]]&quot;, directed by Parisot, written by Mike Armstrong and Wright, and starring Wright and [[Rowan Atkinson]]. Upon accepting the Oscar, Wright said, &quot;Now I'm sorry I cut out that last hour-and-a-half.&quot;  In 1992 Wright had a recurring role on the television [[Situation comedy|sitcom]] ''[[Mad About You]]''. He supplied the voice of the radio DJ in writer-director [[Quentin Tarantino]]'s film ''[[Reservoir Dogs]]'' that year. &quot;Dean Parisot's wife [[Sally Menke]] is Quentin Tarantino's [[film editor|&lt;nowiki&gt;[&lt;/nowiki&gt;film&lt;nowiki&gt;]&lt;/nowiki&gt; editor]], so when she was editing the movie and it was getting down toward the end where they didn't have the radio DJ yet, she thought of me and told Quentin and he liked the idea&quot;, Wright explained in 2009.&lt;ref name=newsday /&gt;
+
+Numerous lists of jokes attributed to Wright circulate on the Internet, sometimes of dubious origin. Wright has stated, &quot;Someone showed me a site, and half of it that said I wrote it, I didn't write. Recently, I saw one, and I didn't write any of it. What's disturbing is that with a few of these jokes, I wish I had thought of them. A giant amount of them, I'm embarrassed that people think I thought of them, because some are really bad&quot;.&lt;ref&gt;[http://www.avclub.com/content/node/54975 &quot;AV Club: Interview with Steven Wright&quot;], ''[[The Onion]]'', 9 November 2006.&lt;/ref&gt;
+
+After his 1990 comedy special ''Wicker Chairs and Gravity'', Wright continued to do stand-up performances, but he was largely absent from television, only doing occasional guest spots on late-night [[talk show]]s. In 1999 he wrote and directed the 30-minute short &quot;[[One Soldier]]&quot;, &quot;about a soldier who was in the [[US Civil War|Civil War]], right after the war, with all these [[existentialism|existentialist]] thoughts and wondering if there is a God and all that stuff&quot;.&lt;ref name=newsday /&gt;
+
+In 2006 Wright produced his first stand-up special in 16 years, ''Steven Wright: [[When The Leaves Blow Away]]'', originally airing on [[Comedy Central]] on October 21, 2006. Its DVD was released April 23, 2007.{{Citation needed|date=May 2009}} On September 25, 2007 Wright released his second album, ''[[I Still Have a Pony]]'', a CD release of the material from ''When The Leaves Blow Away''. It was nominated for the [[Grammy Award for Best Comedy Album]] but it lost to ''[[The Distant Future]]'' by [[Flight of the Conchords]].
+
+==Awards and honors==
+Steven Wright was awarded an Oscar in 1989 for Best Short Live-Action Film for The Appointments of Dennis Jennings, which he co-wrote (with Michael Armstrong) and starred in.&lt;ref&gt;{{cite web|url=http://www.moviefone.com/celebrity/steven-wright/1840682/main |title=Steven Wright Main &amp;#124; All About Steven Wright |publisher=Moviefone |date=1955-12-06 |accessdate=2012-06-12}}&lt;/ref&gt;
+
+On December 15, 2008, Wright became the first inductee to the Boston Comedy Hall of Fame.&lt;ref name=punch /&gt;&lt;ref&gt;Miller, Jay, N. &quot;The Wright stuff; Boston comedian is first inductee into hall of fame&quot;, ''[[The Patriot Ledger]]'' ([[Quincy, Massachusetts]]), December 15, 2008, Features; pg. 23&lt;/ref&gt;
+
+In a 2005 poll to find ''The Comedian's Comedian'', he was voted amongst the top 50 comedy acts by fellow comedians and comedy insiders. He was named #23 on [[Comedy Central]]'s list of the 100 greatest stand-up comics.&lt;ref&gt;[http://everything2.com/index.pl?node_id=1532323 Comedy Central's 100 Greatest Stand-Ups of all Time&lt;!-- Bot generated title --&gt;], Everything2.com&lt;/ref&gt;
+
+==Other interests==
+While not well known for works outside of the comedy realm, Steven Wright is also a musician and has also recorded several non-comedy songs with his friend and occasional actor [[Mark Wuethner]].&lt;ref&gt;{{cite web|url=http://www.stevenwright.com/music_paint/music.html |title=Music |publisher=Steven Wright |date= |accessdate=2012-06-12}}&lt;/ref&gt;&lt;ref&gt;{{IMDb name|2990002|Mark Wuerthner}}&lt;/ref&gt; Wright also has an apparent interest in painting.&lt;ref&gt;{{cite web|url=http://www.stevenwright.com/music_paint/index.html |title=Music &amp; Paintings |publisher=Steven Wright |date= |accessdate=2012-06-12}}&lt;/ref&gt;
+
+Beginning in 2009, Steven Wright sporadically appears as himself on [[The Late Late Show with Craig Ferguson]] as a visiting celebrity, ostensibly dropping by the show to help out with the fan mail segment. He joins a small cadre of Hollywood celebrities who lend their support to the show in this way.&lt;ref&gt;{{cite web|url=http://vids.myspace.com/index.cfm?fuseaction=vids.individual&amp;videoid=43020005 |title=Steven On The Late Late Show |publisher=Vids.myspace.com |date= |accessdate=2012-06-12}}&lt;/ref&gt;&lt;ref&gt;{{cite web|url=http://web.archive.org/web/20110723044856/http://video.tvguide.com/The+Late+Late+Show/The+Late+Late+Show++Steven+Wright+Drops+By/1772664 |title=The Late Late Show - Steven Wright Drops By |publisher=Web.archive.org |date=2011-07-23 |accessdate=2012-06-12}}&lt;/ref&gt;
+
+==Filmography==
+* ''[[Desperately Seeking Susan]]'' (1985) as Larry Stillman D.D.S.
+* ''[[The Appointments of Dennis Jennings]]'' (1988) (short film) ([[Academy Award for Best Live Action Short Film]])
+* ''[[Stars and Bars (film)|Stars and Bars]]'' (1988) as Pruitt
+* ''[[Reservoir Dogs]]'' (1992) (voice only) as K-Billy DJ
+* ''[[So I Married an Axe Murderer]]'' (1993) as Pilot
+* ''[[Speechless (film)|Speechless]]'' (1994) as Eddie
+* ''[[Mad About You]]'' as Paul Buckman's film assistant.
+* ''[[Natural Born Killers]]'' (1994) as Dr. Emil Reingold
+* ''[[The Swan Princess]]'' (1994) as Speed (speaking voice)
+* ''[[Mixed Nuts]]'' (1994) as Suicidal man at pay phone
+* ''[[The Larry Sanders Show]]'' (1994) as himself
+* ''[[Canadian Bacon]]'' (1995) as [[Royal Canadian Mounted Police]] Officer
+* ''[[Half Baked]]'' (1998) as The Guy on the Couch (uncredited)
+* ''[[Babe: Pig in the City]]'' (1998) as Bob (voice)
+* ''[[One Soldier]]'' (1999) (short film)
+* ''[[The Muse (1999 film)|The Muse]]'' (1999)
+* ''[[Loser (film)|Loser]]'' (2000) as Sleazy Man in Bar
+* ''[[Coffee and Cigarettes]]'' (2003) as Steven
+* ''[[The Aristocrats (film)|The Aristocrats]]'' (2005) as himself
+* ''[[When Stand Up Stood Out]]'' (2005) as himself
+* ''[[Son of the Mask]]'' (2005) as The Boss
+
+==Discography==
+* ''[[I Have a Pony]]'', Warner Bros. Records CD '''(1985)'''
+* ''A Steven Wright Special'', HBO DVD (1985)
+* ''[[The Appointments of Dennis Jennings]]'', DVD (1989)
+* ''[[One Soldier]]'', DVD (1999)
+* ''When the Leaves Blow Away'', DVD (2006)
+* ''[[I Still Have a Pony]]'', Comedy Central Records CD '''(2007)'''
+
+==Videography==
+* ''Wicker Chairs and Gravity'', HBO Stand-up Special (1991)&lt;ref&gt;{{cite web|url=http://www.stevenwright.com/history/index.shtml |title=The History |publisher=Steven Wright |date= |accessdate=2012-06-12}}&lt;/ref&gt;
+
+==Music Videos==
+* As Self: ''(I'm From) Western Mass'', Dr. Westchesterson (2012)&lt;ref&gt;{{cite web|url=http://www.youtube.com/watch?v=vqttFWSPtMY |title=(I'm From) Western Mass |publisher=Dr. Westchesterson |date=|accessdate=2012-10-22}}&lt;/ref&gt;
+
+==References==
+{{wikiquote}}
+{{reflist}}
+
+== External links ==
+* [http://www.stevenwright.com/ Steven Wright's web site]
+* {{Twitter|StevenWright|@StevenWright}}
+* {{iMDb name|0942833}}
+* [http://www.wright-house.com/steven-wright/steven-wright-jokes.html Wright-House.com: Jokes attributed to Steven Wright, with actual authors identified]
+* [http://www.dead-frog.com/archives/2006/10/preview_steven_wright_when_the_leaves_blow_away_clip.php Dead-Frog.com: Video of Steven Wright from ''When the Leaves Blow Away'']
+* [http://blogs.riverfronttimes.com/stlog/2008/10/wright_stuff_comic_steven_wrig.php Interview: Steven Wright] [[Riverfront Times]]. October 2008.
+
+{{Authority control|VIAF=96948225}}
+{{Persondata&lt;!-- Metadata: see [[Wikipedia:Persondata]]. --&gt;
+| NAME              = Wright, Steven
+| ALTERNATIVE NAMES =
+| SHORT DESCRIPTION = American actor
+| DATE OF BIRTH     = December 6, 1955
+| PLACE OF BIRTH    = [[Cambridge, Massachusetts]], [[United States|U.S.]]
+| DATE OF DEATH     =
+| PLACE OF DEATH    =
+}}
+{{DEFAULTSORT:Wright, Steven}}
+[[Category:1955 births]]
+[[Category:Academy Award winners]]
+[[Category:American film actors]]
+[[Category:American humorists]]
+[[Category:American people of Italian descent]]
+[[Category:American people of Scottish descent]]
+[[Category:American stand-up comedians]]
+[[Category:American television actors]]
+[[Category:Emerson College alumni]]
+[[Category:Living people]]
+[[Category:People from Cambridge, Massachusetts]]
+[[Category:People from Burlington, Massachusetts]]
+
+[[de:Steven Wright]]
+[[fr:Steven Wright]]
+[[it:Steven Wright]]
+[[he:���������� ��������]]
+[[pt:Steven Wright]]
+[[sv:Steven Wright]]</text>
+      <sha1>0dwl9ox23vjhh9nnkpm1st5a0tnalmb</sha1>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+    </revision>
+  </page>

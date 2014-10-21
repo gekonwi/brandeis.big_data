@@ -6,3 +6,4 @@ encoding//test_data/LemmaIndexMapredTest/Battle\ of\ Tsushima\ -\ text=UTF-8
 encoding//test_data/LemmaIndexMapredTest/Bishounen\ -\ text=UTF-8
 encoding//test_data/ProfessionClassifierMapredTest/math.txt=UTF-8
 encoding//test_data/TokenizerTest/Infobox=UTF-8
+encoding//test_data/unsorted/LemmaIndexMapred\ -\ test\ -\ smallinput.txt=UTF-8
