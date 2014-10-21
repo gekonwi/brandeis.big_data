@@ -89,6 +89,9 @@ public class ProfessionIndexMapred {
 		public void map(Text person, Text lemmaFreqs, Context context) throws IOException,
 				InterruptedException {
 
+			if (!peopleProfessions.containsKey(person))
+				return;
+
 			StringIntegerList lemmaFreqList = new StringIntegerList();
 			lemmaFreqList.readFromString(lemmaFreqs.toString());
 
@@ -136,13 +139,13 @@ public class ProfessionIndexMapred {
 		 * </pre>
 		 */
 		@Override
-		public void reduce(Text profession, Iterable<StringInteger> lemmasAndFreqs, Context context)
+		public void reduce(Text profession, Iterable<StringInteger> lemmaFreqs, Context context)
 				throws IOException, InterruptedException {
 
 			Map<String, Double> lemmaProbs = new HashMap<>();
 			double probabilityAdd = 1.0 / professionsCount.get(profession.toString());
 
-			for (StringInteger si : lemmasAndFreqs) {
+			for (StringInteger si : lemmaFreqs) {
 
 				if (!lemmaProbs.containsKey(si.getString()))
 					lemmaProbs.put(si.getString(), probabilityAdd);
