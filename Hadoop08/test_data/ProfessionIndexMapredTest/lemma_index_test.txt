@@ -1,0 +1,5 @@
+Thomas Gordon Hake	<medical,3><residence,1><family,6><friendship,1><son,7>
+Kim Yong-Kab	<manager,2><play,1><player,1><football,2><south,2>
+Joseph Genualdi	<serve,2><symphony,7><television,1><violin,4><performance,2>
+Hugo Nunes Coelho	<play,3><country,1><achievement,1><game,1><division,1>
+Matt Willig	<gang,1><spot,2><commercial,2><play,6><season,4>

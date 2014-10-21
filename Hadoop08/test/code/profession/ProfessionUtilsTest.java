@@ -23,7 +23,7 @@ public class ProfessionUtilsTest {
 	TestUtils utils = new TestUtils(getClass());
 
 	@Test
-	public void getProfessionCountsPerformanceTest() throws IOException {
+	public void testPerformanceOfGetProfessionCounts() throws IOException {
 		final long ACCEPTED_TOTAL_MILLIS = 5_000;
 
 		System.out.println("starting reading in");
@@ -46,11 +46,12 @@ public class ProfessionUtilsTest {
 		long millisTotal = millisReading + millisParsing;
 		System.out.println("finished reading + parsing after " + millisTotal + " millis");
 
-		assertTrue(millisTotal < ACCEPTED_TOTAL_MILLIS);
+		assertTrue("Method should run within " + ACCEPTED_TOTAL_MILLIS + "millis but took "
+				+ millisTotal + " millis to finish.", millisTotal < ACCEPTED_TOTAL_MILLIS);
 	}
 
 	@Test
-	public void getProfessionCountsTest() throws IOException {
+	public void testGetProfessionCounts() throws IOException {
 		Path path = utils.getInputFilePath("getProfessionCountsTest_input.txt");
 		List<String> professions = Files.readAllLines(path, Charset.forName("UTF-8"));
 

@@ -41,18 +41,34 @@ public class LemmaIndexMapred {
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
 
-		private static final Path STOPWORDS_FILEPATH = new Path("stopwords.csv");
+		private static final String DEFAULT_STOPWORDS_FILEPATH = "stopwords.csv";
 
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
 		private Tokenizer tokenizer;
 
+		private HashSet<String> stopWords;
+
 		@Override
 		protected void setup(Context context) throws IOException, InterruptedException {
-			List<String> lines = HDFSUtils
-					.readLines(STOPWORDS_FILEPATH, context.getConfiguration());
-			HashSet<String> stopWords = new HashSet<>(lines);
+			// allows to set custom stopWords in unit tests
+			if (stopWords == null) {
+				Path path = new Path(DEFAULT_STOPWORDS_FILEPATH);
+				List<String> lines = HDFSUtils.readLines(path, context.getConfiguration());
+				stopWords = new HashSet<>(lines);
+			}
 			tokenizer = new Tokenizer(stopWords);
+		}
+
+		/**
+		 * Has to be called before running MR unit tests. Otherwise the mapper
+		 * will try to retrieve the stop words from an HDFS file.
+		 * 
+		 * @param stopWords
+		 *            list of unwanted lemmas like <i>I, you, be</i>
+		 */
+		public void setStopWords(HashSet<String> stopWords) {
+			this.stopWords = stopWords;
 		}
 
 		@Override
