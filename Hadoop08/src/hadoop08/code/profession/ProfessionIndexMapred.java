@@ -26,61 +26,79 @@ public class ProfessionIndexMapred {
 	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
 
 		private static final Path PROFESSION_FILEPATH = new Path("profession_train.txt");
-		private List<String> wantedPeople;
 		private Map<String, List<String>> peopleProfessions;
 
 		@Override
 		protected void setup(Mapper<Text, Text, Text, StringInteger>.Context context)
 				throws IOException, InterruptedException {
+			/*
+			 * create a HashMap that separates each line from the
+			 * profession_train file into a person and list of its professions
+			 */
 
-			// read from people_train file in HDFS, add each line to
-			// peopleProfessions map.
-			wantedPeople = HDFSUtils.readLines(PROFESSION_FILEPATH, context.getConfiguration());
-			// create a HashMap that separates each line into a person and its
-			// professions.
+			List<String> lines = HDFSUtils.readLines(PROFESSION_FILEPATH,
+					context.getConfiguration());
+
 			peopleProfessions = new HashMap<String, List<String>>();
-			for (String s : wantedPeople) {
-				// Assuming that there is no whitespace in each line
-				// (name:prof1,prof2,prof3)
-				String name = s.substring(0, s.indexOf(":")).trim();
-				;
-				String prof = s.substring(s.indexOf(":") + 1).trim();
-				;
-				// Chose to implement a list because of
-				// http://stackoverflow.com/questions/7488643/java-how-to-convert-comma-separated-string-to-arraylist
-				List<String> items = Arrays.asList(prof.split("\\s*,\\s*"));
-				peopleProfessions.put(name, items);
+			for (String s : lines) {
+				String[] parts = s.split(" : ");
+				String name = parts[0];
+				String profs = parts[1];
+
+				List<String> profsList = Arrays.asList(profs.split(", "));
+				peopleProfessions.put(name, profsList);
 			}
 		}
 
+		/**
+		 * transform the ((key), (value)) pair:
+		 * 
+		 * <pre>
+		 * {@code
+		 * ((person1), (<lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>))
+		 * }
+		 * </pre>
+		 * 
+		 * 
+		 * with
+		 * 
+		 * <pre>
+		 * {@code
+		 * person1 : profession1, profession2, profession3
+		 * }
+		 * </pre>
+		 * 
+		 * into the Cartesian product of professions and lemmas like the
+		 * following ((key), (value)) pairs:
+		 * 
+		 * <pre>
+		 * {@code
+		 * ((profession1), (<lemma1,freq1>))
+		 * ((profession1), (<lemma2,freq2>))
+		 * ((profession1), (<lemma3,freq3>))
+		 * ((profession2), (<lemma1,freq1>))
+		 * ((profession2), (<lemma2,freq2>))
+		 * ((profession2), (<lemma3,freq3>))
+		 * ((profession3), (<lemma1,freq1>))
+		 * ((profession3), (<lemma2,freq2>))
+		 * ((profession3), (<lemma3,freq3>))
+		 * }
+		 * </pre>
+		 */
 		@Override
-		public void map(Text articleId, Text indices, Context context) throws IOException,
+		public void map(Text person, Text lemmaFreqs, Context context) throws IOException,
 				InterruptedException {
-			/*
-			 * transform:
-			 * 
-			 * article_id1 <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>
-			 * 
-			 * into tuples:
-			 * 
-			 * [profession1, <lemma1,freq1>,<lemma2, freq2>,<lemma3,freq3>]
-			 * 
-			 * [profession2, <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>]
-			 * 
-			 * [profession3, <lemma1,freq1>,<lemma2,freq2>,<lemma3,freq3>]
-			 */
 
-			StringIntegerList siList = new StringIntegerList();
-			siList.readFromString(indices.toString());
+			StringIntegerList lemmaFreqList = new StringIntegerList();
+			lemmaFreqList.readFromString(lemmaFreqs.toString());
 
-			String articleIdString = articleId.toString();
 			// For each lemma in the article
-			for (StringInteger lemmaFreq : siList.getIndices()) {
+			for (StringInteger lemmaFreq : lemmaFreqList.getIndices()) {
 				// For each profession associated with the article
-				for (String s : peopleProfessions.get(articleIdString)) {
+				for (String p : peopleProfessions.get(person.toString())) {
 					// Write the profession, all LemmaFreqs associated with that
 					// profession
-					context.write(new Text(s), lemmaFreq);
+					context.write(new Text(p), lemmaFreq);
 				}
 			}
 		}
@@ -95,34 +113,34 @@ public class ProfessionIndexMapred {
 		@Override
 		protected void setup(Reducer<Text, StringInteger, Text, StringDoubleList>.Context context)
 				throws IOException, InterruptedException {
-			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils.readLines(
-					PROFESSION_FILEPATH, context.getConfiguration()));
+			final List<String> lines = HDFSUtils.readLines(PROFESSION_FILEPATH,
+					context.getConfiguration());
+			professionsCount = ProfessionUtils.getProfessionCounts(lines);
 		}
 
+		/**
+		 * transform the ((key), (value)) pair:
+		 * 
+		 * <pre>
+		 * {@code
+		 * ((profession1), (<lemma1,freq1>,<lemma2,freq2>,<lemma1,freq3>))
+		 * }
+		 * </pre>
+		 * 
+		 * into a ((key), (value)) pair like:
+		 * 
+		 * <pre>
+		 * {@code
+		 * ((profession1), (<lemma1,probability1>,<lemma2,probability2>))
+		 * }
+		 * </pre>
+		 */
 		@Override
 		public void reduce(Text profession, Iterable<StringInteger> lemmasAndFreqs, Context context)
 				throws IOException, InterruptedException {
 
-			/*
-			 * transform:
-			 * 
-			 * [profession1, <lemma1,freq1>,<lemma2,freq2>,<lemma1,freq3>]
-			 * 
-			 * [profession2, <lemma1,freq1>,<lemma2,freq2>,<lemma1,freq3>]
-			 * 
-			 * [profession3, <lemma1,freq1>,<lemma2,freq2>,<lemma1,freq3>]
-			 * 
-			 * into:
-			 * 
-			 * [profession1, <lemma1,freq1 + freq3,prob1>,<lemma2,freq2,prob2>]
-			 * 
-			 * [profession2, <lemma1,freq1 + freq3,prob1>,<lemma2,freq2,prob2>]
-			 * 
-			 * [profession3, <lemma1,freq1 + freq3,prob1>,<lemma2,freq2,prob2>]
-			 */
-
 			Map<String, Double> lemmaProbs = new HashMap<>();
-			double probabilityAdd = 1.0 / professionsCount.get(profession);
+			double probabilityAdd = 1.0 / professionsCount.get(profession.toString());
 
 			for (StringInteger si : lemmasAndFreqs) {
 
@@ -133,17 +151,22 @@ public class ProfessionIndexMapred {
 
 			}
 
-			StringDoubleList sdl_lemmaProbs = new StringDoubleList(lemmaProbs);
-
-			context.write(profession, sdl_lemmaProbs);
+			StringDoubleList lemmaProbsList = new StringDoubleList(lemmaProbs);
+			context.write(profession, lemmaProbsList);
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
 
 		Job job = Job.getInstance(new Configuration());
+
+		// mapper
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(StringInteger.class);
+
+		// reducer
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(StringInteger.class);
+		job.setOutputValueClass(StringDoubleList.class);
 
 		job.setMapperClass(ProfessionIndexMapper.class);
 		job.setReducerClass(ProfessionIndexReducer.class);
