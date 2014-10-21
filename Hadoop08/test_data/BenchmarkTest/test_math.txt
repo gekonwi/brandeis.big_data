@@ -1,0 +1,26 @@
+== Barack Obama ==
+real profession : president, attorney, professor
+test profession : archer, president, black
+result : correct
+
+== Kanye West == 
+real profession : rapper, record producer
+test profession : jesus, savior, artist
+result : incorrect
+
+== Fredrick Lawrence == 
+real profession : president, teacher, attorney
+test profession : aladdin, president, attorney
+result : correct
+
+== Sarah Palin ==
+real profession : governor
+test profession : stupid, idiot, russia
+result : incorrect
+
+== Kim Jung Un
+real profession : supreme leader, dictator
+test profession : glorious leader, dictator
+result : correct
+
+Precision = 3 Correct answers / 5 testing sample = 60% 
