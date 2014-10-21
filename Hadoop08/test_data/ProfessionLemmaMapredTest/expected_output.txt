@@ -1,0 +1,84 @@
+actor	actor,1.0
+actor	black,1.0
+actor	live,1.0
+actor	movie,1.0
+actor	school,1.0
+actor	singer,1.0
+father	actor,0.3333333333333333
+father	black,0.3333333333333333
+father	house,0.3333333333333333
+father	live,0.3333333333333333
+father	movie,0.3333333333333333
+father	physics,0.3333333333333333
+father	president,0.3333333333333333
+father	relativity,0.3333333333333333
+father	school,1.0
+father	singer,0.6666666666666666
+father	theory,0.3333333333333333
+father	university,0.3333333333333333
+father	white,0.3333333333333333
+hobby singer	champion,0.5
+hobby singer	dortmund,0.5
+hobby singer	germany,0.5
+hobby singer	goal,0.5
+hobby singer	hospital,0.5
+hobby singer	house,0.5
+hobby singer	president,0.5
+hobby singer	school,1.0
+hobby singer	singer,0.5
+hobby singer	soccer,0.5
+hobby singer	white,0.5
+hobby singer	world,0.5
+hobby surfer	champion,1.0
+hobby surfer	dortmund,1.0
+hobby surfer	germany,1.0
+hobby surfer	goal,1.0
+hobby surfer	hospital,1.0
+hobby surfer	school,1.0
+hobby surfer	soccer,1.0
+hobby surfer	world,1.0
+model	champion,1.0
+model	dortmund,1.0
+model	germany,1.0
+model	goal,1.0
+model	hospital,1.0
+model	school,1.0
+model	soccer,1.0
+model	world,1.0
+physicist	physics,1.0
+physicist	relativity,1.0
+physicist	school,1.0
+physicist	theory,1.0
+physicist	university,1.0
+politician	house,1.0
+politician	president,1.0
+politician	school,1.0
+politician	singer,1.0
+politician	white,1.0
+scientist	physics,1.0
+scientist	relativity,1.0
+scientist	school,1.0
+scientist	theory,1.0
+scientist	university,1.0
+singer	actor,1.0
+singer	black,1.0
+singer	live,1.0
+singer	movie,1.0
+singer	school,1.0
+singer	singer,1.0
+soccer couch	champion,1.0
+soccer couch	dortmund,1.0
+soccer couch	germany,1.0
+soccer couch	goal,1.0
+soccer couch	hospital,1.0
+soccer couch	school,1.0
+soccer couch	soccer,1.0
+soccer couch	world,1.0
+soccer player	champion,1.0
+soccer player	dortmund,1.0
+soccer player	germany,1.0
+soccer player	goal,1.0
+soccer player	hospital,1.0
+soccer player	school,1.0
+soccer player	soccer,1.0
+soccer player	world,1.0

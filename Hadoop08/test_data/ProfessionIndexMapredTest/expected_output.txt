@@ -1,0 +1,10 @@
+actor : <actor,1.0>,<black,1.0>,<live,1.0>,<movie,1.0>,<school,1.0>,<singer,1.0>
+father : <actor,0.3333333333333333>,<black,0.3333333333333333>,<house,0.3333333333333333>,<live,0.3333333333333333>,<movie,0.3333333333333333>,<physics,0.3333333333333333>,<president,0.3333333333333333>,<relativity,0.3333333333333333>,<school,1.0>,<singer,0.6666666666666666>,<theory,0.3333333333333333>,<university,0.3333333333333333>,<white,0.3333333333333333>
+hobby singer : <champion,0.5>,<dortmund,0.5>,<germany,0.5>,<goal,0.5>,<hospital,0.5>,<house,0.5>,<president,0.5>,<school,1.0>,<singer,0.5>,<soccer,0.5>,<white,0.5>,<world,0.5>,<champion,1.0>,<dortmund,1.0>,<germany,1.0>,<goal,1.0>,<hospital,1.0>,<school,1.0>,<soccer,1.0>,<world,1.0>model : <champion,1.0>
+model : <dortmund,1.0>,<germany,1.0>,<goal,1.0>,<hospital,1.0>,<school,1.0>,<soccer,1.0>,<world,1.0>
+physicist : <physics,1.0>,<relativity,1.0>,<school,1.0>,<theory,1.0>,<university,1.0>
+politician : <house,1.0>,<president,1.0>,<school,1.0>,<singer,1.0>,<white,1.0>
+scientist : <physics,1.0>,<relativity,1.0>,<school,1.0>,<theory,1.0>,<university,1.0>
+singer : <actor,1.0>,<black,1.0>,<live,1.0>,<movie,1.0>,<school,1.0>,<singer,1.0>
+soccer couch : <champion,1.0>,<dortmund,1.0>,<germany,1.0>,<goal,1.0>,<hospital,1.0>,<school,1.0>,<soccer,1.0>,<world,1.0>
+soccer player : <champion,1.0>,<dortmund,1.0>,<germany,1.0>,<goal,1.0>,<hospital,1.0>,<school,1.0>,<soccer,1.0>,<world,1.0>
