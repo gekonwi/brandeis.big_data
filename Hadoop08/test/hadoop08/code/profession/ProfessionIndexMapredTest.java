@@ -3,15 +3,10 @@ package hadoop08.code.profession;
 import static org.junit.Assert.assertEquals;
 import hadoop08.code.profession.ProfessionIndexMapred.ProfessionIndexMapper;
 import hadoop08.code.profession.ProfessionIndexMapred.ProfessionIndexReducer;
-import hadoop08.utils.StringDouble;
 import hadoop08.utils.StringDoubleList;
-import hadoop08.utils.StringInteger;
-import hadoop08.utils.StringIntegerList;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.hadoop.io.Text;

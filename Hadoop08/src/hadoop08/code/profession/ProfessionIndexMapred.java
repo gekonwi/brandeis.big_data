@@ -144,7 +144,7 @@ public class ProfessionIndexMapred {
 		Job job = Job.getInstance(new Configuration());
 		
 		job.setMapOutputKeyClass(Text.class);
-		job.setMapOutputValueClass(StringInteger.class);
+		job.setMapOutputValueClass(Text.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(StringDouble.class);
 
