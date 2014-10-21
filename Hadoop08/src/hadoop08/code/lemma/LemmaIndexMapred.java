@@ -7,6 +7,8 @@ import hadoop08.util.WikipediaPageInputFormat;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,10 +41,12 @@ import edu.umd.cloud9.collection.wikipedia.WikipediaPage;
  * @author Steven Hu, stevenhh@brandeis.edu
  */
 public class LemmaIndexMapred {
+
+	private static final String KEY_VALUE_SEPARATOR = " : ";
+	private static final String STOPWORDS_FILEPATH = "stopwords.csv";
+
 	public static class LemmaIndexMapper extends
 			Mapper<LongWritable, WikipediaPage, Text, StringIntegerList> {
-
-		private static final String DEFAULT_STOPWORDS_FILEPATH = "stopwords.csv";
 
 		private static final Log LOG = LogFactory.getLog(LemmaIndexMapper.class);
 
@@ -54,7 +58,7 @@ public class LemmaIndexMapred {
 		protected void setup(Context context) throws IOException, InterruptedException {
 			// allows to set custom stopWords in unit tests
 			if (stopWords == null) {
-				Path path = new Path(DEFAULT_STOPWORDS_FILEPATH);
+				Path path = new Path(STOPWORDS_FILEPATH);
 				List<String> lines = HDFSUtils.readLines(path, context.getConfiguration());
 				stopWords = new HashSet<>(lines);
 			}
@@ -143,10 +147,8 @@ public class LemmaIndexMapred {
 		}
 	}
 
-	private static final String KEY_VALUE_SEPARATOR = " : ";
-
 	public static void main(String[] args) throws IOException, InterruptedException,
-			ClassNotFoundException {
+			ClassNotFoundException, URISyntaxException {
 
 		// Job configs
 		Job job = Job.getInstance(new Configuration());
@@ -171,6 +173,8 @@ public class LemmaIndexMapred {
 
 		// assignment requires " : " instead of the default "\t" as separator
 		conf.set("mapred.textoutputformat.separator", KEY_VALUE_SEPARATOR);
+
+		job.addCacheFile(new URI(STOPWORDS_FILEPATH));
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
