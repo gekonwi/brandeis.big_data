@@ -20,6 +20,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
+	<classpathentry kind="lib" path="libs/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="test/lib/mockito-1.9.5/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="test/lib/MRUnit/commons-collections-3.2.1.jar"/>

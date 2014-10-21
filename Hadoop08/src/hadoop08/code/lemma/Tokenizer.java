@@ -122,19 +122,23 @@ public class Tokenizer {
 		// "has" - all three cases are irrelevant for indexing
 		patterns.add("('s|s')\\s");
 
-		addUnwantedCharPatterns(patterns);
+		patterns.addAll(getUnwantedCharPatterns());
 
 		return patterns;
 	}
 
-	private static void addUnwantedCharPatterns(List<String> patterns) {
+	private static List<String> getUnwantedCharPatterns() {
+
 		// Unwanted characters, separated by a blank.
-		String chars = "\" ` ?? . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # ?? $ _ - ~ * ?? ^ +";
+		String chars = "\" ` ´ . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # § $ _ - ~ * ° ^ +";
 		chars += " s d"; // white space (s) and digits (s)
 
+		List<String> patterns = new ArrayList<>();
 		for (String c : chars.split(" "))
 			// escape to avoid mis-interpretation as a special regex character
 			patterns.add("\\" + c);
+
+		return patterns;
 	}
 
 	private static void addHTMLDecodingPatterns(List<String> patterns) {

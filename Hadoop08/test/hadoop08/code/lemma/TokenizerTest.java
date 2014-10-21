@@ -3,7 +3,6 @@ package hadoop08.code.lemma;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import hadoop08.TestUtils;
-import hadoop08.code.lemma.Tokenizer;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -186,12 +185,21 @@ public class TokenizerTest {
 
 	@Test
 	public void testRemovesReferences() {
-		String doc = "T??g??  [[Crossing the T|crossed the Russian 'T']]";
+		String doc = "Tōgō [[Crossing the T|crossed the Russian 'T']]";
 		doc += "<ref>Semenoff (1907) p. 70</ref>";
 		doc += " enabling him to fire broadsides";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "T??g?? Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
+		String expected = "Tōgō Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesPosessions() {
+		String doc = "my parents' house is also my sister's house";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "my parent house is also my sister house";
 		assertEquals(expected, doc);
 	}
 }
