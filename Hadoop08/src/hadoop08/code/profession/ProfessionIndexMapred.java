@@ -7,7 +7,6 @@ import hadoop08.utils.StringInteger;
 import hadoop08.utils.StringIntegerList;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +24,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class ProfessionIndexMapred {
 
-	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringInteger> {
+	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, Text> {
 
 		private static final Path PROFESSION_FILEPATH = new Path("profession_train.txt");
 		private List<String> wantedPeople;
 		private Map<String, List<String>> peopleProfessions;
 
 		@Override
-		protected void setup(Mapper<Text, Text, Text, StringInteger>.Context context)
+		protected void setup(Mapper<Text, Text, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 
 			// read from people_train file in HDFS, add each line to
@@ -81,7 +80,7 @@ public class ProfessionIndexMapred {
 					for (String s : peopleProfessions.get(articleIdString)) {
 						// Write the profession, all LemmaFreqs associated with that
 						// profession
-						context.write(new Text(s), lemmaFreq);
+						context.write(new Text(s), new Text(lemmaFreq.getString()));
 					}
 				}
 			}
@@ -89,20 +88,20 @@ public class ProfessionIndexMapred {
 	}
 
 	public static class ProfessionIndexReducer extends
-			Reducer<Text, StringInteger, Text, StringDoubleList> {
+			Reducer<Text, Text, Text, StringDoubleList> {
 
 		public static HashMap<String, Integer> professionsCount;
 		private static final Path PROFESSION_FILEPATH = new Path("profession_train.txt");
 
 		@Override
-		protected void setup(Reducer<Text, StringInteger, Text, StringDoubleList>.Context context)
+		protected void setup(Reducer<Text, Text, Text, StringDoubleList>.Context context)
 				throws IOException, InterruptedException {
 			professionsCount = ProfessionUtils.getProfessionCounts(HDFSUtils.readLines
 												(PROFESSION_FILEPATH, context.getConfiguration()));
 		}
 
 		@Override
-		public void reduce(Text profession, Iterable<StringInteger> lemmasAndFreqs, Context context)
+		public void reduce(Text profession, Iterable<Text> lemmas, Context context)
 				throws IOException, InterruptedException {
 
 			/*
@@ -126,12 +125,12 @@ public class ProfessionIndexMapred {
 			Map<String, Double> lemmaProbs = new HashMap<>();
 			double probabilityAdd = 1.0 / professionsCount.get(profession.toString());
 
-			for (StringInteger si : lemmasAndFreqs) {
+			for (Text si : lemmas) {
 
-				if (!lemmaProbs.containsKey(si.getString()))
-					lemmaProbs.put(si.getString(), probabilityAdd);
+				if (!lemmaProbs.containsKey(si.toString()))
+					lemmaProbs.put(si.toString(), probabilityAdd);
 				else
-					lemmaProbs.put(si.getString(), lemmaProbs.get(si.getString()) + probabilityAdd);
+					lemmaProbs.put(si.toString(), lemmaProbs.get(si.toString()) + probabilityAdd);
 
 			}
 

@@ -27,9 +27,9 @@ import org.junit.Test;
  * @author Calvin Wang, minwang@brandeis.edu
  */
 public class ProfessionIndexMapredTest {
-	MapDriver<Text, Text, Text, StringInteger> mapDriver;
-	ReduceDriver<Text, StringInteger, Text, StringDoubleList> reduceDriver;
-	MapReduceDriver<Text, Text, Text, StringInteger, 
+	MapDriver<Text, Text, Text, Text> mapDriver;
+	ReduceDriver<Text, Text, Text, StringDoubleList> reduceDriver;
+	MapReduceDriver<Text, Text, Text, Text, 
 						Text, StringDoubleList> mapReduceDriver;
 	
 	//private ProfessionIndexMapper mapper = new ProfessionIndexMapper();
@@ -43,16 +43,16 @@ public class ProfessionIndexMapredTest {
 		
 		// Initialize Mapper, create a mapDriver for mapper
 		ProfessionIndexMapper mapper = new ProfessionIndexMapper();
-		mapDriver = new MapDriver<Text, Text, Text, StringInteger>();
+		mapDriver = new MapDriver<Text, Text, Text, Text>();
 		mapDriver.setMapper(mapper);
 
 		// Initialize Reducer, create a mapDriver for reducer
 		ProfessionIndexReducer reducer = new ProfessionIndexReducer();
-		reduceDriver = new ReduceDriver<Text, StringInteger, Text, StringDoubleList>();
+		reduceDriver = new ReduceDriver<Text, Text, Text, StringDoubleList>();
 		reduceDriver.setReducer(reducer);
 
 		// Create a mapReduceDriver for mapred, for testing both together
-		mapReduceDriver = new MapReduceDriver<Text, Text, Text, StringInteger, 
+		mapReduceDriver = new MapReduceDriver<Text, Text, Text, Text, 
 														Text, StringDoubleList>();
 		mapReduceDriver.setMapper(mapper);
 		mapReduceDriver.setReducer(reducer);
