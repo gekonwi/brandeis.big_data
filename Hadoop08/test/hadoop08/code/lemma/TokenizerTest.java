@@ -195,6 +195,18 @@ public class TokenizerTest {
 	}
 
 	@Test
+	public void testRemovesReferencesReluctant() {
+		String doc = "Bill [[Crossing the T|crossed the Russian 'T']]";
+		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
+		doc += " enabling him to fire broadsides";
+		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "Bill Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
+		assertEquals(expected, doc);
+	}
+
+	@Test
 	public void testRemovesPosessions() {
 		String doc = "my parents' house is also my sister's house";
 
