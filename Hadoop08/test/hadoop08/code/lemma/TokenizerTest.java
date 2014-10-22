@@ -64,7 +64,37 @@ public class TokenizerTest {
 	public void testRemovesURL_HTTP() {
 		String doc = "Here is some URL [http://www.url.com] which starts with http.";
 
-		String expected = "Here is some URL which starts with http";
+		String expected = "here is some url which starts with http";
+		String actual = Tokenizer.removeNoise(doc);
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testRemovesURL_WithSubPath() {
+		String doc = "Here is some URL [www.url.com/some/thing] with path.";
+
+		String expected = "here is some url with path";
+		String actual = Tokenizer.removeNoise(doc);
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testRemovesURL_WithoutWWW() {
+		String doc = "Here is some URL [http://url.com/some/] which starts with http.";
+
+		String expected = "here is some url which starts with http";
+		String actual = Tokenizer.removeNoise(doc);
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testRemovesURL_NotGreedy1() {
+		String doc = "some URL [http://www.url.com|Important] which starts with http.";
+
+		String expected = "some url important which starts with http";
 		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
@@ -74,7 +104,7 @@ public class TokenizerTest {
 	public void testRemovesURL_HTTPS() {
 		String doc = "Here is some URL [https://www.url.com] which starts with https.";
 
-		String expected = "Here is some URL which starts with https";
+		String expected = "here is some url which starts with https";
 		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
@@ -84,7 +114,7 @@ public class TokenizerTest {
 	public void testRemovesURL_HTTPS_Without_WWW() {
 		String doc = "Here is some URL [https://url.com] which starts with https but does not have a www.";
 
-		String expected = "Here is some URL which starts with https but does not have a www";
+		String expected = "here is some url which starts with https but does not have a www";
 		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
@@ -92,9 +122,9 @@ public class TokenizerTest {
 
 	@Test
 	public void testRemovesURL_WWW() {
-		String doc = "Here is some URL www.url.com without http and brackets.";
+		String doc = "here is some URL www.url.com without http and brackets.";
 
-		String expected = "Here is some URL without http and brackets";
+		String expected = "here is some url without http and brackets";
 		String actual = Tokenizer.removeNoise(doc);
 
 		assertEquals(expected, actual);
@@ -125,7 +155,7 @@ public class TokenizerTest {
 
 		String cleared = Tokenizer.removeNoise(doc);
 
-		assertEquals("First line Second line Something else", cleared);
+		assertEquals("first line second line something else", cleared);
 	}
 
 	@Test
@@ -148,7 +178,7 @@ public class TokenizerTest {
 	public void testPreservesSingleApostrophe() {
 		String doc = "I'm sure we're doing well";
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "I'm sure we're doing well";
+		String expected = "i'm sure we're doing well";
 		assertEquals(expected, doc);
 	}
 
@@ -159,7 +189,7 @@ public class TokenizerTest {
 		doc += " - well.";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "Here is Map showing the routes of both fleets well";
+		String expected = "here is map showing the routes of both fleets well";
 		assertEquals(expected, doc);
 	}
 
@@ -169,7 +199,7 @@ public class TokenizerTest {
 		doc += "[[File:Constitucion espanola 1978.JPG|thumb|Spanish Constitution of 1978]]";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "Very nice Spanish Constitution of";
+		String expected = "very nice spanish constitution of";
 		assertEquals(expected, doc);
 	}
 
@@ -179,7 +209,7 @@ public class TokenizerTest {
 		doc += "[[File:Michael Richards HS Yearbook.jpeg|thumb|left|Richards as a senior in high school, 1967.]]";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "Very nice Richards as a senior in high school";
+		String expected = "very nice richards as a senior in high school";
 		assertEquals(expected, doc);
 	}
 
@@ -190,7 +220,7 @@ public class TokenizerTest {
 		doc += " enabling him to fire broadsides";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "Tōgō Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
+		String expected = "tōgō crossing the t crossed the russian 't' enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
 
@@ -202,7 +232,7 @@ public class TokenizerTest {
 		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "Bill Crossing the T crossed the Russian 'T' enabling him to fire broadsides";
+		String expected = "bill crossing the t crossed the russian 't' enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
 
@@ -214,4 +244,14 @@ public class TokenizerTest {
 		String expected = "my parent house is also my sister house";
 		assertEquals(expected, doc);
 	}
+
+	@Test
+	public void testRemovesHtmlEncoding() {
+		String doc = "my %whatever; html tag";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "my html tag";
+		assertEquals(expected, doc);
+	}
+
 }

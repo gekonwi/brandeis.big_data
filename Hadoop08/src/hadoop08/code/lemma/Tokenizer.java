@@ -51,7 +51,7 @@ public class Tokenizer {
 	}
 
 	static String removeNoise(String documentText) {
-		Matcher matcher = NOISE_PATTERN.matcher(documentText);
+		Matcher matcher = NOISE_PATTERN.matcher(documentText.toLowerCase());
 		documentText = matcher.replaceAll(" ").trim();
 
 		// replace all multiple blanks by a single blank
@@ -80,7 +80,8 @@ public class Tokenizer {
 		sb.deleteCharAt(sb.length() - 1);
 
 		// successive separators should be treated as one separation match
-		String regex = "(" + sb.toString() + ")+";
+		// String regex = "(" + sb.toString() + ")+?";
+		String regex = sb.toString();
 
 		System.out.println(regex);
 
@@ -93,13 +94,13 @@ public class Tokenizer {
 		List<String> patterns = new ArrayList<>();
 
 		// remove the whole InfoBox
-		patterns.add("\\{\\{Infobox.*?\\n\\}\\}");
+		patterns.add("\\{\\{infobox.*?\\n\\}\\}");
 
 		// remove whole URLs
-		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+");
+		patterns.add("((https?://www\\.)|(https?://)|(www\\.))\\w+\\.[a-z]+(/\\w+)*");
 
 		// leave only the description of a picture
-		patterns.add("\\[\\[File:.+\\|thumb(\\|\\d+px)?(\\|(left|center|right))?");
+		patterns.add("\\[\\[file:.+\\|thumb(\\|\\d+px)?(\\|(left|center|right))?");
 
 		// remove whole references
 		patterns.add("&lt;ref&gt;.+?&lt;/ref&gt;");
@@ -120,7 +121,9 @@ public class Tokenizer {
 		// "has" - all three cases are irrelevant for indexing
 		patterns.add("('s|s')\\s");
 
-		patterns.addAll(getHTMLDecodingPatterns());
+		// remove HTML encoding
+		patterns.add("%[a-z]+?;");
+
 		patterns.addAll(getUnwantedCharPatterns());
 
 		return patterns;
