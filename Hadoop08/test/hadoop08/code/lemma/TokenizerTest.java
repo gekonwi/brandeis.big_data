@@ -186,7 +186,7 @@ public class TokenizerTest {
 	@Test
 	public void testRemovesReferences() {
 		String doc = "Tōgō [[Crossing the T|crossed the Russian 'T']]";
-		doc += "<ref>Semenoff (1907) p. 70</ref>";
+		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
 		doc += " enabling him to fire broadsides";
 
 		doc = Tokenizer.removeNoise(doc);

@@ -102,7 +102,7 @@ public class Tokenizer {
 		patterns.add("\\[\\[File:.+\\|thumb(\\|\\d+px)?(\\|(left|center|right))?");
 
 		// remove whole references
-		patterns.add("<ref>.+</ref>");
+		patterns.add("&lt;ref&gt;.+&lt;/ref&gt;");
 
 		// remove date and accessdate completely in any link / file
 		patterns.add("\\|(access)?date=.*(\\||\\})");
