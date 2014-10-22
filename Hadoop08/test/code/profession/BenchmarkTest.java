@@ -15,28 +15,17 @@ import org.junit.Before;
 import org.junit.Test;
 public class BenchmarkTest {
 	
-	BufferedReader in; // Input file
-	BufferedWriter out; // Output 1, used for developing classifier
-	BufferedWriter out2; // Output 2, used for testing classifier (small subset of out1 with only names)
-	BufferedWriter out3; // Output 3, contains solution to out2 (includes professions of out2)
-	
-	
-	@Before
-	public void setUp() {
-		//Normally, the BufferedWriters would print to a file, not to console.
+	@Test 
+	public void testSplit() {
+		//Tests to see if file splits correctly
 		BufferedReader in = new BufferedReader(new FileReader("real_profession"));
 		BufferedWriter out = new BufferedWriter(new FileWriter("known_profession"));
 		BufferedWriter out2 = new BufferedWriter(new FileWriter("test_profession.txt"));
 		BufferedWriter out3 = new BufferedWriter(new FileWriter("sol_profession.txt"));
-	}
-	
-	@Test 
-	public void testSplit() {
-		//Tests to see if file splits correctly
 		long counter = 0;
 		
 		String line = in.readLine();
-		while (line != null) {								//loop as long as there is more input to be read
+		while (line != null) {							//loop as long as there is more input to be read
 			if (counter < 5) {								//first 5 profession index.
 				out.write(line + "\n");
 				counter++;		
@@ -64,22 +53,23 @@ public class BenchmarkTest {
 		for (int i = 0; i < counter; i++) {
 			test1 = console.nextLine();
 			test2 = console2.nextLine();
-			int hello = test1.compareTo(test2);
-			assertEquals("The input and expected output should match: \r\n" + test1 + "\r\n" + test2 + "\r\n",0,hello);
+			int equals = test1.compareTo(test2);
+			assertEquals("The input and expected output should match: \r\n" + test1 + "\r\n" + test2 + "\r\n",0,equals);
 		}
 		for (int i = 0; i < 2; i++) {
 			test1 = console.nextLine();
 			test3 = console3.nextLine();
 			test4 = console4.nextLine();
-			int hello = test1.compareTo(test4);
-			boolean bye = test1.contains(test3);
-			assertEquals("The input and expected output should match: \r\n" + test1 + "\r\n" + test4 + "\r\n",0,hello);
-			assertTrue("The input should contain the expected output: \r\n" + test1 + "\r\n" + test3 + "\r\n",bye);
+			int equals = test1.compareTo(test4);
+			boolean contains = test1.contains(test3);
+			assertEquals("The input and expected output should match: \r\n" + test1 + "\r\n" + test4 + "\r\n",0,equals);
+			assertTrue("The input should contain the expected output: \r\n" + test1 + "\r\n" + test3 + "\r\n",contains);
 		}
 	}
 	
 	@Test
 	public void testBenchmark() {
+		//tests to see if precision is correct.
 		BufferedReader in = new BufferedReader(new FileReader("test_profession.txt"));	 
 		BufferedReader in2 = new BufferedReader(new FileReader("sol_profession.txt")); 	 
 		String line = in.readLine(); //line of result.
@@ -98,7 +88,8 @@ public class BenchmarkTest {
 			line2 = in2.readLine();
 		}
 		double precision = correct/counter;
-		System.out.println("Your precision is " + precision);
+		double check = 5.0/7.0;
+		assertEquals("The expected output should match the actual: \r\n", precision, check);
 		
 	}
 	
