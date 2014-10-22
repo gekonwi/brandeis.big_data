@@ -204,6 +204,62 @@ public class TokenizerTest {
 	}
 
 	@Test
+	public void testRemovesPictures_NotGreedy() {
+		String doc = "Very nice: ";
+		doc += "[[File:Constitucion espanola 1978.JPG|thumb|Spanish Constitution of 1978]]";
+		doc += " important ";
+		doc += "[[File:Constitucion espanola 1978.JPG|thumb|Spanish Constitution of 1978]]";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "very nice spanish constitution of important spanish constitution of";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemoveLinkKeepShownPart_File1() {
+		String doc = "Very nice: ";
+		doc += "[[File:SpanConst.JPG|thumb|Spanish Constitution]] ";
+		doc += "important ";
+		doc += "[[File:SpanConst.JPG|thumb|Spanish Constitution]]";
+
+		doc = Tokenizer.removeLinkKeepShownPart(doc);
+		String expected = "Very nice:  Spanish Constitution  important  Spanish Constitution ";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemoveLinkKeepShownPart_File2() {
+		String doc = "Very nice: ";
+		doc += "[[File:SpanConst.JPG|thumb|Spanish Constitution]] ";
+		doc += "important ";
+		doc += "[[File:SpanConst2.JPG|thumb|Spanish Constitution2]]";
+
+		doc = Tokenizer.removeLinkKeepShownPart(doc);
+		String expected = "Very nice:  Spanish Constitution  important  Spanish Constitution2 ";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemoveLinkKeepShownPart_Article() {
+		String doc = "Very nice: ";
+		doc += "[[Crossing the T|crossed the Russian 'T']] ";
+		doc += "important";
+
+		doc = Tokenizer.removeLinkKeepShownPart(doc);
+		String expected = "Very nice:  crossed the Russian 'T'  important";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemoveLinkKeepShownPart_Article2() {
+		String doc = "Very nice: [[Crossing the T]] important";
+
+		doc = Tokenizer.removeLinkKeepShownPart(doc);
+		String expected = "Very nice:  Crossing the T  important";
+		assertEquals(expected, doc);
+	}
+
+	@Test
 	public void testRemovesPicturesPreservingDescription_WithAlignment() {
 		String doc = "Very nice: ";
 		doc += "[[File:Michael Richards HS Yearbook.jpeg|thumb|left|Richards as a senior in high school, 1967.]]";
@@ -215,24 +271,24 @@ public class TokenizerTest {
 
 	@Test
 	public void testRemovesReferences() {
-		String doc = "Tōgō [[Crossing the T|crossed the Russian 'T']]";
+		String doc = "Tōgō ";
 		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
 		doc += " enabling him to fire broadsides";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "tōgō crossing the t crossed the russian 't' enabling him to fire broadsides";
+		String expected = "tōgō enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
 
 	@Test
 	public void testRemovesReferencesReluctant() {
-		String doc = "Bill [[Crossing the T|crossed the Russian 'T']]";
+		String doc = "Bill ";
 		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
 		doc += " enabling him to fire broadsides";
 		doc += "&lt;ref&gt;Semenoff (1907) p. 70&lt;/ref&gt;";
 
 		doc = Tokenizer.removeNoise(doc);
-		String expected = "bill crossing the t crossed the russian 't' enabling him to fire broadsides";
+		String expected = "bill enabling him to fire broadsides";
 		assertEquals(expected, doc);
 	}
 

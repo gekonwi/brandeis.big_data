@@ -26,6 +26,8 @@ public class Tokenizer {
 	private final Set<String> stopWords;
 
 	private static final Pattern NOISE_PATTERN = buildNoisePattern();
+	private static final Pattern LINK_PATTERN = Pattern
+			.compile("\\[\\[([^\\]]*\\|)*(?<shownPart>.*?)\\]\\]");
 
 	public Tokenizer(HashSet<String> stopWords) {
 		// set up the Stanford Core NLP Tool
@@ -51,7 +53,9 @@ public class Tokenizer {
 	}
 
 	static String removeNoise(String documentText) {
-		Matcher matcher = NOISE_PATTERN.matcher(documentText.toLowerCase());
+		documentText = removeLinkKeepShownPart(documentText.toLowerCase());
+
+		Matcher matcher = NOISE_PATTERN.matcher(documentText);
 		documentText = matcher.replaceAll(" ").trim();
 
 		// replace all multiple blanks by a single blank
@@ -90,6 +94,11 @@ public class Tokenizer {
 		return Pattern.compile(regex, Pattern.DOTALL);
 	}
 
+	static String removeLinkKeepShownPart(String doc) {
+		Matcher m = LINK_PATTERN.matcher(doc);
+		return m.replaceAll(" ${shownPart} ");
+	}
+
 	private static List<String> buildNoisePatternParts() {
 		List<String> patterns = new ArrayList<>();
 
@@ -98,9 +107,6 @@ public class Tokenizer {
 
 		// remove whole URLs
 		patterns.add("((https?://www\\.)|(https?://)|(www\\.))\\w+\\.[a-z]+(/\\w+)*");
-
-		// leave only the description of a picture
-		patterns.add("\\[\\[file:.+\\|thumb(\\|\\d+px)?(\\|(left|center|right))?");
 
 		// remove whole references
 		patterns.add("&lt;ref&gt;.+?&lt;/ref&gt;");
