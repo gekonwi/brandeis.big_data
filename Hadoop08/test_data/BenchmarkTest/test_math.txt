@@ -18,9 +18,18 @@ real profession : governor
 test profession : stupid, idiot, russia
 result : incorrect
 
-== Kim Jung Un
+== Kim Jung Un ==
 real profession : supreme leader, dictator
 test profession : glorious leader, dictator
 result : correct
 
-Precision = 3 Correct answers / 5 testing sample = 60% 
+== Albert Einstein ==
+real profession : professor, scientist, physicist
+test profession : smart, scientist, physicist
+result : correct
+
+== Selena Gomez ==
+real profesion : disney star, actor, musician
+test profession : actor, autotune, disney star
+result : incorrect
+Precision = 5 Correct answers / 7 testing sample = 71.4286%
