@@ -31,8 +31,12 @@ public class ProfessionIndexMapred {
 
 			String[] parts = lemmaProb.toString().split(",");
 			String lemma = parts[0];
-			double prob = Double.parseDouble(parts[1]);
-
+			double prob;
+			// work-around for null Double -- some words aren't receiving probabilities
+			// TODO: fix ^
+			if (parts[1].toString() != null) {
+				prob = Double.parseDouble(parts[1]);
+			} else { return; }
 			context.write(profession, new StringDouble(lemma, prob));
 		}
 	}
@@ -62,8 +66,10 @@ public class ProfessionIndexMapred {
 				 * StringDouble object for each iteration to preserve the
 				 * different values.
 				 */
-				list.add(new StringDouble(sd.getString(), sd.getValue()));
-
+				// another workaround for null lemma and probability values...
+				if (sd.getString() != null && sd.getValue() != null) {
+					list.add(new StringDouble(sd.getString(), sd.getValue()));
+				} else { return; }
 			StringDoubleList lemmaProbsList = new StringDoubleList(list);
 			context.write(profession, lemmaProbsList);
 		}
