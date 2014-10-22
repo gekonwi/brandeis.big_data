@@ -139,7 +139,7 @@ public class Tokenizer {
 		patterns.add("('s|s')\\s");
 
 		// remove HTML encoding
-		patterns.add("%[a-z]+?;");
+		patterns.add("&[a-z]+?;");
 
 		patterns.addAll(getUnwantedCharPatterns());
 

@@ -303,7 +303,16 @@ public class TokenizerTest {
 
 	@Test
 	public void testRemovesHtmlEncoding() {
-		String doc = "my %whatever; html tag";
+		String doc = "< is &lt;, > is &gt; and quotation is &quot;, to start with";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "is is and quotation is to start with";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesHtmlEncoding2() {
+		String doc = "my &whatever; html tag";
 
 		doc = Tokenizer.removeNoise(doc);
 		String expected = "my html tag";
@@ -311,7 +320,7 @@ public class TokenizerTest {
 	}
 
 	@Test
-	public void testRemovesCitationCompletely() {
+	public void testRemovesNestedCitationCompletely() {
 		String doc = "material {{cite web | title = Anthropology 333 | "
 				+ "url = http://web.arc.losrios.edu/~anthro/AnthroDepartment/documents/Anth333-Sp07Worley.pdf "
 				+ "{{Dead link|date=March 2014}} | accessdate = 2006-02-07 | "
