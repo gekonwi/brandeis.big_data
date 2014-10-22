@@ -93,7 +93,7 @@ public class Tokenizer {
 		List<String> patterns = new ArrayList<>();
 
 		// remove the whole InfoBox
-		patterns.add("\\{\\{Infobox.*\\}\\}");
+		patterns.add("\\{\\{Infobox.*?\\n\\}\\}");
 
 		// remove whole URLs
 		patterns.add("((http(s)?:\\/\\/)|(www\\.))\\S+\\.\\S+");

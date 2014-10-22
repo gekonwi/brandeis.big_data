@@ -125,7 +125,7 @@ public class TokenizerTest {
 
 		String cleared = Tokenizer.removeNoise(doc);
 
-		assertEquals("First line Second line", cleared);
+		assertEquals("First line Second line Something else", cleared);
 	}
 
 	@Test
