@@ -30,4 +30,17 @@ public class StringIntegerTest {
 	public void testStringIntegerReadFields() {
 
 	}
+
+	/**
+	 * Required in
+	 * org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils
+	 * .java:131) when MR creates StringInteger objects "behind the scene"
+	 * 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	@Test
+	public void testInstantiation() throws InstantiationException, IllegalAccessException {
+		StringInteger.class.newInstance();
+	}
 }

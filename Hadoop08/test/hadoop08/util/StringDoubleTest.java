@@ -41,4 +41,18 @@ public class StringDoubleTest {
 	// parameters correctly
 	public void testStringDoubleReadFields() {
 	}
+
+	/**
+	 * Required in
+	 * org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils
+	 * .java:131) when MR creates StringDouble objects "behind the scene"
+	 * 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	@Test
+	public void testInstantiation() throws InstantiationException, IllegalAccessException {
+		StringDouble.class.newInstance();
+	}
+
 }

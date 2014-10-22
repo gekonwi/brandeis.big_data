@@ -10,6 +10,10 @@ import java.util.regex.Matcher;
  */
 public class StringDouble extends StringNumber<Double> {
 
+	// required for reflection instantiation in Hadoop
+	public StringDouble() {
+	};
+
 	public StringDouble(String string, double value) {
 		super(string, value);
 	}

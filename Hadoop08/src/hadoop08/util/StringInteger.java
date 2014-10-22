@@ -10,8 +10,10 @@ import java.util.regex.Matcher;
  */
 public class StringInteger extends StringNumber<Integer> {
 
-	public StringInteger() {}
-	
+	// required for reflection instantiation in Hadoop
+	public StringInteger() {
+	}
+
 	public StringInteger(String string, int value) {
 		super(string, value);
 	}
