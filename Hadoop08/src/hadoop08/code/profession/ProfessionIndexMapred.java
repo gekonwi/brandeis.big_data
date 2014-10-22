@@ -56,7 +56,13 @@ public class ProfessionIndexMapred {
 
 			List<StringDouble> list = new ArrayList<>();
 			for (StringDouble sd : lemmaProbs)
-				list.add(sd);
+				/*
+				 * Haddoop reuses the same StringDouble object in the iterator
+				 * and changes the value of it. Thus we have to create a new
+				 * StringDouble object for each iteration to preserve the
+				 * different values.
+				 */
+				list.add(new StringDouble(sd.getString(), sd.getValue()));
 
 			StringDoubleList lemmaProbsList = new StringDoubleList(list);
 			context.write(profession, lemmaProbsList);

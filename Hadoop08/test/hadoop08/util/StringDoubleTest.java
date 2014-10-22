@@ -1,10 +1,6 @@
 package hadoop08.util;
 
 import static org.junit.Assert.assertEquals;
-import hadoop08.util.StringDouble;
-import hadoop08.util.StringInteger;
-
-import java.io.IOException;
 
 import org.junit.Test;
 
@@ -12,20 +8,9 @@ import org.junit.Test;
  * 
  * @author Steven Hu, stevenhh@brandeis.edu
  */
-public class StringNumberTest {
+public class StringDoubleTest {
 
 	private static final double DOUBLE_COURTESY = 0.00001;
-
-	@Test
-	public void testStringInteger() throws IOException {
-		final String string = "StringIntegerTest1";
-		final int value = 100;
-		StringInteger si = new StringInteger(string, value);
-
-		assertEquals(string, si.getString());
-		assertEquals(value, (int) si.getValue());
-		assertEquals(string + "," + value, si.toString());
-	}
 
 	@Test
 	public void testStringDouble1() {
@@ -51,16 +36,23 @@ public class StringNumberTest {
 	}
 
 	@Test
-	// will need implementation after figuring out how to pass in readFields
-	// parameters correctly
-	public void testStringIntegerReadFields() {
-
-	}
-
-	@Test
-	// will need implementation after figuring out how to pass in readFields
+	// TODO will need implementation after figuring out how to pass in
+	// readFields
 	// parameters correctly
 	public void testStringDoubleReadFields() {
+	}
+
+	/**
+	 * Required in
+	 * org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils
+	 * .java:131) when MR creates StringDouble objects "behind the scene"
+	 * 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	@Test
+	public void testInstantiation() throws InstantiationException, IllegalAccessException {
+		StringDouble.class.newInstance();
 	}
 
 }
