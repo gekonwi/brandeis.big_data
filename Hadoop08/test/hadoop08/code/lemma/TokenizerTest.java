@@ -155,7 +155,7 @@ public class TokenizerTest {
 
 		String cleared = Tokenizer.removeNoise(doc);
 
-		assertEquals("first line second line something else", cleared);
+		assertEquals("first line second line", cleared);
 	}
 
 	@Test
@@ -307,6 +307,21 @@ public class TokenizerTest {
 
 		doc = Tokenizer.removeNoise(doc);
 		String expected = "my html tag";
+		assertEquals(expected, doc);
+	}
+
+	@Test
+	public void testRemovesCitationCompletely() {
+		String doc = "material {{cite web | title = Anthropology 333 | "
+				+ "url = http://web.arc.losrios.edu/~anthro/AnthroDepartment/documents/Anth333-Sp07Worley.pdf "
+				+ "{{Dead link|date=March 2014}} | accessdate = 2006-02-07 | "
+				+ "quote = Do NOT use Wikipedia or other online or print encyclopedias "
+				+ "as a source for your paper.}} This is especially true when it "
+				+ "is used without corroboration.";
+
+		doc = Tokenizer.removeNoise(doc);
+		String expected = "material this is especially true when it is used "
+				+ "without corroboration";
 		assertEquals(expected, doc);
 	}
 

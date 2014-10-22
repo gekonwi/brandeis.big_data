@@ -25,9 +25,10 @@ public class Tokenizer {
 	private final StanfordCoreNLP pipeLine; // tool used for lemmatization
 	private final Set<String> stopWords;
 
-	private static final Pattern NOISE_PATTERN = buildNoisePattern();
-	private static final Pattern LINK_PATTERN = Pattern
+	public static final Pattern NOISE_PATTERN = buildNoisePattern();
+	public static final Pattern LINK_PATTERN = Pattern
 			.compile("\\[\\[([^\\]]*\\|)*(?<shownPart>.*?)\\]\\]");
+	public static final Pattern CITATION_PATTERN = Pattern.compile("\\{\\{[^\\{\\}]*\\}\\}");
 
 	public Tokenizer(HashSet<String> stopWords) {
 		// set up the Stanford Core NLP Tool
@@ -52,14 +53,16 @@ public class Tokenizer {
 		return filterStopWords(lemmas);
 	}
 
-	static String removeNoise(String documentText) {
-		documentText = removeLinkKeepShownPart(documentText.toLowerCase());
+	static String removeNoise(String doc) {
+		doc = removeLinkKeepShownPart(doc.toLowerCase());
 
-		Matcher matcher = NOISE_PATTERN.matcher(documentText);
-		documentText = matcher.replaceAll(" ").trim();
+		doc = removeWhileChanges(doc, CITATION_PATTERN);
+		doc = removeWhileChanges(doc, NOISE_PATTERN);
+
+		doc = doc.trim();
 
 		// replace all multiple blanks by a single blank
-		return documentText.replaceAll("\\s+", " ");
+		return doc.replaceAll("\\s+", " ");
 	}
 
 	private List<String> filterStopWords(List<String> lemmas) {
@@ -99,20 +102,34 @@ public class Tokenizer {
 		return m.replaceAll(" ${shownPart} ");
 	}
 
+	/**
+	 * Apply the given pattern on the given document until it does not change
+	 * anymore.
+	 * 
+	 * @param doc
+	 *            text potentially containing pattern matches
+	 * @param pat
+	 *            the pattern to be applied (potentially multiple times)
+	 * @return <code>doc</code> text with all {{x}} elements replaced by blanks
+	 */
+	private static String removeWhileChanges(String doc, Pattern pat) {
+		String oldDoc = "";
+		while (!doc.equals(oldDoc)) {
+			oldDoc = doc;
+			Matcher m = pat.matcher(doc);
+			doc = m.replaceAll(" ");
+		}
+		return doc;
+	}
+
 	private static List<String> buildNoisePatternParts() {
 		List<String> patterns = new ArrayList<>();
-
-		// remove the whole InfoBox
-		patterns.add("\\{\\{infobox.*?\\n\\}\\}");
 
 		// remove whole URLs
 		patterns.add("((https?://www\\.)|(https?://)|(www\\.))\\w+\\.[a-z]+(/\\w+)*");
 
 		// remove whole references
 		patterns.add("&lt;ref&gt;.+?&lt;/ref&gt;");
-
-		// remove citation prefixes (but keep title and author values etc.)
-		patterns.add("\\{\\{cite web\\|url=");
 
 		// '' for italic, ''' for bold, but preserve the single '
 		patterns.add("''+");
@@ -143,17 +160,6 @@ public class Tokenizer {
 		for (String c : chars.split(" "))
 			// escape to avoid mis-interpretation as a special regex character
 			patterns.add("\\" + c);
-
-		return patterns;
-	}
-
-	private static List<String> getHTMLDecodingPatterns() {
-		List<String> patterns = new ArrayList<>();
-
-		patterns.add("&lt"); // "<" in HTML encoding
-		patterns.add("&gt"); // ">" in HTML encoding
-		patterns.add("&amp"); // "&" in HTML encoding
-		patterns.add("&quot"); // " (quotation mark) in HTML encoding
 
 		return patterns;
 	}
