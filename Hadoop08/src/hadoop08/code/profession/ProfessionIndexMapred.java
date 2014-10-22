@@ -5,6 +5,8 @@ import hadoop08.util.StringDoubleList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
@@ -20,10 +22,19 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class ProfessionIndexMapred {
 	private static final String OUTPUT_KEY_VALUE_SEPARATOR = " : ";
 
+	private static enum Opt {
+		minProb, maxProb, maxLemmasPerProf;
+
+		public String asKey() {
+			return ProfessionIndexMapred.class.getName() + "." + name();
+		}
+	}
+
 	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringDouble> {
 
 		/**
-		 * Just parses value into a StringDouble object
+		 * Parses value into a StringDouble object. If minProb or maxProb are
+		 * set, lemmas with invalid probabilities are skipped
 		 */
 		@Override
 		public void map(Text profession, Text lemmaProb, Context context) throws IOException,
@@ -32,6 +43,13 @@ public class ProfessionIndexMapred {
 			String[] parts = lemmaProb.toString().split(",");
 			String lemma = parts[0];
 			double prob = Double.parseDouble(parts[1]);
+
+			final Configuration conf = context.getConfiguration();
+			double minProb = conf.getDouble(Opt.minProb.asKey(), Double.MIN_VALUE);
+			double maxProb = conf.getDouble(Opt.maxProb.asKey(), Double.MAX_VALUE);
+
+			if (prob < minProb || prob > maxProb)
+				return;
 
 			context.write(profession, new StringDouble(lemma, prob));
 		}
@@ -64,12 +82,65 @@ public class ProfessionIndexMapred {
 				 */
 				list.add(new StringDouble(sd.getString(), sd.getValue()));
 
+			final Configuration conf = context.getConfiguration();
+			int maxLemmas = conf.getInt(Opt.maxLemmasPerProf.asKey(), -1);
+			if (maxLemmas > 0)
+				list = takeTopN(list, maxLemmas);
+
 			StringDoubleList lemmaProbsList = new StringDoubleList(list);
 			context.write(profession, lemmaProbsList);
 		}
+
+		private List<StringDouble> takeTopN(List<StringDouble> list, int n) {
+			Collections.sort(list, new Comparator<StringDouble>() {
+
+				@Override
+				public int compare(StringDouble o1, StringDouble o2) {
+					// invert order for DESCENDING sorting
+					return o2.getValue().compareTo(o1.getValue());
+				}
+			});
+
+			return list.subList(0, Math.min(list.size(), n));
+		}
 	}
 
+	/**
+	 * Takes in four parameters when called from commandline:
+	 * 
+	 * <pre>
+	 * inputPath	HDFS path to ProfessionLemmaMapred output
+	 * 
+	 * outputPath	HDFS path to a not existing directory for the output
+	 * 
+	 * optional	key=value pairs with key in {minProb, maxProb, maxLemmasPerProf},
+	 * 		separated by blanks, e.g. <code>minProb=0.1 maxLemmasPerProf=100</code>.
+	 * 		Any combination of 1, 2, or 3 of these parameters is accepted.
+	 * 
+	 * 		<code>minProb</code>: the minimum probability of a lemma given a certain profession 
+	 * 		to end up in the index for this profession, e.g. <code>minProb=0.15</code>
+	 * 
+	 * 		<code>maxProb</code>: the maximum probability of a lemma given a certain profession 
+	 * 		to end up in the index for this profession, e.g. <code>maxProb=0.85</code>
+	 * 
+	 * 		<code>maxLemmasPerProf</code>: sorted by probability how many lemmas should be put
+	 * 		in the index of one profession at max, e.g.
+	 * <code>maxLemmasPerProf=0100</code>
+	 * 
+	 * </pre>
+	 * 
+	 * @param args
+	 *            inputPath outputPath (optional)*
+	 */
 	public static void main(String[] args) throws Exception {
+
+		if (args.length < 2)
+			throw new IllegalArgumentException(
+					"need at least two parameters: inputPath and outputPath");
+
+		if (args.length > 5)
+			throw new IllegalArgumentException("Too many parameters. Can take max 5: "
+					+ "inputPath outputPath, minProb maxProb maxLemmasPerProf");
 
 		Job job = Job.getInstance(new Configuration());
 
@@ -96,8 +167,28 @@ public class ProfessionIndexMapred {
 
 		conf.set("mapreduce.job.queuename", "hadoop08");
 		conf.set("mapred.textoutputformat.separator", OUTPUT_KEY_VALUE_SEPARATOR);
+		storeOptionalParams(conf, args);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
+	}
+
+	private static void storeOptionalParams(Configuration conf, String[] args) {
+		if (args.length < 3)
+			return; // no optional parameters
+
+		for (int i = 2; i < args.length; i++) {
+			final String[] parts = args[i].split("=");
+			Opt key = Opt.valueOf(parts[0]);
+
+			if (key == Opt.maxLemmasPerProf) {
+				int value = Integer.parseInt(parts[1]);
+				conf.setInt(key.asKey(), value);
+			} else {
+				double value = Double.parseDouble(parts[1]);
+				conf.setDouble(key.asKey(), value);
+			}
+		}
+
 	}
 }
