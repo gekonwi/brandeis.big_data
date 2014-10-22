@@ -113,8 +113,6 @@ public class Tokenizer {
 		// remove citation prefixes (but keep title and author values etc.)
 		patterns.add("\\{\\{cite web\\|url=");
 
-		addHTMLDecodingPatterns(patterns);
-
 		// '' for italic, ''' for bold, but preserve the single '
 		patterns.add("''+");
 
@@ -122,12 +120,17 @@ public class Tokenizer {
 		// "has" - all three cases are irrelevant for indexing
 		patterns.add("('s|s')\\s");
 
+		patterns.addAll(getHTMLDecodingPatterns());
 		patterns.addAll(getUnwantedCharPatterns());
 
 		return patterns;
 	}
 
 	private static List<String> getUnwantedCharPatterns() {
+		/*
+		 * we can't use a simple [^a-zA-Z] here because we need to preserve
+		 * letter variations like in the name Tōgō
+		 */
 
 		// Unwanted characters, separated by a blank.
 		String chars = "\" ` ´ . , : ; ! ? ( ) [ ] { } < > = / | \\ % & # § $ _ - ~ * ° ^ +";
@@ -141,13 +144,15 @@ public class Tokenizer {
 		return patterns;
 	}
 
-	private static void addHTMLDecodingPatterns(List<String> patterns) {
-		// TODO are these needed? if HTML is decoded while XML parsing, then
-		// it's not.
+	private static List<String> getHTMLDecodingPatterns() {
+		List<String> patterns = new ArrayList<>();
+
 		patterns.add("&lt"); // "<" in HTML encoding
 		patterns.add("&gt"); // ">" in HTML encoding
 		patterns.add("&amp"); // "&" in HTML encoding
 		patterns.add("&quot"); // " (quotation mark) in HTML encoding
+
+		return patterns;
 	}
 
 	/**
