@@ -1,20 +1,12 @@
 package hadoop08.code.profession;
 
-import static org.junit.Assert.assertEquals;
 import hadoop08.util.StringDoubleList;
 import hadoop08.util.StringInteger;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
-import org.apache.hadoop.mrunit.types.Pair;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * 
@@ -28,7 +20,7 @@ public class ProfessionIndexMapredTest {
 	// private ProfessionIndexMapper mapper = new ProfessionIndexMapper();
 	// private ProfessionIndexReducer reducer = new ProfessionIndexReducer();
 
-	@Before
+	// @Before
 	// public void setUp() {
 	// // quick and dirty -- basic logging to console instead of to file
 	// org.apache.log4j.BasicConfigurator.configure();
@@ -163,55 +155,55 @@ public class ProfessionIndexMapredTest {
 	 * + result.toString() + "\r\n\tshould == \r\n" + expected.toString() +
 	 * "\r\n", expected.toString(), result.toString()); }
 	 */
-	@Test
-	public void mapReducer2() throws IOException {
-
-		// feed input into the mapper
-		// TODO: refactor this ugly code by reading straight from
-		// lemma_index_test.txt
-		mapReduceDriver.withInput(new Text("Thomas Gordon Hake"), new Text(
-				"<medical,3><residence,1><family,6><friendship,1><son,7>"));
-
-		mapReduceDriver.withInput(new Text("Kim Yong-Kab"), new Text(
-				"<manager,2><play,1><player,1><football,2><south,2>"));
-
-		mapReduceDriver.withInput(new Text("Joseph Genualdi"), new Text(
-				"<serve,2><symphony,7><television,1><violin,4><performance,2>"));
-
-		mapReduceDriver.withInput(new Text("Hugo Nunes Coelho"), new Text(
-				"<play,3><country,1><achievement,1><game,1><division,1>"));
-
-		mapReduceDriver.withInput(new Text("Matt Willig"), new Text(
-				"<gang,1><spot,2><commercial,2><play,6><season,4>"));
-
-		// compare to expected outputs
-		/*
-		 * Thomas Gordon Hake : medical doctor, physician Kim Yong-Kab :
-		 * footballer Joseph Genualdi : violinist Hugo Nunes Coelho : footballer
-		 * Matt Willig : football player
-		 * 
-		 * So the expected resultant professions would be those listed above
-		 */
-
-		List<Pair<Text, StringDoubleList>> resultProfs = mapReduceDriver.run();
-		List<String> expectedProfs = new ArrayList<>();
-		// TODO: refactor by reading straight from profession_train-test file
-		expectedProfs.add("medical doctor");
-		expectedProfs.add("physician");
-		expectedProfs.add("footballer");
-		expectedProfs.add("violinist");
-		expectedProfs.add("football player");
-
-		boolean correct = true;
-		for (int i = 0; i < resultProfs.size(); i++) {
-			if (!expectedProfs.contains(resultProfs.get(i).getFirst().toString())) {
-				correct = false;
-			}
-		}
-
-		assertEquals(
-				"resultant list of professions should include all of expected professions as key values",
-				true, correct);
-	}
+	// @Test
+	// public void mapReducer2() throws IOException {
+	//
+	// // feed input into the mapper
+	// // TODO: refactor this ugly code by reading straight from
+	// // lemma_index_test.txt
+	// mapReduceDriver.withInput(new Text("Thomas Gordon Hake"), new Text(
+	// "<medical,3><residence,1><family,6><friendship,1><son,7>"));
+	//
+	// mapReduceDriver.withInput(new Text("Kim Yong-Kab"), new Text(
+	// "<manager,2><play,1><player,1><football,2><south,2>"));
+	//
+	// mapReduceDriver.withInput(new Text("Joseph Genualdi"), new Text(
+	// "<serve,2><symphony,7><television,1><violin,4><performance,2>"));
+	//
+	// mapReduceDriver.withInput(new Text("Hugo Nunes Coelho"), new Text(
+	// "<play,3><country,1><achievement,1><game,1><division,1>"));
+	//
+	// mapReduceDriver.withInput(new Text("Matt Willig"), new Text(
+	// "<gang,1><spot,2><commercial,2><play,6><season,4>"));
+	//
+	// // compare to expected outputs
+	// /*
+	// * Thomas Gordon Hake : medical doctor, physician Kim Yong-Kab :
+	// * footballer Joseph Genualdi : violinist Hugo Nunes Coelho : footballer
+	// * Matt Willig : football player
+	// *
+	// * So the expected resultant professions would be those listed above
+	// */
+	//
+	// List<Pair<Text, StringDoubleList>> resultProfs = mapReduceDriver.run();
+	// List<String> expectedProfs = new ArrayList<>();
+	// // TODO: refactor by reading straight from profession_train-test file
+	// expectedProfs.add("medical doctor");
+	// expectedProfs.add("physician");
+	// expectedProfs.add("footballer");
+	// expectedProfs.add("violinist");
+	// expectedProfs.add("football player");
+	//
+	// boolean correct = true;
+	// for (int i = 0; i < resultProfs.size(); i++) {
+	// if (!expectedProfs.contains(resultProfs.get(i).getFirst().toString())) {
+	// correct = false;
+	// }
+	// }
+	//
+	// assertEquals(
+	// "resultant list of professions should include all of expected professions as key values",
+	// true, correct);
+	// }
 
 }
