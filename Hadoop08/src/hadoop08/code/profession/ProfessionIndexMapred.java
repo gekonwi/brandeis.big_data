@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -32,6 +34,8 @@ public class ProfessionIndexMapred {
 
 	public static class ProfessionIndexMapper extends Mapper<Text, Text, Text, StringDouble> {
 
+		private final Log LOG = LogFactory.getLog(getClass());
+
 		/**
 		 * Parses value into a StringDouble object. If minProb or maxProb are
 		 * set, lemmas with invalid probabilities are skipped
@@ -42,7 +46,13 @@ public class ProfessionIndexMapred {
 
 			String[] parts = lemmaProb.toString().split(",");
 			String lemma = parts[0];
-			double prob = Double.parseDouble(parts[1]);
+			double prob;
+			try {
+				prob = Double.parseDouble(parts[1]);
+			} catch (NumberFormatException e) {
+				LOG.error("cannot parse " + lemmaProb.toString() + " into a StringDouble");
+				return;
+			}
 
 			final Configuration conf = context.getConfiguration();
 			double minProb = conf.getDouble(Opt.minProb.asKey(), Double.MIN_VALUE);
