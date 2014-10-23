@@ -27,7 +27,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class ProfessionLemmaIndexMapred {
 
 	public static class ProfessionLemmaIndexMapper extends
-			Mapper<Text, StringInteger, Text, StringInteger> {
+			Mapper<Text, Text, Text, Text> {
 
 		// set of titles that will be used for lookup in mapper
 		public static Set<String> professionTitles;
@@ -37,7 +37,7 @@ public class ProfessionLemmaIndexMapred {
 		private static final Path PROFESSION_TEST_FILEPATH = new Path("profession_test.txt");
 
 		@Override
-		protected void setup(Mapper<Text, StringInteger, Text, StringInteger>.Context context)
+		protected void setup(Mapper<Text, Text, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 			final List<String> lines = HDFSUtils.readLines(PROFESSION_TEST_FILEPATH,
 					context.getConfiguration());
@@ -45,10 +45,10 @@ public class ProfessionLemmaIndexMapred {
 		}
 
 		@Override
-		public void map(Text articleId, StringInteger lemmaAndFreq, Context context)
+		public void map(Text articleId, Text lemmaAndFreqs, Context context)
 				throws IOException, InterruptedException {
 			if (professionTitles.contains(articleId.toString()))
-				context.write(articleId, lemmaAndFreq);
+				context.write(articleId, lemmaAndFreqs);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class ProfessionLemmaIndexMapred {
 		Job job = Job.getInstance(new Configuration());
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(StringInteger.class);
+		job.setOutputValueClass(Text.class);
 
 		job.setMapperClass(ProfessionLemmaIndexMapper.class);
 
