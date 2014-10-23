@@ -8,6 +8,7 @@ import hadoop08.util.StringIntegerList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is used for 3.3 Section B of assignment 2.
@@ -29,20 +32,79 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  */
 public class ProfessionClassifierMapred {
 
+	/*
+	 * required key-value separator is " : " instead of tab (default). However
+	 * KeyValueLineRecordReader only accepts one separator bit. Our mapper makes
+	 * up for it.
+	 */
+	private static final String INPUT_KEY_VALUE_SEP = ":";
+	private static final String OUTPUT_KEY_VALUE_SEP = " : ";
+	private static final String OUTPUT_PROFESSIONS_SEP = ", ";
+
+	private static final String FLAG_CACHE_PROBS = "-cacheProbs";
+	public static final String CONF_KEY_CACHE_PROBS = ProfessionClassifierMapred.class.getName()
+			+ ".cacheProbs";
+
 	public static class ProfessionClassifierMapper extends Mapper<Text, Text, Text, Text> {
 
 		private Set<String> wantedPeople;
+		private Map<String, Map<String, Double>> probs;
+		private static Logger LOG = LogManager.getLogger("Main");
 
 		@Override
 		protected void setup(Mapper<Text, Text, Text, Text>.Context context) throws IOException,
 				InterruptedException {
 
-			/*
-			 * read people to be classified from local cache
-			 */
+			// allows setting custom people set and profession-lemma
+			// probabilities from unit tests
+
+			if (wantedPeople == null)
+				wantedPeople = readWantedPeople(context);
+
+			if (probs == null)
+				probs = readLemmaProfessionProbs(context);
+		}
+
+		private Map<String, Map<String, Double>> readLemmaProfessionProbs(Context context)
+				throws IOException {
+			Map<String, Map<String, Double>> result = new HashMap<>();
+
+			Path profPath = new Path(context.getCacheFiles()[1]);
+			BufferedReader br = HDFSUtils.getFileReader(profPath, context.getConfiguration());
+
+			String profIndexLine;
+			while ((profIndexLine = br.readLine()) != null) {
+
+				String[] parts = profIndexLine.split(INPUT_KEY_VALUE_SEP);
+				String profession = parts[0];
+				String lemmaProbs = parts[1];
+
+				StringDoubleList lemmaProbsList = new StringDoubleList();
+				lemmaProbsList.readFromString(lemmaProbs);
+				Map<String, Double> lemmaProbsMap = lemmaProbsList.getMap();
+
+				result.put(profession, lemmaProbsMap);
+			}
+
+			br.close();
+
+			return result;
+		}
+
+		/**
+		 * read people to be classified from local cache
+		 * 
+		 * @return
+		 */
+		private HashSet<String> readWantedPeople(Mapper<Text, Text, Text, Text>.Context context)
+				throws IOException {
 			Path peoplePath = new Path(context.getCacheFiles()[0]);
 			List<String> lines = HDFSUtils.readLines(peoplePath, context.getConfiguration());
-			wantedPeople = new HashSet<>(lines);
+			return new HashSet<>(lines);
+		}
+
+		public void setWantedPeople(HashSet<String> wantedPeople) {
+			this.wantedPeople = wantedPeople;
 		}
 
 		/**
@@ -72,7 +134,6 @@ public class ProfessionClassifierMapred {
 		@Override
 		public void map(Text person, Text lemmaCounts, Context context) throws IOException,
 				InterruptedException {
-
 			/*
 			 * make up for the fact that the input key-value pairs are separated
 			 * by " : " but the KeyValueLineRecordReader can only separate by
@@ -84,28 +145,43 @@ public class ProfessionClassifierMapred {
 			if (!wantedPeople.contains(person.toString()))
 				return;
 
-			TopProfessions topProf = getTopProfessions(lemmaCounts.toString(), context);
+			LOG.info("processing wanted person: " + person);
+
+			TopProfessions topProfs;
+			if (probs == null)
+				topProfs = getTopProfessionsFromFile(lemmaCounts.toString(), context);
+			else
+				topProfs = getTopProfessionsFromMap(lemmaCounts.toString());
 
 			StringBuilder sb = new StringBuilder();
-			for (String prof : topProf.getProfessions())
-				sb.append(prof + ", ");
+			for (String prof : topProfs.getProfessions())
+				sb.append(prof + OUTPUT_PROFESSIONS_SEP);
 
 			// remove the last ", "
 			sb.delete(sb.length() - 2, sb.length());
+			Text profs = new Text(sb.toString());
 
-			context.write(person, new Text(sb.toString()));
+			context.write(person, profs);
+			LOG.info("done. professions: " + profs);
 		}
 
-		private TopProfessions getTopProfessions(String lemmaCounts, Context context)
+		private TopProfessions getTopProfessionsFromMap(String lemmaCounts) throws IOException {
+			TopProfessions topProf = new TopProfessions();
+
+			for (String job : probs.keySet()) {
+				double prob = getProfessionProbability(lemmaCounts, probs.get(job));
+				topProf.check(job, prob);
+			}
+
+			return topProf;
+		}
+
+		private TopProfessions getTopProfessionsFromFile(String lemmaCounts, Context context)
 				throws FileNotFoundException, IOException {
 			TopProfessions topProf = new TopProfessions();
 
 			/*
 			 * read and process the BIG PROFESSION_INDEX_PATH file line by line
-			 * 
-			 * Hadoop puts all cached files in the working directory of the
-			 * slave node, regardless of the original path of the cached file.
-			 * Therefore we just need the file's name.
 			 */
 
 			Path profPath = new Path(context.getCacheFiles()[1]);
@@ -114,7 +190,7 @@ public class ProfessionClassifierMapred {
 			String profIndexLine;
 			while ((profIndexLine = br.readLine()) != null) {
 
-				String[] parts = profIndexLine.split(" : ");
+				String[] parts = profIndexLine.split(INPUT_KEY_VALUE_SEP);
 				String profession = parts[0];
 				String lemmaProbs = parts[1];
 
@@ -133,6 +209,11 @@ public class ProfessionClassifierMapred {
 			lemmaProbsList.readFromString(lemmaProbs);
 			Map<String, Double> lemmaProbsMap = lemmaProbsList.getMap();
 
+			return getProfessionProbability(lemmaCounts, lemmaProbsMap);
+		}
+
+		private double getProfessionProbability(String lemmaCounts,
+				Map<String, Double> lemmaProbsMap) throws IOException {
 			StringIntegerList lemmaCountsList = new StringIntegerList();
 			lemmaCountsList.readFromString(lemmaCounts.toString());
 
@@ -160,22 +241,28 @@ public class ProfessionClassifierMapred {
 	 * Takes in four parameters when called from commandline:
 	 * 
 	 * <pre>
-	 * inputPath	HDFS path to the input (directory or file)
+	 * inputPath	HDFS path to the ARTICLE_LEMMA_INDEX file
+	 * 
 	 * outputPath	HDFS path to a not existing directory for the output
+	 * 
 	 * peoplePath	HDFS path to a file containing the people to be classified (one per line)
-	 * professionIndexPath	HDFS path to the LEMMA_PROFESSION_INDEX file
+	 * 
+	 * professionIndexPath	HDFS path to the PROFESSION_LEMMA_INDEX file
+	 * 
+	 * cacheProbs (optional)	set by <code>-cacheProbs</code>.
+	 * 		Tells the mapper to store the PROFESSION_LEMMA_INDEX with a fast accessible 
+	 * 		data structure in working memory. If not provided, mapper will parse 
+	 * 		<code>professionIndexPath</code> on every <code>map()</code>
+	 * call.
 	 * 
 	 * <pre>
 	 * @param args
-	 *            inputPath outputPath peoplePath professionIndexPath
+	 *            inputPath outputPath peoplePath professionIndexPath (-cacheProbs)
 	 * @throws IllegalArgumentException if <code>args</code> does not contain the four HDFS paths
 	 * described above
 	 */
 	public static void main(String[] args) throws Exception {
-		if (args.length != 4)
-			throw new IllegalArgumentException("Four parameters required. "
-					+ "Representing the four HDFS pathes: "
-					+ "input, output, people_list, LEMMA_PROFESSION_INDEX");
+		validateParameters(args);
 
 		Job job = Job.getInstance(new Configuration());
 
@@ -194,19 +281,34 @@ public class ProfessionClassifierMapred {
 
 		job.setJarByClass(ProfessionClassifierMapred.class);
 
-		final Configuration conf = job.getConfiguration();
-		// so we don't have to specify the job name when starting job on cluster
-		conf.set("mapreduce.job.queuename", "hadoop08");
-
-		/*
-		 * required key-value separator is " : " instead of tab (default).
-		 * However KeyValueLineRecordReader only accepts one separator bit. Our
-		 * mapper makes up for it.
-		 */
-		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator", ":");
-		conf.set("mapred.textoutputformat.separator", " : ");
+		setConfigurationValues(args, job);
 
 		// execute the job with verbose prints
 		job.waitForCompletion(true);
+	}
+
+	private static void setConfigurationValues(String[] args, Job job) {
+		Configuration conf = job.getConfiguration();
+		// so we don't have to specify the job name when starting job on cluster
+		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		conf.set("mapreduce.input.keyvaluelinerecordreader.key.value.separator",
+				INPUT_KEY_VALUE_SEP);
+		conf.set("mapred.textoutputformat.separator", OUTPUT_KEY_VALUE_SEP);
+
+		if (args[4].equals(FLAG_CACHE_PROBS))
+			conf.setBoolean(CONF_KEY_CACHE_PROBS, true);
+	}
+
+	private static void validateParameters(String[] args) {
+		if (args.length < 4 || args.length > 5)
+			throw new IllegalArgumentException("Four parameters required. "
+					+ "The four HDFS pathes: "
+					+ "input output people_list PROFESSION_LEMMA_INDEX. Optionally the flag "
+					+ FLAG_CACHE_PROBS + " as fifth");
+
+		if (args.length == 5 && !args[4].equals(FLAG_CACHE_PROBS))
+			throw new IllegalArgumentException("The fifth parameter can only be the flag "
+					+ FLAG_CACHE_PROBS);
 	}
 }

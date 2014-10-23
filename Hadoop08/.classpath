@@ -24,6 +24,8 @@
 	<classpathentry kind="lib" path="libs/mockito-1.9.5/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="libs/MRUnit/mrunit-1.1.0-hadoop2.jar"/>
 	<classpathentry kind="lib" path="libs/MRUnit/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="libs/log4j2/log4j-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="libs/log4j2/log4j-core-2.0.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

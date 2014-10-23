@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} %-5level %class{1} %L %M - %msg%xEx%n" />
+		</Console>
+		<File name="file" fileName="logs/classifier.log" append="true">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} %-5level %class{1} %L %M - %msg%xEx%n" />
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="trace">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>
