@@ -61,7 +61,9 @@ public class ProfessionClassifierMapred {
 			if (wantedPeople == null)
 				wantedPeople = readWantedPeople(context);
 
-			if (probs == null)
+			final boolean cacheProbs = context.getConfiguration().getBoolean(CONF_KEY_CACHE_PROBS,
+					false);
+			if (probs == null && cacheProbs)
 				probs = readLemmaProfessionProbs(context);
 		}
 
@@ -296,7 +298,7 @@ public class ProfessionClassifierMapred {
 				INPUT_KEY_VALUE_SEP);
 		conf.set("mapred.textoutputformat.separator", OUTPUT_KEY_VALUE_SEP);
 
-		if (args[4].equals(FLAG_CACHE_PROBS))
+		if (args.length == 5 && args[4].equals(FLAG_CACHE_PROBS))
 			conf.setBoolean(CONF_KEY_CACHE_PROBS, true);
 	}
 
