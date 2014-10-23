@@ -22,8 +22,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class is used for 3.3 Section B of assignment 2.
@@ -49,7 +47,8 @@ public class ProfessionClassifierMapred {
 
 		private Set<String> wantedPeople;
 		private Map<String, Map<String, Double>> probs;
-		private static Logger LOG = LogManager.getLogger("Main");
+
+		// private static Logger LOG = LogManager.getLogger("Main");
 
 		@Override
 		protected void setup(Mapper<Text, Text, Text, Text>.Context context) throws IOException,
@@ -61,8 +60,7 @@ public class ProfessionClassifierMapred {
 			if (wantedPeople == null)
 				wantedPeople = readWantedPeople(context);
 
-			final boolean cacheProbs = context.getConfiguration().getBoolean(CONF_KEY_CACHE_PROBS,
-					false);
+			boolean cacheProbs = context.getConfiguration().getBoolean(CONF_KEY_CACHE_PROBS, false);
 			if (probs == null && cacheProbs)
 				probs = readLemmaProfessionProbs(context);
 		}
@@ -147,7 +145,7 @@ public class ProfessionClassifierMapred {
 			if (!wantedPeople.contains(person.toString()))
 				return;
 
-			LOG.info("processing wanted person: " + person);
+			// LOG.info("processing wanted person: " + person);
 
 			TopProfessions topProfs;
 			if (probs == null)
@@ -164,7 +162,7 @@ public class ProfessionClassifierMapred {
 			Text profs = new Text(sb.toString());
 
 			context.write(person, profs);
-			LOG.info("done. professions: " + profs);
+			// LOG.info("done. professions: " + profs);
 		}
 
 		private TopProfessions getTopProfessionsFromMap(String lemmaCounts) throws IOException {
