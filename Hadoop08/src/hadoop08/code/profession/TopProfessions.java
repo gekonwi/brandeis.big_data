@@ -18,7 +18,7 @@ import java.util.LinkedList;
  */
 public class TopProfessions {
 	private final LinkedList<StringDouble> professions = new LinkedList<>();
-	private static final int MAX_PROFESSIONS_COUNT = 3;
+	private static final int MAX_PROFESSIONS_COUNT = 5;
 
 	/**
 	 * Check if the given profession is more likely than one of the previously
@@ -58,13 +58,15 @@ public class TopProfessions {
 	 * was called at least three times this guaranteed returns three
 	 * professions.
 	 * 
+	 * Hackyhack by Calvin to get the top 5, then return last 3, cutting off first 2.
+	 * 
 	 * @return most likely professions, ordered by probability, with the most
 	 *         likely one at index 0
 	 */
 	public String[] getProfessions() {
-		String[] result = new String[professions.size()];
-		for (int i = 0; i < professions.size(); i++)
-			result[i] = professions.get(i).getString();
+		String[] result = new String[professions.size()-2];
+		for (int i = 2; i < professions.size(); i++)
+			result[i-2] = professions.get(i).getString();
 
 		return result;
 	}
