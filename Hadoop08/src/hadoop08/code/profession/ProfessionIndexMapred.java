@@ -46,7 +46,7 @@ public class ProfessionIndexMapred {
 
 			String[] parts = lemmaProb.toString().split(",");
 			String lemma = parts[0];
-			double prob;
+			Double prob;
 			try {
 				prob = Double.parseDouble(parts[1]);
 			} catch (NumberFormatException e) {
@@ -61,7 +61,10 @@ public class ProfessionIndexMapred {
 			if (prob < minProb || prob > maxProb)
 				return;
 
-			context.write(profession, new StringDouble(lemma, prob));
+			if (lemma != null && prob != null)
+				context.write(profession, new StringDouble(lemma, prob));
+			else
+				return;
 		}
 	}
 
@@ -90,7 +93,8 @@ public class ProfessionIndexMapred {
 				 * StringDouble object for each iteration to preserve the
 				 * different values.
 				 */
-				list.add(new StringDouble(sd.getString(), sd.getValue()));
+				if (sd != null && sd.getValue() != null)
+					list.add(new StringDouble(sd.getString(), sd.getValue()));
 
 			final Configuration conf = context.getConfiguration();
 			int maxLemmas = conf.getInt(Opt.maxLemmasPerProf.asKey(), -1);
