@@ -28,12 +28,12 @@ public class PreProcess {
 		File inputPath = new File(args[0]);
 		File outputPath = new File(args[0]);
 		
-		setupStopwords();
+		tokenizer = new Tokenizer(setupStopwords());
 		process(inputPath, outputPath);
 		
 	}
 	
-	private static void process(File in, File out) throws IOException {
+	public static void process(File in, File out) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		
@@ -45,14 +45,14 @@ public class PreProcess {
 		bw.close();
 	}
 	
-	private static String lemmasToString(List<String> list) {
+	public static String lemmasToString(List<String> list) {
 		String result = "";
 		for (String s : list) 
 			result = result + " " + s;
 		return result;
 	}
 	
-	private static void setupStopwords() throws IOException {
+	public static HashSet<String> setupStopwords() throws IOException {
 		if (stopWords == null) {
 			File path = new File(STOPWORDS_FILEPATH);
 			List<String> lines = new ArrayList<>();
@@ -65,6 +65,6 @@ public class PreProcess {
 			stopWords = new HashSet<>(lines);
 			br.close();
 		}
-		tokenizer = new Tokenizer(stopWords);
+		return stopWords;
 	}
 }
