@@ -68,7 +68,7 @@ public class PreProcessMapred {
 			String result = "";
 			for (String s : list) 
 				result = result + " " + s;
-			return result.trim();
+			return result;
 		}
 	}
 

@@ -48,7 +48,7 @@ public class PreProcess {
 		String result = "";
 		for (String s : list) 
 			result = result + " " + s;
-		return result.trim();
+		return result;
 	}
 	
 	public static HashSet<String> setupStopwords() throws IOException {

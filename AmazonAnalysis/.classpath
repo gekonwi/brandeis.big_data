@@ -14,5 +14,23 @@
 	<classpathentry kind="lib" path="lib/hadoop/hadoop-mapreduce-client-core-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j2/log4j-api-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j2/log4j-core-2.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/mockito-1.9.5/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/avro-1.7.4.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/commons-configuration-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/guava-11.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/hadoop-auth-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/mrunit-1.1.0-hadoop2.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/mrunit-1.1.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-api-mockito-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-api-support-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-core-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-module-junit4-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-module-junit4-common-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/powermock-reflect-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/MRUnit/slf4j-log4j12-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
