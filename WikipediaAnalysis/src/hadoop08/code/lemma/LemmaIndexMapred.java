@@ -56,13 +56,6 @@ public class LemmaIndexMapred {
 
 		@Override
 		protected void setup(Context context) throws IOException, InterruptedException {
-			// allows to set custom stopWords in unit tests
-			if (stopWords == null) {
-				Path path = new Path(STOPWORDS_FILEPATH);
-				List<String> lines = HDFSUtils.readLines(path, context.getConfiguration());
-				stopWords = new HashSet<>(lines);
-			}
-			tokenizer = new Tokenizer(stopWords);
 		}
 
 		/**

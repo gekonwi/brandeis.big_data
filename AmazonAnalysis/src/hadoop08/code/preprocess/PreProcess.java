@@ -26,7 +26,7 @@ public class PreProcess {
 					"need two parameters: inputPath and outputPath");
 		
 		File inputPath = new File(args[0]);
-		File outputPath = new File(args[0]);
+		File outputPath = new File(args[1]);
 		
 		tokenizer = new Tokenizer(setupStopwords());
 		process(inputPath, outputPath);
@@ -36,7 +36,6 @@ public class PreProcess {
 	public static void process(File in, File out) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
-		
 		String line;
 		while ((line = br.readLine()) != null) {
 			bw.write(lemmasToString(tokenizer.getLemmas(line)));
@@ -49,7 +48,7 @@ public class PreProcess {
 		String result = "";
 		for (String s : list) 
 			result = result + " " + s;
-		return result;
+		return result.trim();
 	}
 	
 	public static HashSet<String> setupStopwords() throws IOException {
