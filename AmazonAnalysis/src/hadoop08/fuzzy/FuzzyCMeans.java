@@ -2,9 +2,13 @@ package hadoop08.fuzzy;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.mahout.utils.clustering.ClusterDumper;
 
 public class FuzzyCMeans {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		/**
 		 * a file path string to a directory containing the input data set a
 		 * SequenceFile(WritableComparable, VectorWritable). The sequence file
@@ -51,5 +55,32 @@ public class FuzzyCMeans {
 		// FuzzyKMeansDriver.run(input, initialClusters, output,
 		// convergenceDelta, maxIterations, m,
 		// runClustering, emitMostLikely, threshold, runSequential);
+
+		Configuration conf = new Configuration();
+
+		// we can't specify the queue name otherwise
+		conf.set("mapreduce.job.queuename", "hadoop08");
+
+		ClusterDumper cd = new ClusterDumper();
+		cd.setConf(conf);
+
+		ArrayList<String> cdArgs = new ArrayList<>(15);
+		cdArgs.add("--input");
+		cdArgs.add("output/kmeans/002/clusters-2-final/part-r-00000");
+		cdArgs.add("--output");
+		cdArgs.add("output/decoded/kmeans/001");
+		cdArgs.add("--dictionary");
+		cdArgs.add("output/seq2sparse/002/dictionary.file-0");
+		cdArgs.add("--dictionaryType");
+		cdArgs.add("sequencefile");
+		cdArgs.add("--numWords");
+		cdArgs.add("20");
+		cdArgs.add("--substring");
+		cdArgs.add("100");
+		cdArgs.add("--pointsDir");
+		cdArgs.add("output/kmeans/002/clusteredPoints");
+		cdArgs.add("--evaluate");
+
+		cd.run(cdArgs.toArray(new String[cdArgs.size()]));
 	}
 }
