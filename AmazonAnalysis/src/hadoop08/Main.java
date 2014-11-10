@@ -1,17 +1,18 @@
 package hadoop08;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import number_lines.copy.NumberLines;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
 
+	private static Logger log = LogManager.getLogger(Main.class);
+
 	public static void main(String[] args) throws IOException {
-		Path input = Paths.get("test_data", "text_files", "sample_text");
-		Path numberedInput = Paths.get("output", "001", "numbered_input");
-		NumberLines.run(input, numberedInput);
+		org.apache.log4j.BasicConfigurator.configure();
+		log.info("no default behavior implemented yet. You could run a specific class, e.g. "
+				+ "hadoop08.read_clusters.ClusterDumper clusterDir outputDir");
 	}
 
 }

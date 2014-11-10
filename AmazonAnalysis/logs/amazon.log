@@ -1,0 +1,5 @@
+14:36:10.781 INFO  NumberLines 17 run - adding line numbers to test_data/text_files/sample_text, writing result to output/4/numbered_input
+14:36:10.861 INFO  NumberLines 35 run - finished. wrote 153 lines.
+14:46:38.908 INFO  NumberLines 17 run - adding line numbers to test_data/text_files/sample_text, writing result to output/4/numbered_input
+14:46:38.954 INFO  NumberLines 35 run - finished. wrote 153 lines.
+12:55:04.279 INFO  Main 14 main - no default behavior implemented yet. You could run a specific class, e.g. hadoop08.read_clusters.ClusterDumper clusterDir outputDir
