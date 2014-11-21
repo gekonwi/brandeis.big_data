@@ -4,25 +4,41 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Scanner;
 
+import com.jcraft.jsch.*;
+
 public class RecommendPreProcess {
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, JSchException, SftpException {
 		if (args.length != 1)
 			throw new IllegalArgumentException(
 					"need parameter: outputPath");
 		
-		//File inputPath = new File(args[0]);
-		URL inputPath = new URL("ftp://hadoop08:olj0O}an6taR@129.64.2.200/home/o/class/cs129a/assignment4/all.txt");
+		JSch jsch = new JSch();
+		
+		Session session = jsch.getSession("hadoop08", "129.64.2.200", 22);
+        session.setConfig("StrictHostKeyChecking", "no");
+        session.setPassword("olj0O}an6taR");
+
+		session.connect();
+
+		Channel channel = session.openChannel( "sftp" );
+		channel.connect();
+
+		ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+		InputStream in = sftpChannel.get( "/home/o/class/cs129a/assignment4/all.txt" );
+		
 		File outputPath = new File(args[0]);
 		
-		process(inputPath.openConnection().getInputStream(), outputPath);
+		process(in, outputPath);
+		
+		sftpChannel.exit();
+		session.disconnect();
 	}
 	
 	public static void process(InputStream in, File out) throws IOException {
