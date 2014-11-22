@@ -59,7 +59,7 @@ public class RecommendPreProcess {
 			} else {
 				bw.write("\r\n");
 			}
-			if (++count%1000 == 0)
+			if (++count%1000000 == 0)
 				System.out.println(count);
 		}
 		br.close();
