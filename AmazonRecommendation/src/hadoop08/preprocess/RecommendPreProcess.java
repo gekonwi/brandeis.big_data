@@ -32,7 +32,6 @@ public class RecommendPreProcess {
 		ChannelSftp sftpChannel = (ChannelSftp) channel;
 
 		InputStream in = sftpChannel.get( "/home/o/class/cs129a/assignment4/all.txt" );
-		
 		File outputPath = new File(args[0]);
 		
 		process(in, outputPath);
@@ -45,20 +44,38 @@ public class RecommendPreProcess {
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		String line, tag;
+		String builtLine = "";
 		Scanner scan;
 		long count = 0;
 
 		while ((line = br.readLine()) != null) {
 			scan = new Scanner(line);
-			if (scan.hasNext()) {
-				tag = scan.next();
 			
-				if (tag.equals("product/productId:") || tag.equals("review/userId:") || tag.equals("review/score:") || tag.equals("\r\n")) {
-					bw.write(line + "\r\n");
+			if (scan.hasNext()) {
+				//is a line
+				tag = scan.next();
+				
+				if (tag.equals("product/productId:") || tag.equals("review/userId:") || tag.equals("review/score:")) {
+					
+					String[] lineParts = line.split(" ");
+					
+					if (tag.equals("product/productId:"))
+						builtLine += lineParts[1] + "\t";
+					if (tag.equals("review/userId:"))
+						builtLine += lineParts[1] + " ";
+					if (tag.equals("review/score:"))
+						builtLine += lineParts[1];
+					
+				}
+				if (tag.equals("\r\n")) {
+					builtLine += "\r\n";
 				}
 			} else {
-				bw.write("\r\n");
+				//is end, write
+				bw.write(builtLine + "\r\n");
+				builtLine = "";
 			}
+			
 			if (++count%1000000 == 0)
 				System.out.println(count);
 		}
