@@ -10,9 +10,8 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.SequenceFile.Reader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.mahout.clustering.Cluster;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.mahout.clustering.classify.WeightedVectorWritable;
 import org.apache.mahout.math.NamedVector;
 
@@ -27,10 +26,8 @@ public class ClusterDumper {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		org.apache.log4j.BasicConfigurator.configure();
-
 		String inputDir = args[0];
-		Path input = new Path(inputDir + "/" + Cluster.CLUSTERED_POINTS_DIR + "/part-m-00000");
+		Path input = new Path(inputDir + "/clusteredPoints/part-m-00000");
 
 		String outputDir = args[1];
 		Path output = new Path(outputDir + "/clusterdump.txt");
