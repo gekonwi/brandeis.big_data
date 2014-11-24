@@ -12,6 +12,7 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.SequenceFile.Reader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.mahout.clustering.classify.WeightedPropertyVectorWritable;
 import org.apache.mahout.clustering.classify.WeightedVectorWritable;
 import org.apache.mahout.math.NamedVector;
 
@@ -50,9 +51,9 @@ public class ClusterDumper {
 
 	private static void dump(SequenceFile.Reader reader, BufferedWriter bw) throws IOException {
 		IntWritable cluster = new IntWritable();
-		WeightedVectorWritable value = new WeightedVectorWritable();
-		log.info("value class: " + reader.getValueClass());
+		WeightedVectorWritable value = new WeightedPropertyVectorWritable();
 		long lineNum = 0;
+
 		while (reader.next(cluster, value)) {
 			lineNum++;
 
@@ -60,7 +61,7 @@ public class ClusterDumper {
 			String vectorName = vector.getName();
 			bw.write(vectorName + ", " + cluster.toString() + "\n");
 
-			if (lineNum % 1000 == 0)
+			if (lineNum % 10_000 == 0)
 				log.info("wrote " + lineNum + " lines");
 		}
 	}
