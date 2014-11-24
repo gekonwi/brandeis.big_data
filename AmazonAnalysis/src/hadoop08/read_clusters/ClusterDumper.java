@@ -51,6 +51,7 @@ public class ClusterDumper {
 	private static void dump(SequenceFile.Reader reader, BufferedWriter bw) throws IOException {
 		IntWritable cluster = new IntWritable();
 		WeightedVectorWritable value = new WeightedVectorWritable();
+		log.info("value class: " + reader.getValueClass());
 		long lineNum = 0;
 		while (reader.next(cluster, value)) {
 			lineNum++;
