@@ -42,16 +42,16 @@ for file; do
 
 	fileCopy=$TMP/$file
 	copyWithDir $file $fileCopy
-	fileCopy=$(getAbsPath $fileCopy)
 
 	cd $MAHOUT_HOME
 	javac -classpath `hadoop classpath`:. $fileCopy
 	
-	echo "merging in $fileCopy"
-
 	# merge the compiled Java file into the target JAR
+	echo "merging in $fileCopy"
 	cd $TMP	
 	jar uf $target ${file%.java}.class
+
+	cd $startWorkingDir
 done
 
 rm -r $TMP
