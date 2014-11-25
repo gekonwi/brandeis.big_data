@@ -38,7 +38,8 @@ public class HashUnhashTokens {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		BufferedWriter bhashw = new BufferedWriter(new FileWriter(hashMap));
 		String line, builtLine, hashMapLine;
-
+		long count = 0;
+		
 		while ((line = br.readLine()) != null) {
 
 			String tokens[] = line.split(",");
@@ -72,7 +73,10 @@ public class HashUnhashTokens {
 			
 			bw.write(builtLine + "\r\n");
 			bhashw.write(hashMapLine);
-
+			
+			if (++count%1000000 == 0)
+				System.out.println("Hashed " + count + " lines so far.");
+			
 		}
 		
 		br.close();
@@ -86,7 +90,8 @@ public class HashUnhashTokens {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		String line, builtLine, xlation;
-
+		long count = 0;
+		
 		while ((line = br.readLine()) != null) {
 
 			String tokens[] = line.split(",");
@@ -99,6 +104,7 @@ public class HashUnhashTokens {
 				bw.close();
 				return;
 			}
+			
 			builtLine = "";
 			for (int i = 0; i < tokens.length; i++){
 				
@@ -120,6 +126,8 @@ public class HashUnhashTokens {
 			
 			bw.write(builtLine + "\r\n");
 
+			if (++count%1000000 == 0)
+				System.out.println("Translated " + count + " lines so far.");
 		}
 		
 		br.close();
@@ -131,17 +139,13 @@ public class HashUnhashTokens {
 		BufferedReader br = new BufferedReader(new FileReader(hashMap));
 		String line, value;
 		
-		System.out.println("reading file " + hashMap.getName());
+		System.out.println("Reading file " + hashMap.getName());
 		
 		while ((line = br.readLine()) != null) {
 			
 			String[] keyval = line.split(":");
-			
-			System.out.println("finding translation for " + keyval[0]);
-			
 			if (keyval[0].equals(token)) {
 				value = keyval[1];
-				System.out.println("for token " + token + " found key " + keyval[0] + " returning value " + value);
 				br.close();
 				return value;
 			}
