@@ -14,26 +14,30 @@ import java.io.IOException;
  * @author calvin
  * 
  */
-public class HashUnhashTokens {
+public class HashUnhash {
 	public static void main(String[] args) throws IOException {
 		// use arguments for filename input
-		if (args.length != 5)
+		if (args.length != 6)
 			throw new IllegalArgumentException(
-					"need 5 parameters: inputPath, outputPath, [hash | unhash], HashMapPath, numTokens");
+					"need 6 parameters: inputPath, outputPath, [hash | unhash], HashMapPath, numTokens, characterSplit (the character to split by)");
 		
 		if (!args[2].equals("hash") && !args[2].equals("unhash"))
 			throw new IllegalArgumentException("invalid param: " + args[2]
 					+ ", must be 'hash' or 'unhash'");
+		
+		if (args[5].length() != 1)
+			throw new IllegalArgumentException("invalid param: " + args[2]
+					+ ", must be a single character");
 
 		int numTokens = Integer.parseInt(args[4]);
 		
 		if (args[2].equals("hash"))
-			hash(new File(args[0]), new File(args[1]), args[2], new File(args[3]), numTokens);
+			hash(new File(args[0]), new File(args[1]), args[2], new File(args[3]), numTokens, args[5]);
 		else
-			unhash(new File(args[0]), new File(args[1]), args[2], new File(args[3]), numTokens);
+			unhash(new File(args[0]), new File(args[1]), args[2], new File(args[3]), numTokens, args[5]);
 	}
 
-	private static void hash(File in, File out, String op, File hashMap, int numTokens) throws IOException {
+	private static void hash(File in, File out, String op, File hashMap, int numTokens, String splitBy) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		BufferedWriter bhashw = new BufferedWriter(new FileWriter(hashMap));
@@ -42,7 +46,7 @@ public class HashUnhashTokens {
 		
 		while ((line = br.readLine()) != null) {
 
-			String tokens[] = line.split(",");
+			String tokens[] = line.split(splitBy);
 			int translated[] = new int[numTokens];
 			
 			if (numTokens > tokens.length) {
@@ -86,7 +90,7 @@ public class HashUnhashTokens {
 	}
 	
 
-	private static void unhash(File in, File out, String op, File hashMap, int numTokens) throws IOException {
+	private static void unhash(File in, File out, String op, File hashMap, int numTokens, String splitBy) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		String line, builtLine, xlation;
@@ -94,7 +98,7 @@ public class HashUnhashTokens {
 		
 		while ((line = br.readLine()) != null) {
 
-			String tokens[] = line.split(",");
+			String tokens[] = line.split(splitBy);
 			
 			if (numTokens > tokens.length) {
 				System.err.println("You can't hash more tokens then there are tokens in a line:\r\n" +
