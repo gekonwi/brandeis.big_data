@@ -23,12 +23,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 
  * The input file is expected to be the output of
  * {@link NumberLines#run(java.nio.file.Path, java.nio.file.Path)}, i.e. each
- * line start with an integer indicating the line number, followed by a
+ * line starts with an integer indicating the line number, followed by a
  * <code>\t</code> character and the actual line content.
  * 
  * The output has the same format, however there is no guarantee about the
  * output order (due to the unpredictable order in which Hadoop MapReduce
- * executes map and reduce jobs) .
+ * executes map and reduce jobs). The output has the same amount of lines as the
+ * input (including 'blank' lines with only line number and the <code>\t</code>
+ * character).
  * 
  * @author Calvin Wang
  * 
