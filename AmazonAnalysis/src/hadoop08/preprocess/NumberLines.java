@@ -50,5 +50,7 @@ public class NumberLines {
 		bw.close();
 
 		br.close();
+
+		log.info("Success. Wrote all " + lineNum + " lines.");
 	}
 }
