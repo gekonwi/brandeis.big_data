@@ -1,4 +1,4 @@
-package preprocess;
+package hadoop08.preprocess;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 /**
  * This class just prefixes each line in the given input with the line number
  * and a <code>\t</code> character.
@@ -16,6 +19,8 @@ import java.nio.file.Paths;
  * 
  */
 public class NumberLines {
+	private static Logger log = LogManager.getLogger(NumberLines.class);
+
 	public static void main(String[] args) throws IOException {
 		run(Paths.get(args[0]), Paths.get(args[1]));
 	}
@@ -33,6 +38,9 @@ public class NumberLines {
 		while ((line = br.readLine()) != null) {
 			lineNum++;
 			bw.write(lineNum + "\t" + line + "\n");
+
+			if (lineNum % 10_000 == 0)
+				log.info("line " + lineNum);
 		}
 
 		bw.flush();

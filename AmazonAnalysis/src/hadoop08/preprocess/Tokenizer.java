@@ -1,4 +1,4 @@
-package hadoop08.code.preprocess;
+package hadoop08.preprocess;
 
 import java.util.ArrayList;
 import java.util.HashSet;

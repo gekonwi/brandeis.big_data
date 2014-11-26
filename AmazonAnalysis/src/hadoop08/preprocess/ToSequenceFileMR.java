@@ -1,4 +1,4 @@
-package hadoop08.line_to_SequenceFile;
+package hadoop08.preprocess;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
  * 
  * @author Paul,
  */
-public class LineToSequenceFileMR {
+public class ToSequenceFileMR {
 
 	public static class LineToSequenceFileMapper extends Mapper<LongWritable, Text, Text, Text> {
 
@@ -46,7 +46,7 @@ public class LineToSequenceFileMR {
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		job.setJarByClass(LineToSequenceFileMR.class);
+		job.setJarByClass(ToSequenceFileMR.class);
 
 		// so we don't have to specify the job name when starting job on cluster
 		job.getConfiguration().set("mapreduce.job.queuename", "hadoop08");

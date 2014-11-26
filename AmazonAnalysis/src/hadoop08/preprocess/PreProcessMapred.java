@@ -1,6 +1,6 @@
-package hadoop08.code.preprocess;
+package hadoop08.preprocess;
 
-import hadoop08.code.preprocess.Tokenizer;
+import hadoop08.preprocess.Tokenizer;
 import hadoop08.utils.HDFSUtils;
 
 import java.io.*;
