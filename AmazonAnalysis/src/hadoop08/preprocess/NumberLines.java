@@ -27,9 +27,12 @@ public class NumberLines {
 
 	public static void run(Path input, Path output) throws IOException {
 		Charset utf8 = Charset.forName("UTF-8");
+
 		BufferedReader br = Files.newBufferedReader(input, utf8);
 
-		Files.createDirectories(output.getParent());
+		if (output.getParent() != null && Files.notExists(output.getParent()))
+			Files.createDirectories(output.getParent());
+
 		BufferedWriter bw = Files.newBufferedWriter(output, utf8);
 
 		long lineNum = 0;
@@ -39,7 +42,7 @@ public class NumberLines {
 			lineNum++;
 			bw.write(lineNum + "\t" + line + "\n");
 
-			if (lineNum % 10_000 == 0)
+			if (lineNum % 100_000 == 0)
 				log.info("line " + lineNum);
 		}
 
