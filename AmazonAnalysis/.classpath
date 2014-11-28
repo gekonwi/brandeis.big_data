@@ -5,13 +5,13 @@
 	<classpathentry kind="lib" path="lib/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/mahout-1.0-snapshot/mahout-examples-1.0-SNAPSHOT-job.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/stanford-corenlp-full-2014-08-27/stanford-corenlp-3.4.1-models.jar"/>
 	<classpathentry kind="lib" path="lib/apache-commons-logging-1.2/commons-logging-1.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/apache-commons-logging-1.2/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j2/log4j-api-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j2/log4j-core-2.0.2.jar"/>
-
 	<classpathentry kind="lib" path="lib/mockito-1.9.5/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/MRUnit/avro-1.7.4.jar"/>
 	<classpathentry kind="lib" path="lib/MRUnit/commons-collections-3.2.1.jar"/>
@@ -30,7 +30,6 @@
 	<classpathentry kind="lib" path="lib/MRUnit/powermock-reflect-1.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/MRUnit/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/MRUnit/slf4j-log4j12-1.7.5.jar"/>
-
 	<classpathentry kind="lib" path="lib/hadoop/hadoop-common-2.5.1.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api/"/>
@@ -41,7 +40,5 @@
 			<attribute name="javadoc_location" value="http://hadoop.apache.org/docs/r2.5.1/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/mahout-1.0-snapshot/mahout-examples-1.0-SNAPSHOT-job.jar"/>
-
 	<classpathentry kind="output" path="bin"/>
 </classpath>

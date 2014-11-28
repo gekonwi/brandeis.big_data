@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# =============================================================================================================
 # Expects a list of Java file paths to be compiled and the target path as last argument.
 # Each Java file path has to correspond to the package of this class.
+# E.g. the path to hadoop08.read_clusters.ClusterDumper must be hadoop08/read_clusters/ClusterDumper.java.
+# Thus there must be a hadoop08/read_clusters/ClusterDumper.java in the directory from which this script is called.
+# =============================================================================================================
+
 
 # 1. Compiles each given Java file respecting Mahout dependencies using the `hadoop classpath` in the javac call and creates a Hadoop executable JAR containing both, all the Mahout code and the compiled Java files. 
 
@@ -19,8 +24,10 @@ getAbsPath() {
 	echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 }
 
-MAHOUT_HOME=~/mahout_unpacked
+MAHOUT_HOME=~/mahout_examples_unpacked
+
 TMP=$MAHOUT_HOME/tmp
+mkdir $TMP
 
 echo „Compiling given Java files with Mahout and Hadoop class path“
 
@@ -29,8 +36,7 @@ for targetRel; do true; done
 target=$(getAbsPath $targetRel)
 
 # prepare a fresh copy of the original Mahout job JAR
-mkdir $TMP
-cp $MAHOUT_HOME/mahout-mrlegacy-1.0-SNAPSHOT-job.jar_backup $target
+cp $MAHOUT_HOME/mahout-examples-1.0-SNAPSHOT-job.jar_backup $target
 
 startWorkingDir=$pwd
 
