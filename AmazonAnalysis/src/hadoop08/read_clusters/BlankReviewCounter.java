@@ -37,13 +37,12 @@ public class BlankReviewCounter {
 		long count = 0;
 		
 		while ((line = br.readLine()) != null) {
-			String[] parts = line.split(" ");
+			String[] parts = line.split("\t");
 			
-			if (!(parts.length > 1)) {
+			if (parts.length == 1) {
 				log.info("Empty line #" + ++count + " found:\r\n\t[" + line + "]");
 			}
 		}
-		
 		log.info("Total empty lines: " + count);
 		br.close();
 		
