@@ -4,12 +4,11 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 
@@ -20,16 +19,16 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
  */
 public class ToSequenceFileMR {
 
-	public static class LineToSequenceFileMapper extends Mapper<LongWritable, Text, Text, Text> {
+	public static class LineToSequenceFileMapper extends Mapper<Text, Text, Text, Text> {
 
 		/**
 		 * TODO
 		 */
 		@Override
-		public void map(LongWritable lineNum, Text review, Context context) throws IOException,
+		public void map(Text lineNum, Text review, Context context) throws IOException,
 				InterruptedException {
-			Text lineNumAsText = new Text(lineNum.toString());
-			context.write(lineNumAsText, review);
+			Text reviewID = new Text("review_" + lineNum.toString());
+			context.write(reviewID, review);
 		}
 	}
 
@@ -40,7 +39,7 @@ public class ToSequenceFileMR {
 
 		job.setMapperClass(LineToSequenceFileMapper.class);
 
-		job.setInputFormatClass(TextInputFormat.class);
+		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
