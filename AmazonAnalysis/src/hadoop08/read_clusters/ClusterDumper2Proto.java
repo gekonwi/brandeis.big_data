@@ -17,9 +17,8 @@ public class ClusterDumper2Proto {
 		Path input = new Path(args[0]);
 		int printFirstN = Integer.parseInt(args[1]);
 
-		long maxPointsPerCluster = Long.MAX_VALUE;
 		Map<Integer, List<WeightedPropertyVectorWritable>> points;
-		points = ClusterDumper.readPoints(input, maxPointsPerCluster, new Configuration());
+		points = ClusterDumper.readPoints(input, printFirstN, new Configuration());
 
 		int count = 0;
 		for (Integer key : points.keySet()) {
