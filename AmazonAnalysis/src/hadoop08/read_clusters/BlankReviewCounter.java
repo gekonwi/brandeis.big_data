@@ -20,6 +20,8 @@ public class BlankReviewCounter {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
+		if (args.length != 2)
+			System.err.println("Need 2 parameters: input file to scan, output file for log");
 		File input = new File(args[0]);
 		File logOutput = new File(args[1]);
 
