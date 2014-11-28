@@ -13,9 +13,11 @@ import org.apache.mahout.common.Pair;
 import org.apache.mahout.common.iterator.sequencefile.PathFilters;
 import org.apache.mahout.common.iterator.sequencefile.PathType;
 import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirIterable;
+import org.apache.mahout.math.NamedVector;
+import org.apache.mahout.math.Vector;
 
-public class ClusterDumper4Proto {
-	private static Logger log = LogManager.getLogger(ClusterDumper4Proto.class);
+public class ClusterDumper5Proto {
+	private static Logger log = LogManager.getLogger(ClusterDumper5Proto.class);
 
 	public static void main(String[] args) {
 		Path input = new Path(args[0]);
@@ -26,19 +28,22 @@ public class ClusterDumper4Proto {
 	// adapted from org.apache.mahout.utils.clustering.ClusterDumper
 	public static void readPoints(Path pointsPathDir, Configuration conf) {
 
-		Set<Integer> clusters = new HashSet<>();
-
 		SequenceFileDirIterable<IntWritable, WeightedPropertyVectorWritable> dirIterable;
 		dirIterable = new SequenceFileDirIterable<IntWritable, WeightedPropertyVectorWritable>(
 				pointsPathDir, PathType.LIST, PathFilters.logsCRCFilter(), conf);
 
+		Set<String> vectorIDs = new HashSet<>();
+		long count = 0;
+
 		for (Pair<IntWritable, WeightedPropertyVectorWritable> record : dirIterable) {
+			count++;
 
-			int clusterID = record.getFirst().get();
-			clusters.add(clusterID);
+			Vector vector = record.getSecond().getVector();
+			String vectorID = ((NamedVector) vector).getName();
+			vectorIDs.add(vectorID);
 
-			log.info("read in cluster: " + clusterID + ", total number of clusters so far: "
-					+ clusters.size());
+			log.info(count + ": read in vector: " + vectorID + ", total number of vectors so far: "
+					+ vectorIDs.size());
 		}
 	}
 }
