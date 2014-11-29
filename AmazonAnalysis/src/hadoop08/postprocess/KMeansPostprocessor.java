@@ -146,7 +146,7 @@ public class KMeansPostprocessor {
 		}
 
 		log.info("Created original_cluster->scaled_cluster mapping for " + mapping.size()
-				+ "clusters: \n" + mapping);
+				+ " clusters: \n" + mapping);
 
 		return mapping;
 	}
@@ -164,13 +164,14 @@ public class KMeansPostprocessor {
 			int clusterID = reviewClusterMap.get(reviewID);
 			assert clusterID > 0;
 
-			bw.write(clusterID);
+			bw.write(clusterID + "");
 			if (reviewID < reviewClusterMap.size())
 				bw.write("\n");
 
 			logProgress(reviewID);
 		}
 
+		bw.flush();
 		bw.close();
 		log.info("Finished writing. Total output lines: " + reviewClusterMap.size());
 	}
