@@ -44,8 +44,8 @@ public class KMeansPostprocessor {
 	 * 
 	 */
 	public static void main(String[] args) throws IOException {
-		Path kMeansOutputDir = new Path(args[0]);
-		Path postProcessOutput = new Path(args[1]);
+		String kMeansOutputDir = args[0];
+		String postProcessOutput = args[1];
 		long maxReviewID = Long.parseLong(args[2]);
 
 		Map<Long, Integer> reviewClusterMap = readClustering(kMeansOutputDir);
@@ -75,9 +75,10 @@ public class KMeansPostprocessor {
 	 */
 	private static void addMissingReviews(Map<Long, Integer> reviewClusterMap, int maxClusterID,
 			long maxReviewID) {
-		log.info("Adding missing review->cluster assignments. Current number of mappings: "
-				+ reviewClusterMap.size() + ". Checking from review 1 to review " + maxReviewID
-				+ ". Adding random clusters between 1 and " + maxClusterID + ".");
+		log.info("Adding missing review->cluster assignments.");
+		log.info("Current number of mappings: " + reviewClusterMap.size());
+		log.info("Checking from review 1 to review " + maxReviewID + ".");
+		log.info("Adding random clusters between 1 and " + maxClusterID + ".");
 
 		Random rand = new Random();
 
@@ -99,7 +100,7 @@ public class KMeansPostprocessor {
 
 	private static void scaleClusters(Map<Long, Integer> reviewClusterMap,
 			Map<Integer, Integer> clusterScalingMap) {
-		log.info("Scaling clusters in" + reviewClusterMap.size()
+		log.info("Scaling clusters in " + reviewClusterMap.size()
 				+ " records with target clusters from 1 to " + clusterScalingMap.size());
 
 		long counter = 0;
@@ -114,7 +115,7 @@ public class KMeansPostprocessor {
 			logProgress(counter);
 		}
 
-		log.info("finished scaling clusters in " + counter + " records");
+		log.info("Finished scaling clusters in " + counter + " records.");
 	}
 
 	/**
@@ -127,7 +128,8 @@ public class KMeansPostprocessor {
 	 * @return a mapping from given cluster IDs to scaled cluster IDs
 	 */
 	private static Map<Integer, Integer> getClusterScaling(Map<Long, Integer> reviewClusterMap) {
-		log.info("Creating cluster scaling mapping from " + reviewClusterMap.size() + " records");
+		log.info("Creating original_cluster->scaled_cluster mapping from "
+				+ reviewClusterMap.size() + " records");
 
 		Map<Integer, Integer> mapping = new HashMap<>();
 
@@ -143,18 +145,19 @@ public class KMeansPostprocessor {
 			logProgress(counter);
 		}
 
-		log.info("Created cluster scaling mapping for " + mapping.size() + "clusters: \n" + mapping);
+		log.info("Created original_cluster->scaled_cluster mapping for " + mapping.size()
+				+ "clusters: \n" + mapping);
 
 		return mapping;
 	}
 
-	private static void writeSorted(Map<Long, Integer> reviewClusterMap, Path path)
+	private static void writeSorted(Map<Long, Integer> reviewClusterMap, String postProcessOutput)
 			throws IOException {
 
-		log.info("Starting writing " + reviewClusterMap.size() + " records to " + path);
+		log.info("Starting writing " + reviewClusterMap.size() + " records to " + postProcessOutput);
 
 		FileSystem fs = FileSystem.get(new Configuration());
-		FSDataOutputStream outStream = fs.create(path);
+		FSDataOutputStream outStream = fs.create(new Path(postProcessOutput));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outStream));
 
 		for (long reviewID = 1; reviewID <= reviewClusterMap.size(); reviewID++) {
@@ -172,8 +175,8 @@ public class KMeansPostprocessor {
 		log.info("Finished writing. Total output lines: " + reviewClusterMap.size());
 	}
 
-	private static Map<Long, Integer> readClustering(Path kMeansOutputDir) {
-		Path pointsPathDir = Path.mergePaths(kMeansOutputDir, new Path("clusteredPoints"));
+	private static Map<Long, Integer> readClustering(String kMeansOutputDir) {
+		Path pointsPathDir = new Path(kMeansOutputDir + "/clusteredPoints");
 
 		log.info("Starting reading review->cluster mappings from " + pointsPathDir);
 
@@ -195,7 +198,7 @@ public class KMeansPostprocessor {
 			logProgress(reviewClusterMap.size());
 		}
 
-		log.info("Finished reading clusters. total: " + reviewClusterMap.size());
+		log.info("Finished reading clusters. Total: " + reviewClusterMap.size());
 
 		return reviewClusterMap;
 	}
