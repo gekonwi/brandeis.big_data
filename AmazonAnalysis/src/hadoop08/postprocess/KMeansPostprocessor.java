@@ -48,24 +48,24 @@ public class KMeansPostprocessor {
 		Path postProcessOutput = new Path(args[1]);
 		long maxReviewID = Long.parseLong(args[2]);
 
-		Map<Long, Integer> reviewCategoryMap = readClustering(kMeansOutputDir);
+		Map<Long, Integer> reviewClusterMap = readClustering(kMeansOutputDir);
 
-		Map<Integer, Integer> clusterScalingMap = getClusterScaling(reviewCategoryMap);
+		Map<Integer, Integer> clusterScaledClusterMap = getClusterScaling(reviewClusterMap);
 
-		scaleClusters(reviewCategoryMap, clusterScalingMap);
+		scaleClusters(reviewClusterMap, clusterScaledClusterMap);
 
-		addMissingReviews(reviewCategoryMap, clusterScalingMap.size(), maxReviewID);
+		addMissingReviews(reviewClusterMap, clusterScaledClusterMap.size(), maxReviewID);
 
-		writeSorted(reviewCategoryMap, postProcessOutput);
+		writeSorted(reviewClusterMap, postProcessOutput);
 	}
 
 	/**
 	 * Adds missing review-> cluster assignments. Each added cluster is a random
 	 * number between 1 and <code>maxClusterID</code>. In the end the provided
-	 * <code>reviewCategoryMap</code> will contain <code>maxClusterID</code>
+	 * <code>reviewClusterMap</code> will contain <code>maxClusterID</code>
 	 * mappings.
 	 * 
-	 * @param reviewCategoryMap
+	 * @param reviewClusterMap
 	 *            existing review->cluster mappings with review IDs between 1
 	 *            and <code>maxReviewID</code>
 	 * @param maxClusterID
@@ -73,43 +73,43 @@ public class KMeansPostprocessor {
 	 * @param maxReviewID
 	 *            defines the final number of reviews to be achieved
 	 */
-	private static void addMissingReviews(Map<Long, Integer> reviewCategoryMap, int maxClusterID,
+	private static void addMissingReviews(Map<Long, Integer> reviewClusterMap, int maxClusterID,
 			long maxReviewID) {
 		log.info("Adding missing review->cluster assignments. Current number of mappings: "
-				+ reviewCategoryMap.size() + ". Checking from review 1 to review " + maxReviewID
+				+ reviewClusterMap.size() + ". Checking from review 1 to review " + maxReviewID
 				+ ". Adding random clusters between 1 and " + maxClusterID + ".");
 
 		Random rand = new Random();
 
 		for (long reviewID = 1; reviewID <= maxReviewID; reviewID++) {
-			if (reviewCategoryMap.containsKey(reviewID))
+			if (reviewClusterMap.containsKey(reviewID))
 				continue;
 
 			int clusterID = rand.nextInt(maxClusterID) + 1;
-			reviewCategoryMap.put(reviewID, clusterID);
+			reviewClusterMap.put(reviewID, clusterID);
 
 			log.info("\t added missing mapping for review " + reviewID + ": cluster " + clusterID);
 			logProgress(reviewID);
 		}
 
-		assert reviewCategoryMap.size() == maxClusterID;
+		assert reviewClusterMap.size() == maxClusterID;
 		log.info("Finished adding missing review->cluster mappings. New total number of mappings: "
-				+ reviewCategoryMap.size());
+				+ reviewClusterMap.size());
 	}
 
-	private static void scaleClusters(Map<Long, Integer> reviewCategoryMap,
+	private static void scaleClusters(Map<Long, Integer> reviewClusterMap,
 			Map<Integer, Integer> clusterScalingMap) {
-		log.info("Scaling clusters in" + reviewCategoryMap.size()
+		log.info("Scaling clusters in" + reviewClusterMap.size()
 				+ " records with target clusters from 1 to " + clusterScalingMap.size());
 
 		long counter = 0;
-		for (long reviewID : reviewCategoryMap.keySet()) {
+		for (long reviewID : reviewClusterMap.keySet()) {
 			counter++;
 
-			int clusterID = reviewCategoryMap.get(reviewID);
+			int clusterID = reviewClusterMap.get(reviewID);
 			int scaledClusterID = clusterScalingMap.get(clusterID);
 
-			reviewCategoryMap.put(reviewID, scaledClusterID);
+			reviewClusterMap.put(reviewID, scaledClusterID);
 
 			logProgress(counter);
 		}
@@ -120,22 +120,22 @@ public class KMeansPostprocessor {
 	/**
 	 * Generates a mapping from the original cluster id to a number between 1
 	 * and n with n being the number of different clusters in
-	 * <code>reviewCategoryMap</code>.
+	 * <code>reviewClusterMap</code>.
 	 * 
-	 * @param reviewCategoryMap
+	 * @param reviewClusterMap
 	 *            a mapping from review IDs (key) to cluster IDs (value)
 	 * @return a mapping from given cluster IDs to scaled cluster IDs
 	 */
-	private static Map<Integer, Integer> getClusterScaling(Map<Long, Integer> reviewCategoryMap) {
-		log.info("Creating cluster scaling mapping from " + reviewCategoryMap.size() + " records");
+	private static Map<Integer, Integer> getClusterScaling(Map<Long, Integer> reviewClusterMap) {
+		log.info("Creating cluster scaling mapping from " + reviewClusterMap.size() + " records");
 
 		Map<Integer, Integer> mapping = new HashMap<>();
 
 		long counter = 0;
-		for (long reviewID : reviewCategoryMap.keySet()) {
+		for (long reviewID : reviewClusterMap.keySet()) {
 			counter++;
 
-			int clusterID = reviewCategoryMap.get(reviewID);
+			int clusterID = reviewClusterMap.get(reviewID);
 
 			if (!mapping.containsKey(clusterID))
 				mapping.put(clusterID, mapping.size() + 1);
@@ -148,28 +148,28 @@ public class KMeansPostprocessor {
 		return mapping;
 	}
 
-	private static void writeSorted(Map<Long, Integer> reviewCategoryMap, Path path)
+	private static void writeSorted(Map<Long, Integer> reviewClusterMap, Path path)
 			throws IOException {
 
-		log.info("Starting writing " + reviewCategoryMap.size() + " records to " + path);
+		log.info("Starting writing " + reviewClusterMap.size() + " records to " + path);
 
 		FileSystem fs = FileSystem.get(new Configuration());
 		FSDataOutputStream outStream = fs.create(path);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outStream));
 
-		for (long reviewID = 1; reviewID <= reviewCategoryMap.size(); reviewID++) {
-			int clusterID = reviewCategoryMap.get(reviewID);
+		for (long reviewID = 1; reviewID <= reviewClusterMap.size(); reviewID++) {
+			int clusterID = reviewClusterMap.get(reviewID);
 			assert clusterID > 0;
 
 			bw.write(clusterID);
-			if (reviewID < reviewCategoryMap.size())
+			if (reviewID < reviewClusterMap.size())
 				bw.write("\n");
 
 			logProgress(reviewID);
 		}
 
 		bw.close();
-		log.info("Finished writing. Total output lines: " + reviewCategoryMap.size());
+		log.info("Finished writing. Total output lines: " + reviewClusterMap.size());
 	}
 
 	private static Map<Long, Integer> readClustering(Path kMeansOutputDir) {
@@ -183,21 +183,21 @@ public class KMeansPostprocessor {
 		dirIterable = new SequenceFileDirIterable<IntWritable, WeightedPropertyVectorWritable>(
 				pointsPathDir, PathType.LIST, PathFilters.logsCRCFilter(), conf);
 
-		Map<Long, Integer> reviewCategoryMap = new HashMap<>();
+		Map<Long, Integer> reviewClusterMap = new HashMap<>();
 
 		for (Pair<IntWritable, WeightedPropertyVectorWritable> record : dirIterable) {
 
 			int clusterID = record.getFirst().get();
 			long reviewID = getReviewID(record.getSecond().getVector());
 
-			reviewCategoryMap.put(reviewID, clusterID);
+			reviewClusterMap.put(reviewID, clusterID);
 
-			logProgress(reviewCategoryMap.size());
+			logProgress(reviewClusterMap.size());
 		}
 
-		log.info("Finished reading clusters. total: " + reviewCategoryMap.size());
+		log.info("Finished reading clusters. total: " + reviewClusterMap.size());
 
-		return reviewCategoryMap;
+		return reviewClusterMap;
 	}
 
 	private static void logProgress(long processedRecords) {
