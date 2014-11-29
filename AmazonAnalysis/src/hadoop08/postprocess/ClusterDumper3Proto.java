@@ -1,7 +1,7 @@
-package hadoop08.read_clusters;
+package hadoop08.postprocess;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,19 +14,24 @@ import org.apache.mahout.common.iterator.sequencefile.PathFilters;
 import org.apache.mahout.common.iterator.sequencefile.PathType;
 import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirIterable;
 
-public class ClusterDumper4Proto {
-	private static Logger log = LogManager.getLogger(ClusterDumper4Proto.class);
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+public class ClusterDumper3Proto {
+	private static Logger log = LogManager.getLogger(ClusterDumper3Proto.class);
 
 	public static void main(String[] args) {
 		Path input = new Path(args[0]);
+		int printFirstN = Integer.parseInt(args[1]);
 
-		readPoints(input, new Configuration());
+		readPoints(input, printFirstN, new Configuration());
 	}
 
 	// adapted from org.apache.mahout.utils.clustering.ClusterDumper
-	public static void readPoints(Path pointsPathDir, Configuration conf) {
+	public static Map<Integer, List<WeightedPropertyVectorWritable>> readPoints(Path pointsPathDir,
+			long maxPointsPerCluster, Configuration conf) {
 
-		Set<Integer> clusters = new HashSet<>();
+		Map<Integer, List<WeightedPropertyVectorWritable>> result = Maps.newTreeMap();
 
 		SequenceFileDirIterable<IntWritable, WeightedPropertyVectorWritable> dirIterable;
 		dirIterable = new SequenceFileDirIterable<IntWritable, WeightedPropertyVectorWritable>(
@@ -35,10 +40,19 @@ public class ClusterDumper4Proto {
 		for (Pair<IntWritable, WeightedPropertyVectorWritable> record : dirIterable) {
 
 			int clusterID = record.getFirst().get();
-			clusters.add(clusterID);
+			List<WeightedPropertyVectorWritable> pointList = result.get(clusterID);
 
-			log.info("read in cluster: " + clusterID + ", total number of clusters so far: "
-					+ clusters.size());
+			if (pointList == null) {
+				pointList = Lists.newArrayList();
+				result.put(clusterID, pointList);
+			}
+
+			if (pointList.size() < maxPointsPerCluster) {
+				pointList.add(record.getSecond());
+			}
+
+			log.info("read in cluster: " + clusterID + ", points: " + pointList);
 		}
+		return result;
 	}
 }

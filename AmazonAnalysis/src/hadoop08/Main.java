@@ -1,7 +1,5 @@
 package hadoop08;
 
-import hadoop08.read_clusters.ClusterDumper;
-
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -18,8 +16,9 @@ public class Main {
 
 		switch (command) {
 		case "clusterdump":
-			log.info("running " + ClusterDumper.class.getName() + ".main(...)");
-			ClusterDumper.main(remainingArgs);
+			// log.info("running " + ClusterDumper.class.getName() +
+			// ".main(...)");
+			// ClusterDumper.main(remainingArgs);
 		default:
 			log.info("don't know what to do with command '" + command + "'");
 		}

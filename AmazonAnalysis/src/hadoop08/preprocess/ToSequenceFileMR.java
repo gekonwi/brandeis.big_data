@@ -19,6 +19,8 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
  */
 public class ToSequenceFileMR {
 
+	public static final String VECTOR_ID_PREFIX = "review_";
+
 	public static class LineToSequenceFileMapper extends Mapper<Text, Text, Text, Text> {
 
 		/**
@@ -27,7 +29,7 @@ public class ToSequenceFileMR {
 		@Override
 		public void map(Text lineNum, Text review, Context context) throws IOException,
 				InterruptedException {
-			Text reviewID = new Text("review_" + lineNum.toString());
+			Text reviewID = new Text(VECTOR_ID_PREFIX + lineNum.toString());
 			context.write(reviewID, review);
 		}
 	}

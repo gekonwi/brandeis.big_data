@@ -1,4 +1,4 @@
-package hadoop08.read_clusters;
+package hadoop08.postprocess;
 
 import java.util.HashSet;
 import java.util.Set;
