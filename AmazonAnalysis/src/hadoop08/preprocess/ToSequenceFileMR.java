@@ -21,7 +21,7 @@ public class ToSequenceFileMR {
 
 	public static final String VECTOR_ID_PREFIX = "review_";
 
-	public static class LineToSequenceFileMapper extends Mapper<Text, Text, Text, Text> {
+	public static class ToSequenceFileMapper extends Mapper<Text, Text, Text, Text> {
 
 		/**
 		 * TODO
@@ -39,7 +39,7 @@ public class ToSequenceFileMR {
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 
-		job.setMapperClass(LineToSequenceFileMapper.class);
+		job.setMapperClass(ToSequenceFileMapper.class);
 
 		job.setInputFormatClass(KeyValueTextInputFormat.class);
 		job.setOutputFormatClass(SequenceFileOutputFormat.class);
