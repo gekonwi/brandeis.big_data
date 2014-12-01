@@ -1,1 +1,4 @@
 /bin
+*.class
+*.DS_Store
+*models.jar
